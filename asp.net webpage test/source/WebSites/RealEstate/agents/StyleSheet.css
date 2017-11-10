@@ -1,0 +1,57 @@
+﻿ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+li a{
+    display: block;
+    color: #000;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a.active{
+    background-color: #4CAF50;
+    color: white;
+}
+
+li a:hover:not(.active){
+    background-color: #555;
+    color: white;
+}
+
+li {
+    float: left;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+body {
+    display: table;
+}
+
+.my-block {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+.products {
+    padding: 16px;
+    margin: auto;
+    width: 61.5%; /*width  of the space defined for the pics to exist in*/
+    /*padding: 70px;*/ /*Have no idea what it changes so might delete*/
+    margin-top: 60px;
+    padding-top: 80px;
+}
+.highlight {
+    color: red;
+    font-weight: bold;
+}
