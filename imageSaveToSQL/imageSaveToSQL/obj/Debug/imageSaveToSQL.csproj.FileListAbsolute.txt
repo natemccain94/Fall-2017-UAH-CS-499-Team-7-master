@@ -1,0 +1,10 @@
+C:\Users\jjp0009\source\repos\imageSaveToSQL\imageSaveToSQL\bin\Debug\imageSaveToSQL.exe.config
+C:\Users\jjp0009\source\repos\imageSaveToSQL\imageSaveToSQL\bin\Debug\imageSaveToSQL.exe
+C:\Users\jjp0009\source\repos\imageSaveToSQL\imageSaveToSQL\bin\Debug\imageSaveToSQL.pdb
+C:\Users\jjp0009\source\repos\imageSaveToSQL\imageSaveToSQL\obj\Debug\imageSaveToSQL.csprojResolveAssemblyReference.cache
+C:\Users\jjp0009\source\repos\imageSaveToSQL\imageSaveToSQL\obj\Debug\imageSaveToSQL.Form1.resources
+C:\Users\jjp0009\source\repos\imageSaveToSQL\imageSaveToSQL\obj\Debug\imageSaveToSQL.Properties.Resources.resources
+C:\Users\jjp0009\source\repos\imageSaveToSQL\imageSaveToSQL\obj\Debug\imageSaveToSQL.csproj.GenerateResource.Cache
+C:\Users\jjp0009\source\repos\imageSaveToSQL\imageSaveToSQL\obj\Debug\imageSaveToSQL.csproj.CoreCompileInputs.cache
+C:\Users\jjp0009\source\repos\imageSaveToSQL\imageSaveToSQL\obj\Debug\imageSaveToSQL.exe
+C:\Users\jjp0009\source\repos\imageSaveToSQL\imageSaveToSQL\obj\Debug\imageSaveToSQL.pdb
