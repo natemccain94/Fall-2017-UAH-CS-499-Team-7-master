@@ -83,9 +83,15 @@ public partial class agents_update_listing : System.Web.UI.Page
     {
         id = Convert.ToInt32(Request.QueryString["listing_id"].ToString());
         cmd.CommandType = CommandType.Text;
+        con.Open();
+        cmd.CommandText = "DELETE FROM schedule WHERE listing_id=" + id;
+        cmd.Connection = con;
+        cmd.ExecuteNonQuery();
+        cmd.CommandText = "DELETE FROM reviews WHERE listing_id=" + id;
+        cmd.Connection = con;
+        cmd.ExecuteNonQuery();
         cmd.CommandText = "DELETE FROM listing WHERE listing_id=" + id;
         cmd.Connection = con;
-        con.Open();
         cmd.ExecuteNonQuery();
         con.Close();
         Response.Redirect("agentMain.aspx");
