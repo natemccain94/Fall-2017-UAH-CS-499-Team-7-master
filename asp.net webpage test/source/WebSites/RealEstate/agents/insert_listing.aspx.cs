@@ -141,6 +141,7 @@ public partial class agents_insert_listing : System.Web.UI.Page
             int x = command.ExecuteNonQuery();
             con.Close();
         }
+        Response.Redirect("agentMain.aspx");
     }
     protected void Cancel_Click(object sender, EventArgs e)
     {

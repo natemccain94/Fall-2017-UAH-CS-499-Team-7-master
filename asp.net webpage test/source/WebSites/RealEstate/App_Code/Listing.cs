@@ -29,12 +29,12 @@ public class Listing
             listing_sqFT = 0;
             listing_price = 0;
             Listing_occupied = false;
-            pic1 = null;
-            pic2 = null;
-            pic3 = null;
-            pic4 = null;
-            pic5 = null;
-            pic6 = null;
+            Pic1 = null;
+            Pic2 = null;
+            Pic3 = null;
+            Pic4 = null;
+            Pic5 = null;
+            Pic6 = null;
         }
 
         public long Listing_price { get => listing_price; set => listing_price = value; }
@@ -49,4 +49,10 @@ public class Listing
         public string Listing_street { get => listing_street; set => listing_street = value; }
         public string Listing_shortDescription { get => listing_shortDescription; set => listing_shortDescription = value; }
         public bool Listing_occupied { get => listing_occupied; set => listing_occupied = value; }
+        public byte[] Pic1 { get => pic1; set => pic1 = value; }
+        public byte[] Pic2 { get => pic2; set => pic2 = value; }
+        public byte[] Pic3 { get => pic3; set => pic3 = value; }
+        public byte[] Pic4 { get => pic4; set => pic4 = value; }
+        public byte[] Pic5 { get => pic5; set => pic5 = value; }
+        public byte[] Pic6 { get => pic6; set => pic6 = value; }
 }

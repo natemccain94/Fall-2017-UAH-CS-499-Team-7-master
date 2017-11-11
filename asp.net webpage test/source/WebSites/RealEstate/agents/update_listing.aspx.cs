@@ -13,6 +13,7 @@ public partial class agents_update_listing : System.Web.UI.Page
     SqlConnection con = new SqlConnection("Data Source=DESKTOP-KFI49LK;Initial Catalog=Housing;Integrated Security=True");
     SqlCommand cmd = new SqlCommand();
     SqlDataReader reader;
+    Listing new_listing = new Listing();
     int id;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -31,30 +32,30 @@ public partial class agents_update_listing : System.Web.UI.Page
             reader = cmd.ExecuteReader();
             while (reader.Read())
             {
+                //initialize new_listing object to with retrieving sql data 
                 Boolean occupied_flag = false;
-                listing_price.Text = reader["listing_price"].ToString();
-                listing_state.Text = reader["listing_state"].ToString();
-                listing_street.Text = reader["listing_street"].ToString();
-                listing_shortDescription.Text = reader["listing_shortDescription"].ToString();
-                listing_city.Text = reader["listing_city"].ToString();
-                listing_sqFT.Text = reader["listing_sqFT"].ToString();
-                listing_description.Text = reader["listing_description"].ToString();
-                listing_zip.Text = reader["listing_zip"].ToString();
-                listing_roomDescription.Text = reader["listing_roomDescription"].ToString();
-                listing_nameSubDivision.Text = reader["listing_nameSubDivision"].ToString();
-                listing_alarminfo.Text = reader["listing_alarmInfo"].ToString();
+                new_listing.Listing_price = Convert.ToInt64(reader["listing_price"]);
+                new_listing.Listing_state = reader["listing_state"].ToString();
+                new_listing.Listing_street = reader["listing_street"].ToString();
+                new_listing.Listing_shortDescription = reader["listing_shortDescription"].ToString();
+                new_listing.Listing_city = reader["listing_city"].ToString();
+                new_listing.Listing_sqFT = Convert.ToInt64(reader["listing_sqFT"]);
+                new_listing.Listing_description = reader["listing_description"].ToString();
+                new_listing.Listing_zip = Convert.ToInt64(reader["listing_zip"]);
+                new_listing.Listing_roomDescription = reader["listing_roomDescription"].ToString();
+                new_listing.Listing_nameSubDivision = reader["listing_nameSubDivision"].ToString();
+                new_listing.Listing_alarminfo = reader["listing_alarmInfo"].ToString();
                 Boolean.TryParse(reader["listing_occupied"].ToString(), out occupied_flag);
-                if (occupied_flag == true)
-                {
-                    listing_occupied.Checked = true;
-                }
-                Image1.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage((byte[])reader[1]);
-                Image2.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage((byte[])reader[2]);
-                Image3.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage((byte[])reader[3]);
-                Image4.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage((byte[])reader[4]);
-                Image5.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage((byte[])reader[5]);
-                Image6.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage((byte[])reader[6]);
+                new_listing.Listing_occupied = occupied_flag;
+                new_listing.Pic1 = (byte[])reader[1];
+                new_listing.Pic2 = (byte[])reader[2];
+                new_listing.Pic3 = (byte[])reader[3];
+                new_listing.Pic4 = (byte[])reader[4];
+                new_listing.Pic5 = (byte[])reader[5];
+                new_listing.Pic6 = (byte[])reader[6];
+
             }
+            set_Frontend_listing(new_listing);
             reader.Close();
             con.Close();
         }
@@ -120,6 +121,32 @@ public partial class agents_update_listing : System.Web.UI.Page
 
     protected void Update_listing(object sender, EventArgs e)
     {
+
+    }
+    
+    private void set_Frontend_listing(Listing new_listing)
+    {
+        listing_price.Text = new_listing.Listing_price.ToString();
+        listing_state.Text = new_listing.Listing_state;
+        listing_street.Text = new_listing.Listing_street;
+        listing_shortDescription.Text = new_listing.Listing_shortDescription;
+        listing_city.Text = new_listing.Listing_city;
+        listing_sqFT.Text = new_listing.Listing_sqFT.ToString();
+        listing_description.Text = new_listing.Listing_description;
+        listing_zip.Text = new_listing.Listing_zip.ToString();
+        listing_roomDescription.Text = new_listing.Listing_roomDescription;
+        listing_nameSubDivision.Text = new_listing.Listing_nameSubDivision;
+        listing_alarminfo.Text = new_listing.Listing_alarminfo;
+        if (new_listing.Listing_occupied == true)
+        {
+            listing_occupied.Checked = true;
+        }
+        Image1.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic1);
+        Image2.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic2);
+        Image3.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic3);
+        Image4.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic4);
+        Image5.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic5);
+        Image6.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic6);
 
     }
 }
