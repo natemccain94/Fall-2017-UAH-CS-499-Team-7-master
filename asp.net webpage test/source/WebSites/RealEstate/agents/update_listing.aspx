@@ -162,10 +162,22 @@
                 <asp:Button class="img-thumbnail" runat="server" ID="Cancel" OnClick="Cancel_Click" Text="Cancel" />
             </div>
             <div class="col">
-                <asp:Button class="img-thumbnail" runat="server" ID="Update" Text="Update" />
+                <asp:Button
+                    class="img-thumbnail" 
+                    runat="server" 
+                    ID="Update"
+                    OnClientClick ="return confirm('Are you certain you want to update this listing?');"
+                     OnClick="Update_listing"
+                    Text="Update" />
             </div>
             <div class="col">
-                <asp:Button class="img-thumbnail" runat="server" ID="Delete" Text="Delete" OnClick="Delete_Click" />
+                <asp:Button 
+                    class="img-thumbnail" 
+                    runat="server" 
+                    ID="Delete" 
+                    Text="Delete"
+                    OnClientClick ="return confirm('Are you certain you want to delete this listing?');"
+                    OnClick="Delete_Click" />
             </div>
             </div>
             <br />

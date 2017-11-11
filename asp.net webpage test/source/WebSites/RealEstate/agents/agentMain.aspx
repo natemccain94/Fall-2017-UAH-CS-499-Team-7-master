@@ -16,6 +16,7 @@
         <li><a class="active" href="#" > Home</a></li>
         <li><a href="insert_listing.aspx" >Add a Listing</a></li>
         <li><a href="#"><asp:Button ID="logoutButton" runat="server" OnClick="Button1_Click" Text="Logout" /></a></li>
+
     </ul>
 
     <h1> Welcome Agent</h1>

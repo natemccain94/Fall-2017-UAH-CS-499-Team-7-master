@@ -158,7 +158,12 @@
                 <asp:Button runat="server" ID="Cancel" OnClick="Cancel_Click" Text="Cancel" />
             </div>
             <div class="col">
-                <asp:Button runat="server" ID="Add" Text="Add Listing" OnClick="Add_Click" />
+                <asp:Button 
+                    runat="server" 
+                    ID="Add" 
+                    Text="Add Listing" 
+                    OnClientClick ="return confirm('Are you certain you want to add this listing?');"
+                    OnClick="Add_Click" />
             </div>
             </div>
             <br />

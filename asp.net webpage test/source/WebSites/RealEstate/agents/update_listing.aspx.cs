@@ -117,5 +117,10 @@ public partial class agents_update_listing : System.Web.UI.Page
         }
 
     }
+
+    protected void Update_listing(object sender, EventArgs e)
+    {
+
+    }
 }
 //template class for listing
