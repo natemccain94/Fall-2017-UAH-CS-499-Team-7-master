@@ -87,6 +87,11 @@ public partial class agents_update_listing : System.Web.UI.Page
 
     protected void Update_listing(object sender, EventArgs e)
     {
+        //check if agent is null
+        if (Request.QueryString["listing_id"] == null)
+        {
+            Response.Redirect("agentMain.aspx");
+        }
         //get all update data back to new_listing
         set_backend_listing();
         //push new data of specific listing back to database
