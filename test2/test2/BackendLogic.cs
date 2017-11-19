@@ -3155,7 +3155,7 @@ namespace test2
         /// <returns></returns>
         public int GetTotalNumberOfAgencies()
         {
-            var result = 0;
+            var result = -1;
             using (var command = new SqlCommand())
             {
                 try
@@ -3253,6 +3253,27 @@ namespace test2
             return table;
         }
 
+        public int GetAgencyID(string agency_name)
+        {
+            var result = -1;
+            using (var command = new SqlCommand())
+            {
+                try
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = string.Concat("SELECT agency_id FROM agency WHERE",
+                    " agency_name = ", agency_name);
+                    result = Convert.ToInt32(command.ExecuteScalar());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    result = -1;
+                }
+            }
+            return result;
+        }
         #endregion
 
         #endregion
