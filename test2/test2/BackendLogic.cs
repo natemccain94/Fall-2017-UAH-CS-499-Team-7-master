@@ -3271,10 +3271,8 @@ namespace test2
             Console.WriteLine(outputString);
         }
 
-
-        //convert image to byte[]
         /// <summary>
-        /// Imagetoes the byte.
+        /// Image to the byte.
         /// </summary>
         /// <param name="imageIn">The image in.</param>
         /// <returns></returns>
@@ -3284,10 +3282,9 @@ namespace test2
             imageIn.Save(ms, ImageFormat.Gif);
             return ms.ToArray();
         }
-
-        //convert byte[] to image
+        
         /// <summary>
-        /// Bytetoes the image.
+        /// Byte to the image.
         /// </summary>
         /// <param name="byteArrayIn">The byte array in.</param>
         /// <returns></returns>
