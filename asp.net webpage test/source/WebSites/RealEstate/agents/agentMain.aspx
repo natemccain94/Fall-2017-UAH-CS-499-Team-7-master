@@ -17,12 +17,11 @@
     <ul>
         <li><a class="active" href="#" > Home</a></li>
         <li><a href="insert_listing.aspx" >Add a Listing</a></li>
+        <li><a href="../users/display_houses.aspx" >Customer's Main</a></li>
         <li><a href="#"><asp:Button ID="logoutButton" runat="server" OnClick="Button1_Click" Text="Logout" /></a></li>
 
     </ul>
-
     <h1> Welcome Agent</h1>
-    <h2><a href="../users/display_houses.aspx"> View Listings </a></h2>
     
     <asp:ScriptManager ID="ScriptManager2" runat="server" EnablePageMethods="true"/>
      <!--test gridview-->
@@ -39,6 +38,7 @@
                 <asp:BoundField DataField="listing_city" HeaderText="City" ItemStyle-Width="150" />
                 <asp:BoundField DataField="listing_zip" HeaderText="ZipCode" ItemStyle-Width="100" />
                 <asp:BoundField DataField="listing_shortDescription" HeaderText="Short Description" ItemStyle-Width="250" />
+                <asp:BoundField DataField="listing_alarmInfo" HeaderText="Alarm Info." ItemStyle-Width="100" />
                <asp:HyperLinkField DataNavigateUrlFields="listing_id" HeaderText="More details..."  DataNavigateUrlFormatString="update_listing.aspx?listing_id={0}" Text="View Details" />
             </Columns>
         </asp:GridView>
