@@ -14,21 +14,157 @@ namespace BackendTests
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [TestClass]
     public class AgentDatabaseTests
     {
-        
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
+        [ClassInitialize]
+        public static void Init()
+        {
+            ISeeData = new SQL_Connection();
+            ISeeData.openConnection();
+        }
+
+        /// <summary>
+        /// Adds an agent get agent identifier.
+        /// </summary>
+        [TestMethod]
+        public void AddAnAgent_GetAgentID()
+        {
+            // Arrange
+            int id;
+            // Act
+            ISeeData.AddAgent("agent_Fname", "agent_Lname", "agent_Uname",
+                "agent_password", "agent_number", "agent_email", 696969, "000");
+            id = ISeeData.GetAgentID("agent_Uname");
+            // Assert
+            Assert.AreNotEqual(-1, id);
+        }
+
+        /// <summary>
+        /// Gets the agent identifier edit agent information.
+        /// </summary>
+        [TestMethod]
+        public void GetAgentID_EditAgentInfo()
+        {
+            // Arrange
+            int id;
+            string editInfo = "Yarg";
+            int editNumber = 666;
+            // Act
+            id = ISeeData.GetAgentID("agent_Uname");
+            ISeeData.UpdateAgentFirstName(editInfo,id);
+            ISeeData.UpdateAgentLastName(editInfo, id);
+            ISeeData.UpdateAgentUsername(editInfo, id);
+            ISeeData.UpdateAgentPassword(editInfo, id);
+            ISeeData.UpdateAgentNumber(editNumber.ToString(), id);
+            ISeeData.UpdateAgentEmail(editInfo, id);
+
+            // Assert
+            Assert.AreEqual(id, ISeeData.GetAgentID(editInfo));
+        }
+
+        /// <summary>
+        /// Differents the agent get function tests.
+        /// </summary>
+        [TestMethod]
+        public void DifferentAgentGetFunctionTests()
+        {
+            // Arrange
+            int id;
+            string checkString = "Yarg";
+
+            // Act
+            id = ISeeData.GetAgentID(checkString);
+
+            // Assert
+            Assert.AreNotEqual(0,ISeeData.GetTotalNumberOfAgentsUsingService());
+            Assert.AreEqual(1,ISeeData.GetTotalNumberOfAgentsWithAgency(696969));
+            Assert.AreEqual(checkString,ISeeData.GetAgentFirstName(id));
+            Assert.AreEqual(checkString,ISeeData.GetAgentLastName(id));
+            Assert.AreEqual(checkString,ISeeData.GetAgentUserName(id));
+            Assert.IsTrue(ISeeData.CheckAgentPassword(checkString,checkString));
+            Assert.AreEqual(checkString,ISeeData.GetAgentPhoneNumber(id));
+            Assert.AreEqual(checkString,ISeeData.GetAgentEmail(id));
+            Assert.AreEqual(696969,ISeeData.GetAgencyOfAgent(id));
+        }
+
+        /// <summary>
+        /// Tests the data table get functions.
+        /// </summary>
+        [TestMethod]
+        public void TestDataTableGetFunctions()
+        {
+            // Arrange
+            int id;
+            DataRow set;
+            // Act
+            id = ISeeData.GetAgentID("Yarg");
+            set = ISeeData.GetAgent(id).Rows[0];
+            // Assert
+            Assert.AreEqual("Yarg",set[1]);
+            Assert.IsInstanceOfType(ISeeData.GetAllAgents(),typeof(DataTable));
+            Assert.IsInstanceOfType(ISeeData.GetAllAgentsFromAgency(696969),typeof(DataTable));
+        }
+
+        /// <summary>
+        /// Gets the agent identifier delete agent.
+        /// </summary>
+        [TestMethod]
+        public void GetAgentID_DeleteAgent()
+        {
+            // Arrange
+            int id;
+            // Act
+            id = ISeeData.GetAgentID("Yarg");
+            ISeeData.DeleteAgent(id);
+            // Assert
+            Assert.AreNotEqual(id,ISeeData.GetAgentID("Yarg"));
+        }
+
+        /// <summary>
+        /// Ends the of agent tests.
+        /// </summary>
+        [ClassCleanup]
+        public static void EndOfAgentTests()
+        {
+            ISeeData.closeConnection();
+        }
+
+        /// <summary>
+        /// The i see data
+        /// </summary>
+        public static test2.SQL_Connection ISeeData;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [TestClass]
     public class AgencyDatabaseTests
     {
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
+        [ClassInitialize]
+        public static void Init()
+        {
+            ISeeData = new SQL_Connection();
+            ISeeData.openConnection();
+        }
+
+        /// <summary>
+        /// Adds an agency get agency identifier.
+        /// </summary>
         [TestMethod]
         public void AddAnAgency_GetAgencyID()
         {
             // Arrange
-            test2.SQL_Connection ISeeData = new SQL_Connection();
-            ISeeData.openConnection();
             ISeeData.AddAgency("agency_name","agency_email","agency_phone",
                 "agency_street","agency_city","agency_state","agency_zip");
             int id;
@@ -40,15 +176,15 @@ namespace BackendTests
             // Assert
             Assert.AreSame(typeof(DataTable),helper);
             Assert.AreEqual("agency_name", set[0]);
-            ISeeData.closeConnection();
         }
 
+        /// <summary>
+        /// Updates an agency.
+        /// </summary>
         [TestMethod]
         public void UpdateAnAgency()
         {
             // Arrange
-            test2.SQL_Connection ISeeData = new SQL_Connection();
-            ISeeData.openConnection();
             int id;
             DataRow set;
 
@@ -72,16 +208,15 @@ namespace BackendTests
             Assert.AreEqual("sexy,", set[4]);
             Assert.AreEqual("not", set[5]);
             Assert.AreEqual("fatass", set[6]);
-
-            ISeeData.closeConnection();
         }
 
+        /// <summary>
+        /// Removes an agency.
+        /// </summary>
         [TestMethod]
         public void RemoveAnAgency()
         {
             // Arrange
-            test2.SQL_Connection ISeeData = new SQL_Connection();
-            ISeeData.openConnection();
             int id;
 
             // Act
@@ -89,7 +224,20 @@ namespace BackendTests
             ISeeData.DeleteAgency(id);
             // Assert
             Assert.AreNotEqual(id, ISeeData.GetAgencyID("kiiim"));
+        }
+
+        /// <summary>
+        /// Ends the of agency tests.
+        /// </summary>
+        [ClassCleanup]
+        public static void EndOfAgencyTests()
+        {
             ISeeData.closeConnection();
         }
+
+        /// <summary>
+        /// The i see data
+        /// </summary>
+        public static test2.SQL_Connection ISeeData;
     }
 }
