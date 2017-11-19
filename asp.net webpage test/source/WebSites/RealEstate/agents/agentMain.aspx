@@ -6,6 +6,8 @@
 <head runat="server">
     <title>Agent Main Page</title>
     <link rel="stylesheet" type="text/css" href="StyleSheet.css" />
+    <link href="bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link type="text/css" href="gridview.css" rel="stylesheet" />
 </head>
 <body>
     <form id="agent" runat="server">
@@ -23,43 +25,26 @@
     <h2><a href="../users/display_houses.aspx"> View Listings </a></h2>
     
     <asp:ScriptManager ID="ScriptManager2" runat="server" EnablePageMethods="true"/>
-    <asp:Button ID="getdata" runat="server" Onclick="GetAgentID_Click" Text="click me!"></asp:Button>
-    <asp:Label runat="server" ID="updaterino" Text="..." />
-     
-    <div class="products">
-    <asp:Repeater ID="d2" runat="server"> 
-        <HeaderTemplate>
-            <ul>
-        </HeaderTemplate>
-       
-        <ItemTemplate>
-            <li class="last">
-              <div class="over">
-                    <a id="listing_ID" href="update_listing.aspx?listing_id=<%#Eval("listing_id") %>">
-                        <img src='data:image/jpg;base64,<%#Eval("pic1") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic1")) : string.Empty %>' alt="pic1" height="300" width="300" />
-                    </a>
-                     <div class="overlay">
-                         <div class="text">
-                            <h2>$<%#Eval("listing_price") %></h2>
-                            <h5><%#Eval("listing_street") %></h5>
-                            <p style=""font-color: white"><%#Eval("listing_city") %> , <%#Eval("listing_state") %>, <%#Eval("listing_zip") %></p>
-                            <p>Agency: <%#Eval("agency_name") %></p>
-                            <p>Agent: <%#Eval("agent_Fname") %> <%#Eval("agent_Lname") %></p>
-                         </div> 
-                    </div>
-                </div>         
-          </li>
-       </ItemTemplate>
-        
-       <FooterTemplate>
-            </ul>
-       </FooterTemplate>
-    </asp:Repeater>
-    <!-- Repeater ends here-->
-    </div>
-    <!-- Product div ends here -->
-
+     <!--test gridview-->
+         Search:
+        <asp:TextBox ID="txtSearch" runat="server" />
+        <asp:Button Text="Search" runat="server" OnClick="Search_Click" />
+        <hr />
+        <asp:GridView ID="GridView1" CssClass="table table-striped table-bordered table-hover" OnPageIndexChanging="GridView1_PageIndexChanging" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White"
+            runat="server" AllowPaging="true" PageSize="5" AutoGenerateColumns="false">
+            <Columns>
+                <asp:BoundField DataField="listing_id" HeaderText="Listing ID" ItemStyle-Width="150" />
+                <asp:BoundField DataField="listing_price" HeaderText="Price" ItemStyle-Width="150" />
+                <asp:BoundField DataField="listing_street" HeaderText="Street" ItemStyle-Width="250" />
+                <asp:BoundField DataField="listing_city" HeaderText="City" ItemStyle-Width="150" />
+                <asp:BoundField DataField="listing_zip" HeaderText="ZipCode" ItemStyle-Width="100" />
+                <asp:BoundField DataField="listing_shortDescription" HeaderText="Short Description" ItemStyle-Width="250" />
+               <asp:HyperLinkField DataNavigateUrlFields="listing_id" HeaderText="More details..."  DataNavigateUrlFormatString="update_listing.aspx?listing_id={0}" Text="View Details" />
+            </Columns>
+        </asp:GridView>
+    <!--test gridview-->
     </form>
 </body>
   
 </html>
+
