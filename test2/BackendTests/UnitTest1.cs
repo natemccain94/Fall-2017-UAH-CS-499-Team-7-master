@@ -5,13 +5,92 @@ using test2;
 
 namespace BackendTests
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [TestClass]
     public class ListingDatabaseTests
     {
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
+        [ClassInitialize]
+        public static void Init()
+        {
+            ISeeData = new SQL_Connection();
+            ISeeData.openConnection();
+        }
+
+        /// <summary>
+        /// Adds the listing get listing identifier.
+        /// </summary>
         [TestMethod]
-        public void TestMethod1()
+        public void AddListing_GetListingID()
         {
         }
+
+        /// <summary>
+        /// Updates the test listing information.
+        /// </summary>
+        [TestMethod]
+        public void UpdateTestListingInformation()
+        {
+            
+        }
+
+        /// <summary>
+        /// Changes the test listing hit counts.
+        /// </summary>
+        [TestMethod]
+        public void ChangeTestListingHitCounts()
+        {
+            
+        }
+
+        /// <summary>
+        /// Removes the parts of test listing.
+        /// </summary>
+        [TestMethod]
+        public void RemovePartsOfTestListing()
+        {
+            
+        }
+
+        /// <summary>
+        /// Gets the parts of test listing.
+        /// </summary>
+        [TestMethod]
+        public void GetPartsOfTestListing()
+        {
+            
+        }
+
+        /// <summary>
+        /// Deletes the test listing.
+        /// </summary>
+        [TestMethod]
+        public void DeleteTestListing()
+        {
+            
+        }
+
+        /// <summary>
+        /// Ends the of listing tests.
+        /// </summary>
+        [ClassCleanup]
+        public static void EndOfListingTests()
+        {
+            ISeeData.closeConnection();
+        }
+
+        /// <summary>
+        /// The i see data
+        /// </summary>
+        public static SQL_Connection ISeeData;
+        /// <summary>
+        /// The listing identifier
+        /// </summary>
+        private int listingID;
     }
 
     /// <summary>
