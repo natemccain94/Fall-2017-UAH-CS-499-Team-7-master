@@ -1,17 +1,49 @@
 ﻿using System;
+using test2;
+
 namespace test2
 {
-    public class ClosingForms
+    public static class ClosingForms
     {
-        public ClosingForms()
+        public static void SendClosingForms(string street, string city, string state, int zip, string listing_description,
+                           int listing_price, string agent_fName, string agent_lName, string agent_email)
         {
+            string ClosingSettlementToSend;
+            string PurchaseAgreementToSend;
+            string RepairsRequestToSend;
+
+            ClosingSettlementToSend = ClosingForm;
+            PurchaseAgreementToSend = AgreementToPurchaseRealEstate;
+            RepairsRequestToSend = RequestForRepairs;
+
+            ClosingSettlementToSend = ClosingSettlementToSend.Replace("<Street>", street);
+            ClosingSettlementToSend = ClosingSettlementToSend.Replace("<City>", city);
+            ClosingSettlementToSend = ClosingSettlementToSend.Replace("<State>", state);
+            ClosingSettlementToSend = ClosingSettlementToSend.Replace("<Zip>", zip.ToString());
+            ClosingSettlementToSend = ClosingSettlementToSend.Replace("<Listing Price>", listing_price.ToString());
+
+            PurchaseAgreementToSend = PurchaseAgreementToSend.Replace("<Street>", street);
+            PurchaseAgreementToSend = PurchaseAgreementToSend.Replace("<City>", city);
+            PurchaseAgreementToSend = PurchaseAgreementToSend.Replace("<State>", state);
+            PurchaseAgreementToSend = PurchaseAgreementToSend.Replace("<Zip>", zip.ToString());
+            PurchaseAgreementToSend = PurchaseAgreementToSend.Replace("<Listing Price>", listing_price.ToString());
+            PurchaseAgreementToSend = PurchaseAgreementToSend.Replace("<listing description>", listing_description);
+
+            RepairsRequestToSend = RepairsRequestToSend.Replace("<Street>", street);
+            RepairsRequestToSend = RepairsRequestToSend.Replace("<City>", city);
+            RepairsRequestToSend = RepairsRequestToSend.Replace("<State>", state);
+            RepairsRequestToSend = RepairsRequestToSend.Replace("<Zip>", zip.ToString());
+
+            EmailAnAgent.EmailClosingFormsToAgent(agent_email,agent_fName,agent_lName,street,
+                                                  city, state,zip, ClosingSettlementToSend,
+                                                  PurchaseAgreementToSend, RepairsRequestToSend);
         }
 
         #region Closing Settlement Statement String
-        private string ClosingForm = string.Concat(
+        public static string ClosingForm = string.Concat(
             "                 Closing Settlement Statement\n\n",
-            "Seller: <customer selling>          Buyer: <customer buying>\n\n",
-            "Seller: <realtor name>              Buyer: <customer realtor>\n\n",
+            "Seller: __________________          Buyer: __________________\n\n",
+            "Seller: __________________          Buyer: __________________\n\n",
             "Property Address: <Street>\n\n",
             "City: <City>            State: <State>        Zip: <Zip>\n\n",
             "Total Price: <Listing Price>\n\n",
@@ -19,23 +51,23 @@ namespace test2
             "| I/We certify that the contents hereof are true and correct.      |\n",
             "|                                                                  |\n",
             "| Sellers:                                                         |\n",
-            "| Print Name: <Customer Selling>       SS#:___________________     |\n",
-            "| Signature:____________________       Date:__________________     |\n",
-            "| Print Name: <Realtor Selling>        SS#:___________________     |\n",
-            "| Signature:____________________       Date:__________________     |\n",
+            "| Print Name: __________________       SS#:___________________     |\n",
+            "| Signature: ___________________       Date:__________________     |\n",
+            "| Print Name: __________________       SS#:___________________     |\n",
+            "| Signature: ___________________       Date:__________________     |\n",
             " ------------------------------------------------------------------\n\n\n",
             "  ------------------------------------------------------------------\n",
             "| I/We certify that the contents hereof are true and correct.      |\n",
             "|                                                                  |\n",
             "| Buyers:                                                          |\n",
-            "| Print Name: <Customer Buying>        SS#:___________________     |\n",
-            "| Signature:____________________       Date:__________________     |\n",
-            "| Print Name: <Realtor Buying>         SS#:___________________     |\n",
-            "| Signature:____________________       Date:__________________     |\n",
+            "| Print Name: ____________________     SS#:___________________     |\n",
+            "| Signature: ____________________      Date:__________________     |\n",
+            "| Print Name: ____________________     SS#:___________________     |\n",
+            "| Signature: ____________________      Date:__________________     |\n",
             " ------------------------------------------------------------------\n");
         #endregion
         #region Agreement to Purchase Real Estate String
-        private string AgreementToPurchaseRealEstate = string.Concat(
+        public static string AgreementToPurchaseRealEstate = string.Concat(
             "AGREEMENT TO PURCHASE REAL ESTATE\n\n",
             "The undersigned (herein \"Purchaser\") hereby offers to purchase from the owner (herein \"Seller\") the real estate\n",
             "located at <Street> in the city of <City>, State of <State>, the legal description of which is:\n",
@@ -130,16 +162,15 @@ namespace test2
             "Acceptance by Seller\n\n",
             "The foregoing offer to purchase real estate is hereby accepted in accordance with the terms and conditions specified\n",
             "above. The undersigned hereby aggrees to pay a brokerage fee of $__________________ to \n",
-            "<Realtor Selling>, broker, in accordance with the existing listing contract.\n\n",
+            "__________________, broker, in accordance with the existing listing contract.\n\n",
             "Dated this __________________________ day of _________________________, 20__.\n\n\n\n",
             "                                                                              ________________________________\n",
             "                                                                                                      (SELLER)\n",
             "                                                                              ________________________________\n",
             "                                                                                             (REALTOR SELLING)\n\n\n\n");
         #endregion
-
         #region Request for Repairs String
-        private string RequestForRepairs = string.Concat(
+        public static string RequestForRepairs = string.Concat(
         "REQUEST FOR REPAIR NO. __________\n",
         "(Or other Corrective Action)\n\n",
             "Date Prepared: __________________\n",
