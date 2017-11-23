@@ -8,8 +8,7 @@ using System.IO;
 namespace test2
 {
     #region Nate's input
-
-    // Hi me!
+    
     /// <summary>
     /// 
     /// </summary>
@@ -3253,6 +3252,11 @@ namespace test2
             return table;
         }
 
+        /// <summary>
+        /// Gets the agency identifier.
+        /// </summary>
+        /// <param name="agency_name">Name of the agency.</param>
+        /// <returns></returns>
         public int GetAgencyID(string agency_name)
         {
             var result = -1;
@@ -3303,7 +3307,7 @@ namespace test2
             imageIn.Save(ms, ImageFormat.Gif);
             return ms.ToArray();
         }
-        
+
         /// <summary>
         /// Byte to the image.
         /// </summary>
@@ -3316,6 +3320,7 @@ namespace test2
             return returnImage;
         }
 
+
         /// <summary>
         /// The connection
         /// </summary>
@@ -3327,7 +3332,7 @@ namespace test2
     }
 
     #endregion
-    
+
     /// <summary>
     /// 
     /// </summary>
