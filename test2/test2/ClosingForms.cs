@@ -3,8 +3,23 @@ using test2;
 
 namespace test2
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ClosingForms
     {
+        /// <summary>
+        /// Sends the closing forms.
+        /// </summary>
+        /// <param name="street">The street.</param>
+        /// <param name="city">The city.</param>
+        /// <param name="state">The state.</param>
+        /// <param name="zip">The zip.</param>
+        /// <param name="listing_description">The listing description.</param>
+        /// <param name="listing_price">The listing price.</param>
+        /// <param name="agent_fName">Name of the agent f.</param>
+        /// <param name="agent_lName">Name of the agent l.</param>
+        /// <param name="agent_email">The agent email.</param>
         public static void SendClosingForms(string street, string city, string state, int zip, string listing_description,
                            int listing_price, string agent_fName, string agent_lName, string agent_email)
         {
@@ -34,12 +49,15 @@ namespace test2
             RepairsRequestToSend = RepairsRequestToSend.Replace("<State>", state);
             RepairsRequestToSend = RepairsRequestToSend.Replace("<Zip>", zip.ToString());
 
-            EmailAnAgent.EmailClosingFormsToAgent(agent_email,agent_fName,agent_lName,street,
+            test2.EmailAnAgent.EmailClosingFormsToAgent(agent_email,agent_fName,agent_lName,street,
                                                   city, state,zip, ClosingSettlementToSend,
                                                   PurchaseAgreementToSend, RepairsRequestToSend);
         }
 
         #region Closing Settlement Statement String
+        /// <summary>
+        /// The closing form
+        /// </summary>
         public static string ClosingForm = string.Concat(
             "                 Closing Settlement Statement\n\n",
             "Seller: __________________          Buyer: __________________\n\n",
@@ -67,6 +85,9 @@ namespace test2
             " ------------------------------------------------------------------\n");
         #endregion
         #region Agreement to Purchase Real Estate String
+        /// <summary>
+        /// The agreement to purchase real estate
+        /// </summary>
         public static string AgreementToPurchaseRealEstate = string.Concat(
             "AGREEMENT TO PURCHASE REAL ESTATE\n\n",
             "The undersigned (herein \"Purchaser\") hereby offers to purchase from the owner (herein \"Seller\") the real estate\n",
@@ -170,6 +191,9 @@ namespace test2
             "                                                                                             (REALTOR SELLING)\n\n\n\n");
         #endregion
         #region Request for Repairs String
+        /// <summary>
+        /// The request for repairs
+        /// </summary>
         public static string RequestForRepairs = string.Concat(
         "REQUEST FOR REPAIR NO. __________\n",
         "(Or other Corrective Action)\n\n",
@@ -228,5 +252,6 @@ namespace test2
             "|__________________________________________________________|\n");
 
         #endregion
+        
     }
 }
