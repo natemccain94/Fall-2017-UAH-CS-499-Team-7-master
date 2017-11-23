@@ -14,10 +14,16 @@ public partial class users_detailed_display : System.Web.UI.Page
     int id;                                                                                                                                 //will hold the id variable created in the display_house.aspx code
     protected void Page_Load(object sender, EventArgs e)
     {
+        HttpCookie _userInfo = Request.Cookies["_userInfo"];
 
-        //d1.Visible = false;
-        //this.Page.FindControl("d1").Visible = false;
-        //theDiv.Visible = false;
+        if (_userInfo != null)
+        {
+            HttpCookie _listingInfo = new HttpCookie("_listingInfo");
+            _listingInfo["ID"] = Request.QueryString["id"].ToString();
+            Response.Cookies.Add(_listingInfo);
+
+            Response.Redirect("../agents/agent_detailedListing.aspx");
+        }
 
 
         if (Request.QueryString["id"] == null)                                                                                              //id is the name of the variable holding the listing id
@@ -26,6 +32,7 @@ public partial class users_detailed_display : System.Web.UI.Page
         }
         else
         {
+
             id = Convert.ToInt32(Request.QueryString["id"].ToString());                                                                     //Changes the listing id into a string so we can use it in our command
             con.Open();
             SqlCommand cmd = con.CreateCommand();

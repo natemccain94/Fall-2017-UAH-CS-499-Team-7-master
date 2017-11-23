@@ -19,8 +19,14 @@
     <ul>
         <li><a href="agentMain.aspx" > Home</a></li>
         <li><a class="active" href="#"> Add a listing</a></li>
+        <li><a href="../users/display_houses.aspx" >Customer's Main</a></li>
+        <li><a href="agent_forms.aspx" >Agent Forms</a></li>
         <li><a href="#"><asp:Button ID="logoutButton" runat="server" OnClick="Button1_Click" Text="Logout" /></a></li>
+         
     </ul>
+
+
+
          <div class="container">
             <!--begin ROW 1 of update listing-->
             <div class="row">
