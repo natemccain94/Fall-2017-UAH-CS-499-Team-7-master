@@ -41,7 +41,7 @@
                 
                          
                 
-              <asp:DropDownList ID="DropDownList1" runat="server">
+              <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" style="height: 25px">
                   <asp:ListItem Value="01"></asp:ListItem>
                   <asp:ListItem Value="02"></asp:ListItem>
                   <asp:ListItem Value="03"></asp:ListItem>
@@ -57,7 +57,7 @@
               </asp:DropDownList>
 
 
-              <asp:DropDownList ID="DropDownList2" runat="server">
+              <asp:DropDownList ID="DropDownList2" runat="server" style="top:100%">
                   <asp:ListItem Value="01"></asp:ListItem>
                   <asp:ListItem Value="02"></asp:ListItem>
                   <asp:ListItem Value="03"></asp:ListItem>
@@ -206,7 +206,7 @@
               <br />
               <br />
               <br />
-              <asp:Button ID="Button1" runat="server" Text="Schedule" />
+              <asp:Button ID="Button1" runat="server" Text="Schedule" OnClick="Button1_Click" />
 
          </div>
     

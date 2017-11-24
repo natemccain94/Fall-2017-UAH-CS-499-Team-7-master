@@ -37,4 +37,150 @@ public partial class agents_schedule_listing : System.Web.UI.Page
     {
 
     }
+
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        getValue();
+       
+    }
+
+    public void getValue()
+    {
+        string i = DropDownList1.SelectedValue;
+        switch(i.ToLower())
+        {
+            case "01":
+                addItems(31);
+                break;
+            case "02":
+                addItems(28);
+                break;
+            case "03":
+                addItems(31);
+                break;
+            case "04":
+                addItems(30);
+                break;
+            case "05":
+                addItems(31);
+                break;
+            case "06":
+                addItems(30);
+                break;
+            case "07":
+                addItems(31);
+                break;
+            case "08":
+                addItems(31);
+                break;
+            case "09":
+                addItems(30);
+                break;
+            case "10":
+                addItems(31);
+                break;
+            case "11":
+                addItems(30);
+                break;
+            case "12":
+                addItems(31);
+                break;
+        }
+    }
+    public void addItems(int c)
+    {
+        DropDownList2.Items.Clear();
+
+        for(int i = 1; i < c+1; i++)
+        {
+            DropDownList2.Items.Insert(i-1, new ListItem(i.ToString(), ""));
+        }
+        
+     
+    }
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        SqlConnection con = new SqlConnection("Data Source=DESKTOP-KFI49LK;Initial Catalog=Housing;Integrated Security=True");
+        List<string> result = new List<string>();
+        int listingID;
+        int currentAgentID;
+        int currentAgencyID;
+
+        string zero = "00";
+        string start = null;
+        string finish = null;
+        int agent_id = 0;
+        int listing_id;     //got it its called listingID
+        int agency_id = 0;
+        string agent_showing_firstName = null;
+        string agent_showing_lastName = null;
+        string agency_showing_company = null;
+        HttpCookie _listingInfo = Request.Cookies["_listingInfo"];
+        HttpCookie _userInfo = Request.Cookies["_userInfo"];
+        if(_userInfo == null)
+        {
+            Response.Write("dam");
+        }
+
+        
+        listingID = Convert.ToInt32(_listingInfo["ID"].ToString());
+        currentAgentID = Convert.ToInt32(_userInfo["AgentID"].ToString());
+        currentAgencyID = Convert.ToInt32(_userInfo["AgencyID"].ToString());
+        Response.Write(listingID);
+        con.Open();
+        SqlCommand cmd1 = new SqlCommand("SELECT agent.agent_id FROM listing INNER JOIN agent ON listing.agent_id = agent.agent_id WHERE listing.listing_id = '"+listingID+"' " , con);
+        SqlDataReader usernameRdr = null;
+        usernameRdr = cmd1.ExecuteReader();
+
+        while (usernameRdr.Read())
+        {
+            Response.Write("This happens");
+           agent_id  = Convert.ToInt32(usernameRdr["agent_id"]);
+        }
+
+        start = DropDownList3.SelectedValue + "-" + DropDownList1.SelectedValue + "-" + DropDownList2.SelectedValue + " " + DropDownList4.SelectedValue + ":" + DropDownList5.SelectedValue + ":" + zero;
+        finish = DropDownList3.SelectedValue + "-" + DropDownList1.SelectedValue + "-" + DropDownList2.SelectedValue + " " + DropDownList7.SelectedValue + ":" + DropDownList8.SelectedValue + ":" + zero ;
+
+        cmd1 = new SqlCommand("SELECT agency.agency_id FROM listing INNER JOIN agency ON listing.agency_id = agency.agency_id WHERE listing.listing_id = '" + listingID + "' ", con);
+        while (usernameRdr.Read())
+        {
+            agency_id = Convert.ToInt32(usernameRdr["agency_id"]);
+        }
+
+        Response.Write(currentAgencyID);
+        cmd1 = new SqlCommand("SELECT agency_name FROM agency WHERE agency_id = '" + currentAgencyID + "' ", con);
+        while (usernameRdr.Read())
+        {
+            Response.Write("this happesn 2");
+            agency_showing_company = usernameRdr["agency_name"].ToString();
+        }
+
+        cmd1 = new SqlCommand("SELECT agent_Fname FROM agent WHERE agent_id= '" + currentAgentID + "' ", con);
+        while (usernameRdr.Read())
+        {
+            agent_showing_firstName = usernameRdr["agent_Fname"].ToString();
+        }
+
+        cmd1 = new SqlCommand("SELECT agent_Lname FROM agent WHERE agent_id= '" + currentAgentID + "' ", con);
+        while (usernameRdr.Read())
+        {
+            agent_showing_lastName = usernameRdr["agent_Lname"].ToString();
+        }
+
+        usernameRdr.Close();
+
+        string sql = "INSERT INTO schedule(start, finish, agent_id, listing_id, agency_id, agent_showing_firstName, agent_showing_lastName, agency_showing_company)VALUES('" +start+ "','" + finish + "','" +agent_id+ "','" + listingID + "','" + agency_id + "','" + agent_showing_firstName+ "','" +agent_showing_lastName+ "','" + agency_showing_company +"'  )";
+        //string time = "2017-10-11 10:45:00";
+        //string sql = "INSERT INTO schedule(start) VALUES('"+time +"')";
+        SqlCommand command;
+        //command = new SqlCommand(sql, con);
+        //int x = command.ExecuteNonQuery();
+
+        Response.Write(agent_id);
+        Response.Write(agency_id);
+        Response.Write(agent_showing_firstName);
+
+        con.Close();
+    }
 }
