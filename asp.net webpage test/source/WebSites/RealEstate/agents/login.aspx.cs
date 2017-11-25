@@ -21,7 +21,7 @@ public partial class login : System.Web.UI.Page
         }
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void login_Click(object sender, EventArgs e)
     {
         string conString = "Data Source=DESKTOP-KFI49LK;Initial Catalog=Housing;Integrated Security=True";
 
@@ -60,23 +60,14 @@ public partial class login : System.Web.UI.Page
                 }
                 else
                 {
-                    Response.Write("Incorrect Username or password");
+                    Response.Write("<script>alert('wrong username/password. access denied')</script>");
                 }
             }
             else
             {
-                Response.Write("Username is not correct");
+                Response.Write("<script>alert('wrong username/password. access denied')</script>");
             }
 
         }
-
-
-
-
-
-
-
-
-
     }
 }

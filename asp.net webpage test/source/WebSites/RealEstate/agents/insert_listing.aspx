@@ -19,8 +19,8 @@
     <ul>
         <li><a href="agentMain.aspx" > Home</a></li>
         <li><a class="active" href="#"> Add a listing</a></li>
-        <li><a href="../users/display_houses.aspx" >Customer's Main</a></li>
         <li><a href="agent_forms.aspx" >Agent Forms</a></li>
+         <li><a href="../users/display_houses.aspx" >Customer's Main</a></li>
         <li><a href="#"><asp:Button ID="logoutButton" runat="server" OnClick="Button1_Click" Text="Logout" /></a></li>
          
     </ul>
@@ -161,10 +161,16 @@
             <!--begin for buttons-->
             <div class="row">
             <div class="col">
-                <asp:Button runat="server" ID="Cancel" OnClick="Cancel_Click" Text="Cancel" />
+                <asp:Button
+                    class="btn-change"
+                    runat="server" 
+                    ID="Cancel" 
+                    OnClick="Cancel_Click" 
+                    Text="Cancel" />
             </div>
             <div class="col">
                 <asp:Button 
+                    class="btn-change"
                     runat="server" 
                     ID="Add" 
                     Text="Add Listing" 

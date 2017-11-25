@@ -3,55 +3,32 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <title></title>
     <link rel="stylesheet" type="text/css" href="loginStyle.css" />
-    <style type="text/css">
-        .auto-style5 {
-            text-align: right;
-            width: 201px;
-            color: #00FF00;
-        }
-        .auto-style6 {
-            text-align: right;
-            width: 201px;
-            color: #33CC33;
-        }
-    </style>
 </head>
 <body>
-    <a href="../users/display_houses.aspx"> Viww Listings</a>
-    <form id="form1" runat="server">
-        <h1>Real Estate Agencies</h1>
-        <div>
-        </div>
-        <table class="auto-style1">
-            <tr>
-                <td class="auto-style6">Username:</td>
-                <td class="auto-style4">
-                    <asp:TextBox ID="TextBoxUN" runat="server"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxUN" ErrorMessage="Enter in Username" ForeColor="Red"></asp:RequiredFieldValidator>
-                </td>
-            </tr>
-            <tr>
-                <td class="auto-style5">Password:</td>
-                <td class="auto-style4">
-                    <asp:TextBox ID="TextBoxPW" runat="server" TextMode="Password"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="TextBoxPW" ErrorMessage="Enter in Password" ForeColor="Red"></asp:RequiredFieldValidator>
-                </td>
-            </tr>
-            <tr>
-                <td class="auto-style3">&nbsp;</td>
-                <td class="auto-style4">
-                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Login" />
-                </td>
-                <td>&nbsp;</td>
-            </tr>
-        </table>
-    </form>
+<form id="login_page" runat="server">
+     <div class="container">
+    <div class="form-signin" id="form1" runat="server"> 
+        <asp:TextBox Class="form-signin TextBox" placeholder="Username" ID="TextBoxUN" runat="server"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxUN" ErrorMessage="Enter in Username" ForeColor="Red"></asp:RequiredFieldValidator>
+        <asp:TextBox Class="form-signin TextBox1" placeholder="Password" TextMode="Password" ID="TextBoxPW" runat="server"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="TextBoxPW" ErrorMessage="Enter in Password" ForeColor="Red"></asp:RequiredFieldValidator>'
+        <asp:Button class="form-signin btn-change " ID="btn_login" runat="server" OnClick="login_Click" Text="Login" />
+        <button type="button" class="form-signin btn-change" onclick="cancel_btn();">Cancel</button> 
+     </div>
+     </div> 
+
+    <!-- /container -->
+</form>
 </body>
+<script>
+    function cancel_btn()
+    {
+        window.location.href = "../users/display_houses.aspx";
+    }
+</script>
 </html>
