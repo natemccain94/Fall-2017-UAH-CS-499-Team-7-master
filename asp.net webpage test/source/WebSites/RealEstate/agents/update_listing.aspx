@@ -88,11 +88,11 @@
             </div>
             <div class="col">
                <asp:label ID="description" runat="server" Font-Bold="true">listing Description</asp:label><br />
-                <asp:TextBox runat="server" ID="listing_description"/>
+                <asp:TextBox runat="server" TextMode="MultiLine" ID="listing_description"/>
             </div>
             <div class="col">
                 <asp:label ID="room_description" runat="server" Font-Bold="true">listing Room Description</asp:label><br />
-                <asp:TextBox runat="server" ID="listing_roomDescription"/>
+                <asp:TextBox runat="server" TextMode="MultiLine" ID="listing_roomDescription"/>
             </div>
             </div>
             <br />
@@ -105,7 +105,7 @@
             </div>
             <div class="col">
                 <asp:label ID="shortdescription" runat="server" Font-Bold="true">listing Short Description</asp:label><br />
-                <asp:TextBox runat="server" ID="listing_shortDescription"/>
+                <asp:TextBox runat="server" TextMode="MultiLine" ID="listing_shortDescription"/>
             </div>
             <div class="col">
                 <asp:label ID="Label4" runat="server" Font-Bold="true">listing AlarmInfo</asp:label><br />
