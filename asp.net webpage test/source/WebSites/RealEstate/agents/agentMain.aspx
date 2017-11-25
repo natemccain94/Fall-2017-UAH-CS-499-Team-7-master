@@ -26,10 +26,29 @@
     
     <asp:ScriptManager ID="ScriptManager2" runat="server" EnablePageMethods="true"/>
      <!--test gridview-->
-         Search:
-        <asp:TextBox ID="txtSearch" runat="server" />
-        <asp:Button Text="Search" runat="server" OnClick="Search_Click" />
-        <hr />
+    <div class="container h-100 d-flex justify-content-center">
+         <div class="row">
+                 <!--search by text -->
+                    <asp:label runat="server" ID="search_text"> Search keywords:</asp:label>
+                    <asp:label Visible="false" runat="server" ID="search_price"> Search Price(min, max):</asp:label>
+                    <asp:TextBox ID="txtSearch" placeholder="keywords" runat="server"/>
+                    <asp:TextBox Visible="false" placeholder="minimum" ID="price_min" runat="server"/>
+                    <asp:TextBox Visible="false" placeholder="maximum" ID="price_max" runat="server"/>
+                <!--dropdown list for search option-->
+                 <asp:DropDownList ID="Search_option"
+                    AutoPostBack="True"
+                    runat="server"
+                    OnSelectedIndexChanged="Search_option_SelectedIndexChanged">
+                     <asp:ListItem Selected="True" Value="all"> by all </asp:ListItem>
+                      <asp:ListItem Value="street"> by street </asp:ListItem>
+                      <asp:ListItem Value="zipcode"> by zipcode </asp:ListItem>
+                      <asp:ListItem Value="price"> by price </asp:ListItem>
+               </asp:DropDownList>
+            <asp:Button Text="Search" runat="server" OnClick="Search_Click" />
+         </div>
+    </div>
+         <br />
+
         <asp:GridView ID="GridView1" CssClass="table table-striped table-bordered table-hover" OnPageIndexChanging="GridView1_PageIndexChanging" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White"
             runat="server" AllowPaging="true" PageSize="5" AutoGenerateColumns="false">
             <Columns>

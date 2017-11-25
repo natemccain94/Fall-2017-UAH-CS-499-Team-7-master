@@ -5,8 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data.SqlClient;
+using System.Web.UI.WebControls;
 
 public partial class agentMain : System.Web.UI.Page
 {
@@ -31,7 +31,7 @@ public partial class agentMain : System.Web.UI.Page
         }
         if (!IsPostBack)
         {
-            Bind_gridview();
+            Bind_gridview(Search_option.SelectedItem.Value);
         }
     }
     protected void first_load()
@@ -59,7 +59,7 @@ public partial class agentMain : System.Web.UI.Page
         GridView1.DataSource = dt;
         GridView1.DataBind();
     }
-    protected void Bind_gridview()
+    protected void Bind_gridview(string option)
     {
         //agent_id_flag return false if can't convert agent_id
         bool agent_id_flag = false;
@@ -70,7 +70,56 @@ public partial class agentMain : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = con.CreateCommand();                   //create object of command called cmd
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "Select * FROM listing WHERE agent_id=" + agent_id;
+        if (option == "all")
+        {
+            cmd.CommandText = "Select * FROM listing WHERE agent_id=" + agent_id;
+        }
+        else if (option == "street")
+        {
+            // columnname like '%Moses%' and columnname like'%Robi%'
+            cmd.CommandText = "Select * FROM listing WHERE agent_id=" + agent_id + "and listing_street LIKE '%" + txtSearch.Text + "%'";
+        }
+        else if (option == "zipcode")
+        {
+            int zipcode = 0;
+            bool result = Int32.TryParse(txtSearch.Text, out zipcode);
+            if (result)
+            {
+                cmd.CommandText = "Select * FROM listing WHERE agent_id=" + agent_id + "and listing_zip=" + zipcode;
+            }
+            else
+            {
+                cmd.CommandText = "Select * FROM listing WHERE agent_id=" + agent_id;
+            }
+
+        }
+        else if (option == "price")
+        {
+            int min = 0;
+            int max = 99999999;
+            bool min_flag = Int32.TryParse(price_min.Text, out min);
+            bool max_flag = Int32.TryParse(price_max.Text, out max);
+            if (min_flag && max_flag && max >= min)
+            {
+                cmd.CommandText = "Select * FROM listing WHERE agent_id=" + agent_id + "and listing_price >=" + min + "and listing_price <=" + max;
+            }
+            else if (min_flag && max_flag == false)
+            {
+                cmd.CommandText = "Select * FROM listing WHERE agent_id=" + agent_id + "and listing_price >=" + min;
+            }
+            else if (max_flag && min_flag == false)
+            {
+                cmd.CommandText = "Select * FROM listing WHERE agent_id=" + agent_id + "and listing_price <=" + max;
+            }
+            else
+            {
+                cmd.CommandText = "Select * FROM listing WHERE agent_id=" + agent_id;
+            }
+        }
+        else
+        {
+            cmd.CommandText = "Select * FROM listing WHERE agent_id=" + agent_id;
+        }
         //fill datatable
         cmd.ExecuteNonQuery();                                 //takes the text we created above and executes it
         dt = new DataTable();
@@ -89,55 +138,40 @@ public partial class agentMain : System.Web.UI.Page
         Response.Cookies.Add(_userInfo);
         Response.Redirect("login.aspx");
     }
-
-    /*
-    protected void Next_Click(object sender, EventArgs e)
-    {
-
-        if (total_result >= 1)
-        {
-            //+1 to pageNum 
-            page_Num = int.Parse(pageNum.Text);
-            page_Num = page_Num++;
-
-            HttpCookie _userInfo = Request.Cookies["_userInfo"];
-            //parse agent id to int
-            //agent_id_flag return false if can't convert agent_id
-            bool agent_id_flag = false;
-            int agent_id = 0;
-            agent_id_flag = int.TryParse(_userInfo["AgentID"], out agent_id);
-            int k = counter * 2;
-            counter = counter++;
-            con.Open();                                             //connects to database
-            SqlCommand cmd = con.CreateCommand();                   //create object of command called cmd
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "Select * FROM listing WHERE agent_id=" + agent_id + " ORDER BY agent_id OFFSET "+ k +" ROWS  FETCH NEXT 1 ROWS ONLY";
-            cmd.ExecuteNonQuery();                                 //takes the text we created above and executes it
-
-            DataTable dt = new DataTable();
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            da.Fill(dt);
-            total_result = dt.Rows.Count;
-            d2.DataSource = dt;     //d1 is defined in the source portion of this website page
-            d2.DataBind();
-            con.Close();
-        }
-    }
-    */
     protected void GridView1_PageIndexChanged(object sender, EventArgs e)
     {
         //bindGridView();
-        Bind_gridview();
+        Bind_gridview(Search_option.SelectedItem.Value);
     }
 
     protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         GridView1.PageIndex = e.NewPageIndex;
-        Bind_gridview();
+        Bind_gridview(Search_option.SelectedItem.Value);
     }
 
     protected void Search_Click(object sender, EventArgs e)
     {
-        this.Bind_gridview();
+        this.Bind_gridview(Search_option.SelectedItem.Value);
+    }
+
+    protected void Search_option_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (Search_option.SelectedItem.Value == "price")
+        {
+            search_text.Visible = false;
+            txtSearch.Visible = false;
+            search_price.Visible = true;
+            price_min.Visible = true;
+            price_max.Visible = true;
+        }
+        else
+        {
+            search_text.Visible = true;
+            txtSearch.Visible = true;
+            search_price.Visible = false;
+            price_min.Visible = false;
+            price_max.Visible = false;
+        }
     }
 }

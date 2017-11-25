@@ -158,26 +158,37 @@
             </div>
             <br />
             <!--end ROW 5 of update listing-->
-            <!--begin for buttons-->
+           <!--begin for buttons-->
             <div class="row">
             <div class="col">
-                <asp:Button class="img-thumbnail" runat="server" ID="Cancel" OnClick="Cancel_Click" Text="Cancel" />
+                <asp:Button class="btn-change" 
+                    runat="server" 
+                    ID="Cancel" 
+                    OnClick="Cancel_Click" Text="Cancel" />
             </div>
             <div class="col">
                 <asp:Button
-                    class="img-thumbnail" 
+                    class="btn-change"
                     runat="server" 
                     ID="Update"
                     OnClientClick ="return confirm('Are you certain you want to update this listing?');"
                      OnClick="Update_listing"
-                    Text="Update" />
+                    Text="Update Listing" />
+            </div>
+            <div class="col">
+                <asp:Button
+                    class="btn-change" 
+                    runat="server" 
+                    ID="close_listing"
+                    OnClientClick ="return confirm('Are you certain you want to close this listing?');"
+                    Text="Listing Sold" />
             </div>
             <div class="col">
                 <asp:Button 
-                    class="img-thumbnail" 
+                    class="btn-change" 
                     runat="server" 
                     ID="Delete" 
-                    Text="Delete"
+                    Text="Delete Listing"
                     OnClientClick ="return confirm('Are you certain you want to delete this listing?');"
                     OnClick="Delete_Click" />
             </div>
