@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\test2"
+    "\\test2",
+    "\\test2\\BackendTests",
+    "\\test2\\test2"
   ],
-  "SelectedNode": "\\test2\\Backend.sln",
+  "SelectedNode": "\\test2\\test2\\BackendLogic.cs",
   "PreviewInSolutionExplorer": false
 }

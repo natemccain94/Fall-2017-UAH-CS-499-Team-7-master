@@ -67,8 +67,8 @@ namespace test2
                     command.CommandType = CommandType.Text;
                     command.CommandText =
                         "INSERT INTO listing (listing_smallPhoto, listing_largePhoto, listing_price, listing_street, listing_city, listing_state, "
-                        + "listing_zip, listing_sqFT, agent_id, agency_id) VALUES (@listing_smallPhoto, @listing_largePhoto, @listing_price, "
-                        + "@listing_street, @listing_city, @listing_state, @listing_zip, @listing_sqFT, @agent_id, @agency_id)";
+                        + "listing_zip, listing_sqFT, listing_hitCount, listingLifetimeHitCount, agent_id, agency_id) VALUES (@listing_smallPhoto, @listing_largePhoto, @listing_price, "
+                        + "@listing_street, @listing_city, @listing_state, @listing_zip, @listing_sqFT, 0, 0, @agent_id, @agency_id)";
                     // For each variable just start inserting stuff
                     command.Parameters.Add("@listing_smallPhoto", SqlDbType.Image);
                     command.Parameters.Add("@listing_largePhoto", SqlDbType.Image);
@@ -584,7 +584,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE dbo.listing SET listing_nameSubdivision = @listing_nameSubdivision WHERE ",
+                        string.Concat("UPDATE dbo.listing SET listing_nameSubDivision = @listing_nameSubdivision WHERE ",
                             "listing_id = ", listing_id);
 
                     command.Parameters.Add("@listing_nameSubdivision", SqlDbType.NVarChar);
@@ -708,7 +708,7 @@ namespace test2
                     command.CommandType = CommandType.Text;
                     command.CommandText =
                         string.Concat(
-                            "UPDATE dbo.listing SET listingLifetimeHitCount = listing_HitCount + listingLifetimeHitCount WHERE ",
+                            "UPDATE dbo.listing SET listingLifetimeHitCount = listing_hitCount + listingLifetimeHitCount WHERE ",
                             "listing_id = ", listing_id);
 
                     command.ExecuteNonQuery();
@@ -919,7 +919,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE dbo.listing SET listingDescription = '' WHERE ",
+                        string.Concat("UPDATE dbo.listing SET listing_description = '' WHERE ",
                             "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
@@ -944,7 +944,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE dbo.listing SET listingRoomDescription = '' WHERE ",
+                        string.Concat("UPDATE dbo.listing SET listing_roomDescription = '' WHERE ",
                             "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
@@ -969,7 +969,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE dbo.listing SET listingSubdivision = '' WHERE ",
+                        string.Concat("UPDATE dbo.listing SET listing_nameSubDivision = '' WHERE ",
                             "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
@@ -994,7 +994,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE dbo.listing SET listingAlarmInfo = '' WHERE ",
+                        string.Concat("UPDATE dbo.listing SET listing_alarmInfo = '' WHERE ",
                             "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
