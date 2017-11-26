@@ -29,7 +29,7 @@ namespace test2
                                                     string customer_fName, string customer_lName,
                                                     string customer_number, string customer_email,
                                                     string property_street, string property_city,
-                                                     string property_state, int property_zip)
+                                                     string property_state, string property_zip)
         {
             System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587)
             {
@@ -69,7 +69,7 @@ namespace test2
         public static void EmailClosingFormsToAgent(string agent_email, string agent_fName,
                                                     string agent_lName, string property_street, 
                                                     string property_city, string property_state,
-                                                    int property_zip, string ClosingSettlementToSend,
+                                                    string property_zip, string ClosingSettlementToSend,
                                                     string PurchaseAgreementToSend, string RepairsRequestToSend)
         {
             System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587)
@@ -88,7 +88,7 @@ namespace test2
                 "Hello ", agent_fName, " ", agent_lName, ", \n",
                 "Attached are the required closing forms for your property located at:\n",
                 property_street, "\n",
-                property_city, ", ", property_state, " ", property_zip.ToString(), "\n\n",
+                property_city, ", ", property_state, " ", property_zip, "\n\n",
                 "Thank you for using our service!\n");
 
             mail.Body = emailBody;
@@ -111,6 +111,9 @@ namespace test2
             mail.Attachments.Add(RepairsRequestForm);
 
             client.Send(mail);
+            
+            mail.Dispose();
+            client.Dispose();
 
             DeleteFilesMadeForAttachment(ClosingSettlementPath, PurchaseAgreementPath, RepairsRequestPath);
         }
@@ -122,10 +125,15 @@ namespace test2
         /// <param name="thingToWrite">The thing to write.</param>
         private static void MakeAttachment(string filename, string thingToWrite)
         {
-            using (StreamWriter writer = File.CreateText(filename))
+            using (var writer = new StreamWriter(filename, false))
             {
                 writer.WriteLine(thingToWrite);
+                writer.Close();
             }
+            //using (StreamWriter writer = File.CreateText(filename))
+            //{
+            //    writer.WriteLine(thingToWrite);
+            //}
         }
 
         /// <summary>

@@ -17,6 +17,7 @@ namespace BackendTests
             
         }
 
+        #region Test Methods
         [TestMethod]
         public void StartUp()
         {
@@ -287,6 +288,7 @@ namespace BackendTests
             // Assert
             Assert.AreNotEqual(testAgencyID, ISeeData.GetAgencyID("kiiim"));
         }
+        #endregion
 
         [ClassCleanup]
         public static void CleanUp()
@@ -296,5 +298,64 @@ namespace BackendTests
         
         private string changeString = "Yarg";
         private static SQL_Connection ISeeData;
+    }
+
+    [TestClass]
+    public class EmailFunctions
+    {
+        [ClassInitialize]
+        public static void Init(TestContext context)
+        {
+            ISeeData = new SQL_Connection();
+            ISeeData.openConnection();
+        }
+
+        #region Test Methods
+
+        [TestMethod]
+        public void CustomerRequestShowingEmailTest()
+        {
+            // Arrange
+            string[] requiredInputs = new[]
+            {
+                "ntl0003@uah.edu", "Nate", "McCain", "Juvawn", "Parker", "2222222222",
+                "jjp0009@uah.edu", "2000 North Parkway", "Memphis", "Tennessee", "38112"
+            };
+
+            // Act
+            EmailAnAgent.CustomerRequestForShowing(requiredInputs[0], requiredInputs[1], requiredInputs[2],
+                requiredInputs[3], requiredInputs[4], requiredInputs[5], requiredInputs[6], requiredInputs[7],
+                requiredInputs[8], requiredInputs[9], requiredInputs[10]);
+            // Assert
+            Assert.AreEqual(0, 0);
+        }
+
+        [TestMethod]
+        public void SendClosingFormsToAgentTest()
+        {
+            // Arrange
+            string[] requiredInputs = new[]
+            {
+                "2000 North Parkway","Memphis","Tennessee","38112","Rhodes College",
+                "Nate","McCain","ntl0003@uah.edu"
+            };
+            int price = 1234;
+            // Act
+            ClosingForms.SendClosingForms(requiredInputs[0], requiredInputs[1], requiredInputs[2], requiredInputs[3], requiredInputs[4],
+                price, requiredInputs[5], requiredInputs[6], requiredInputs[7]);
+            // Assert
+            Assert.AreEqual(0, 0);
+        }
+
+        #endregion
+
+        [ClassCleanup]
+        public static void CleanUp()
+        {
+            
+        }
+
+        private static SQL_Connection ISeeData;
+
     }
 }

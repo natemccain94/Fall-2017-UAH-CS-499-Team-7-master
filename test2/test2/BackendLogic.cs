@@ -751,9 +751,7 @@ namespace test2
         }
 
         #endregion
-
-        // This region sets a value to null if used on part of a listing.
-
+        
         #region deleting part of a listing/removing a listing
 
         /// <summary>
@@ -1031,8 +1029,7 @@ namespace test2
         }
 
         #endregion
-
-
+        
         #region Retrieving info for listing.
 
         // Get the number of listing (total).
@@ -3390,12 +3387,25 @@ namespace test2
             SQL_Connection connection = new SQL_Connection();
             connection.openConnection();
 
-            connection.AddListing(Resource1.glorious_leader, Resource1.Glorious_Leader_makes_Cupcakes, 666,
-                "street", "city",
-                "state", "zip", 444, 5, 5);
-            DataTable helper = new DataTable();
-            helper = connection.GetListingsFilterByZipCode("zip");
-            Console.WriteLine(helper.Rows[0]["listing_street"]);
+            //connection.AddListing(Resource1.glorious_leader, Resource1.Glorious_Leader_makes_Cupcakes, 666,
+            //    "street", "city",
+            //    "state", "zip", 444, 44, 45);
+            //DataTable helper = new DataTable();
+            //helper = connection.GetListingsFilterByZipCode("zip");
+            //Console.WriteLine(helper.Rows[0]["listing_street"]);
+            int youknow = connection.GetSpecificListingForTestPurposes(44);
+            for (int i = 0; i < 10; i++)
+            {
+                connection.IncrementDailyHitCount(youknow);
+            }
+
+            connection.UpdateLifetimeHitCount(youknow);
+            connection.ResetDailyHitCount(youknow);
+
+            for (int j = 0; j < 12; j++)
+            {
+                connection.IncrementDailyHitCount(youknow);
+            }
             Console.ReadLine();
         }
     }

@@ -20,7 +20,7 @@ namespace test2
         /// <param name="agent_fName">Name of the agent f.</param>
         /// <param name="agent_lName">Name of the agent l.</param>
         /// <param name="agent_email">The agent email.</param>
-        public static void SendClosingForms(string street, string city, string state, int zip, string listing_description,
+        public static void SendClosingForms(string street, string city, string state, string zip, string listing_description,
                            int listing_price, string agent_fName, string agent_lName, string agent_email)
         {
             string ClosingSettlementToSend;
@@ -34,20 +34,20 @@ namespace test2
             ClosingSettlementToSend = ClosingSettlementToSend.Replace("<Street>", street);
             ClosingSettlementToSend = ClosingSettlementToSend.Replace("<City>", city);
             ClosingSettlementToSend = ClosingSettlementToSend.Replace("<State>", state);
-            ClosingSettlementToSend = ClosingSettlementToSend.Replace("<Zip>", zip.ToString());
+            ClosingSettlementToSend = ClosingSettlementToSend.Replace("<Zip>", zip);
             ClosingSettlementToSend = ClosingSettlementToSend.Replace("<Listing Price>", listing_price.ToString());
 
             PurchaseAgreementToSend = PurchaseAgreementToSend.Replace("<Street>", street);
             PurchaseAgreementToSend = PurchaseAgreementToSend.Replace("<City>", city);
             PurchaseAgreementToSend = PurchaseAgreementToSend.Replace("<State>", state);
-            PurchaseAgreementToSend = PurchaseAgreementToSend.Replace("<Zip>", zip.ToString());
+            PurchaseAgreementToSend = PurchaseAgreementToSend.Replace("<Zip>", zip);
             PurchaseAgreementToSend = PurchaseAgreementToSend.Replace("<Listing Price>", listing_price.ToString());
             PurchaseAgreementToSend = PurchaseAgreementToSend.Replace("<listing description>", listing_description);
 
             RepairsRequestToSend = RepairsRequestToSend.Replace("<Street>", street);
             RepairsRequestToSend = RepairsRequestToSend.Replace("<City>", city);
             RepairsRequestToSend = RepairsRequestToSend.Replace("<State>", state);
-            RepairsRequestToSend = RepairsRequestToSend.Replace("<Zip>", zip.ToString());
+            RepairsRequestToSend = RepairsRequestToSend.Replace("<Zip>", zip);
 
             test2.EmailAnAgent.EmailClosingFormsToAgent(agent_email,agent_fName,agent_lName,street,
                                                   city, state,zip, ClosingSettlementToSend,
@@ -64,7 +64,7 @@ namespace test2
             "Seller: __________________          Buyer: __________________\n\n",
             "Property Address: <Street>\n\n",
             "City: <City>            State: <State>        Zip: <Zip>\n\n",
-            "Total Price: <Listing Price>\n\n",
+            "Total Price: $ <Listing Price>\n\n",
             "  ------------------------------------------------------------------\n",
             "| I/We certify that the contents hereof are true and correct.      |\n",
             "|                                                                  |\n",
@@ -91,9 +91,9 @@ namespace test2
         public static string AgreementToPurchaseRealEstate = string.Concat(
             "AGREEMENT TO PURCHASE REAL ESTATE\n\n",
             "The undersigned (herein \"Purchaser\") hereby offers to purchase from the owner (herein \"Seller\") the real estate\n",
-            "located at <Street> in the city of <City>, State of <State>, the legal description of which is:\n",
-            "<listing description>",
-            "upon the following terms and conditions:\n\n",
+            "located at <Street> in the city of <City>, State of <State>, the legal description of which is: \n\n",
+            "\"<listing description> \"\n",
+            "The offer is dependent upon the following terms and conditions:\n\n",
             "1. Purchase Price and Conditions of Payment\n",
             "The purchase price shall be <Listing Price> to be paid in accordance with subparagraph _________, below:\n",
             "A: Cash. The purchase price shall be paid in its entirety in cash at the time of closing the sale.\n\n",
@@ -174,8 +174,7 @@ namespace test2
             "the ____________________ day of _____________________, 20__.\n\n",
             "Closing of the sale shall take place ___________________ days after Purchaser's receipt of an abstract showing\n",
             "marketable title in Sellor or title insurance binder showing insurable title in Seller.\n\n",
-            "This offer is made at ______________________________, State of <State>, this\n",
-            "____________________ day of _______________________, 20__.\n\n\n\n",
+            "This offer is made at <City>, State of <State>, this ____________________ day of _______________________, 20__.\n\n\n\n",
             "                                                                              ________________________________\n",
             "                                                                                                   (PURCHASER)\n",
             "                                                                              ________________________________\n",
