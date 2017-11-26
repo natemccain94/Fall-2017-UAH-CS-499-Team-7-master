@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="display_houses.aspx.cs" Inherits="users_display_houses" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="display_houses.aspx.cs" Inherits="users_display_houses"  EnableEventValidation="true" %>
 
 <!DOCTYPE html>
 
@@ -15,7 +15,6 @@
      <!-- This is the unordered list that will allow users to login if they wish to. Css is in the display_listing.css file -->
      <div class="navBar">
      <ul>
-         
         <li><a id="login" href="../agents/login.aspx">Agent? Log In</a></li>   
     </ul>
     </div>
@@ -49,16 +48,9 @@
                  <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Height="32px"  Text="Search" />
              </li>
          </ul>
-
      </div>
-
-
-
-
-    
+  
     <!-- This is the beginning of where the products are displayed. It is called products and linked to a styling element in display_listing.css -->
-    
-
     <!-- Repeater is a container that allows you to create custom lists out of any data that is available on the page  --> 
     <!-- This is what will allow us to post all houses in the database without wasting space-->
     
@@ -70,14 +62,13 @@
     <div class="products">
     <asp:Repeater ID="d1" runat="server"> 
         
-        
-
         <HeaderTemplate>
             <ul>
         </HeaderTemplate>
         
         <ItemTemplate>
             <li class="last">
+               
                 <div class="over">
                     <!-- id= whatever is how we are passing the specific listing id-->
                     <a id="login" href="detailed_display.aspx?id=<%#Eval("listing_id") %>"><img src='data:image/jpg;base64,<%#Eval("pic1") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic1")) : string.Empty %>' alt="pic1" height="300" width="300" /></a>
@@ -90,25 +81,18 @@
                             <p>Agent: <%#Eval("agent_Fname") %> <%#Eval("agent_Lname") %></p>
                          </div> 
                     </div>
-                </div>
-
-                 
-
-        
+                </div>  
           </li>
-
-      
-
         </ItemTemplate>
         <FooterTemplate>
             </ul>
         </FooterTemplate>
     </asp:Repeater>
+      <!-- id= whatever is how we are passing the specific listing id-->
+       <asp:Button class="btn-change" runat="server" Text="More..." ToolTip="This is an ImageButton"/>
     <!-- Repeater ends here-->
     </div>
     <!-- Product div ends here -->
-
-     
-     </form>
+</form>
 </body>
 </html>
