@@ -89,7 +89,7 @@
         </FooterTemplate>
     </asp:Repeater>
       <!-- id= whatever is how we are passing the specific listing id-->
-       <asp:Button class="btn-change" runat="server" Text="More..." ToolTip="This is an ImageButton"/>
+       <asp:Button class="btn-change" runat="server" Text="More..." Font-Bold="true" Font-Size="Large" ForeColor="Black" OnClick="Pagination_Click" ToolTip="More Listing..."/>
     <!-- Repeater ends here-->
     </div>
     <!-- Product div ends here -->

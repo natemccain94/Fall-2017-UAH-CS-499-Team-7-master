@@ -123,4 +123,9 @@ public partial class users_display_houses : System.Web.UI.Page
             TextBox1.Visible = false;
         }
     }
+
+    protected void Pagination_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("/users/display_houses_pagination.aspx");
+    }
 }
