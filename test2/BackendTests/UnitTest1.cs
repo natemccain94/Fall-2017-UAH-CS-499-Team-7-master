@@ -6,420 +6,295 @@ using test2;
 
 namespace BackendTests
 {
-    /// <summary>
-    /// Test functions that interact with the listing database.
-    /// </summary>
     [TestClass]
-    public class ListingDatabaseTests
+    public class DatabaseTests
     {
-        /// <summary>
-        /// Initializes this instance.
-        /// </summary>
         [ClassInitialize]
-        public static void Init()
+        public static void Init(TestContext context)
         {
             ISeeData = new SQL_Connection();
             ISeeData.openConnection();
+            
         }
 
-        /// <summary>
-        /// Adds the listing get listing identifier.
-        /// </summary>
         [TestMethod]
-        public void AddListing_GetListingID()
+        public void StartUp()
         {
-            // Arrange
-            ISeeData.AddListing(Resource1.Glorious_Leader_makes_Cupcakes, Resource1.glorious_leader,
-                66666, "What is love", "baby don't hurt me",
-                "don't hurt me", "no mas", 66666, 66666, 66666);
-            DataRow row;
-            // Act
-            row = ISeeData.GetListingsFilterByZipCode("no mas").Rows[0];
-            listingID = (int) row[0];
-            // Assert
-            Assert.AreNotEqual(-1,listingID);
+            ISeeData.AddAgency("test", "test@test.com", "2562560000", "street", "city", "state", "33333");
+            int testAgencyID = ISeeData.GetAgencyID("test");
+
+            Assert.AreNotEqual(-1,testAgencyID);
+
+            ISeeData.AddAgent("first", "last", "user", "pass", "2562560101", "agent@agent.com", testAgencyID,
+                "22222");
+            int testAgentID = ISeeData.GetAgentID("user");
+
+            Assert.AreNotEqual(-1, testAgentID);
+
+            ISeeData.AddListing(Resource1.glorious_leader, Resource1.Glorious_Leader_makes_Cupcakes, 55555, "street",
+                "city", "state", "test", 444, testAgentID, testAgencyID);
+            int testListingID = ISeeData.GetSpecificListingForTestPurposes(testAgentID);
+
+            Assert.AreNotEqual(-1, testListingID);
         }
 
-        /// <summary>
-        /// Updates the test listing information.
-        /// </summary>
         [TestMethod]
         public void UpdateTestListingInformation()
         {
             // Arrange
-
+            int testListingID;
+            int testAgentID;
             // Act
-            ISeeData.UpdatePhotoSmall(Resource1.Glorious_Leader_makes_Cupcakes,listingID);
-            ISeeData.UpdatePhotoLarge(Resource1.glorious_leader, listingID);
-            ISeeData.UpdatePhotoOne(Resource1.glorious_leader, listingID);
-            ISeeData.UpdatePhotoTwo(Resource1.glorious_leader, listingID);
-            ISeeData.UpdatePhotoThree(Resource1.glorious_leader, listingID);
-            ISeeData.UpdatePhotoFour(Resource1.glorious_leader, listingID);
-            ISeeData.UpdatePhotoFive(Resource1.glorious_leader, listingID);
-            ISeeData.UpdateListingPrice(99999,listingID);
-            ISeeData.UpdateStreet("street",listingID);
-            ISeeData.UpdateCity("city", listingID);
-            ISeeData.UpdateState("state",listingID);
-            ISeeData.UpdateZip("zip",listingID);
-            ISeeData.UpdateSquareFootage(99999,listingID);
-            ISeeData.UpdateDescription("description",listingID);
-            ISeeData.UpdateRoomDescription("room description", listingID);
-            ISeeData.UpdateShortDescription("short description",listingID);
-            ISeeData.UpdateSubdivision("subdivision",listingID);
-            ISeeData.UpdateAlarmInfo("alarm info",listingID);
+            testAgentID = ISeeData.GetAgentID("user");
+            testListingID = ISeeData.GetSpecificListingForTestPurposes(testAgentID);
+
+            ISeeData.UpdatePhotoSmall(Resource1.Glorious_Leader_makes_Cupcakes, testListingID);
+            ISeeData.UpdatePhotoLarge(Resource1.glorious_leader, testListingID);
+            ISeeData.UpdatePhotoOne(Resource1.glorious_leader, testListingID);
+            ISeeData.UpdatePhotoTwo(Resource1.glorious_leader, testListingID);
+            ISeeData.UpdatePhotoThree(Resource1.glorious_leader, testListingID);
+            ISeeData.UpdatePhotoFour(Resource1.glorious_leader, testListingID);
+            ISeeData.UpdatePhotoFive(Resource1.glorious_leader, testListingID);
+            ISeeData.UpdateListingPrice(999, testListingID);
+            ISeeData.UpdateStreet(changeString, testListingID);
+            ISeeData.UpdateCity(changeString, testListingID);
+            ISeeData.UpdateState(changeString, testListingID);
+            ISeeData.UpdateZip(changeString, testListingID);
+            ISeeData.UpdateSquareFootage(999, testListingID);
+            ISeeData.UpdateDescription(changeString, testListingID);
+            ISeeData.UpdateRoomDescription(changeString, testListingID);
+            ISeeData.UpdateShortDescription(changeString, testListingID);
+            ISeeData.UpdateSubdivision(changeString, testListingID);
+            ISeeData.UpdateAlarmInfo(changeString, testListingID);
             // Assert
-            Assert.AreEqual(99999,ISeeData.GetListingPrice(listingID));
-            Assert.AreEqual("street", ISeeData.GetListingStreet(listingID));
-            Assert.AreEqual("city", ISeeData.GetListingCity(listingID));
-            Assert.AreEqual("state", ISeeData.GetListingState(listingID));
-            Assert.AreEqual("zip", ISeeData.GetListingZip(listingID));
-            Assert.AreEqual("description", ISeeData.GetListingDescription(listingID));
-            Assert.AreEqual("room description", ISeeData.GetListingRoomDescription(listingID));
-            Assert.AreEqual("short description", ISeeData.GetListingShortDescription(listingID));
-            Assert.AreEqual("subdivision", ISeeData.GetListingSubdivision(listingID));
-            Assert.AreEqual("alarm info", ISeeData.GetListingAlarmInfo(listingID));
-            Assert.AreEqual(99999, ISeeData.GetListingSquareFootage(listingID));
-            Assert.IsInstanceOfType(ISeeData.GetSmallPhoto(listingID),typeof(Bitmap));
-            Assert.IsInstanceOfType(ISeeData.GetLargePhoto(listingID), typeof(Bitmap));
-            Assert.IsInstanceOfType(ISeeData.GetPhotoOne(listingID), typeof(Bitmap));
-            Assert.IsInstanceOfType(ISeeData.GetPhotoTwo(listingID), typeof(Bitmap));
-            Assert.IsInstanceOfType(ISeeData.GetPhotoThree(listingID), typeof(Bitmap));
-            Assert.IsInstanceOfType(ISeeData.GetPhotoFour(listingID), typeof(Bitmap));
-            Assert.IsInstanceOfType(ISeeData.GetPhotoFive(listingID), typeof(Bitmap));
+            Assert.AreEqual(999, ISeeData.GetListingPrice(testListingID));
+            Assert.AreEqual(changeString, ISeeData.GetListingStreet(testListingID));
+            Assert.AreEqual(changeString, ISeeData.GetListingCity(testListingID));
+            Assert.AreEqual(changeString, ISeeData.GetListingState(testListingID));
+            Assert.AreEqual(changeString, ISeeData.GetListingZip(testListingID));
+            Assert.AreEqual(changeString, ISeeData.GetListingDescription(testListingID));
+            Assert.AreEqual(changeString, ISeeData.GetListingRoomDescription(testListingID));
+            Assert.AreEqual(changeString, ISeeData.GetListingShortDescription(testListingID));
+            Assert.AreEqual(changeString, ISeeData.GetListingSubdivision(testListingID));
+            Assert.AreEqual(changeString, ISeeData.GetListingAlarmInfo(testListingID));
+            Assert.AreEqual(999, ISeeData.GetListingSquareFootage(testListingID));
+            Assert.IsInstanceOfType(ISeeData.GetSmallPhoto(testListingID), typeof(Bitmap));
+            Assert.IsInstanceOfType(ISeeData.GetLargePhoto(testListingID), typeof(Bitmap));
+            Assert.IsInstanceOfType(ISeeData.GetPhotoOne(testListingID), typeof(Bitmap));
+            Assert.IsInstanceOfType(ISeeData.GetPhotoTwo(testListingID), typeof(Bitmap));
+            Assert.IsInstanceOfType(ISeeData.GetPhotoThree(testListingID), typeof(Bitmap));
+            Assert.IsInstanceOfType(ISeeData.GetPhotoFour(testListingID), typeof(Bitmap));
+            Assert.IsInstanceOfType(ISeeData.GetPhotoFive(testListingID), typeof(Bitmap));
         }
 
-        /// <summary>
-        /// Changes the test listing hit counts.
-        /// </summary>
         [TestMethod]
         public void ChangeTestListingHitCounts_GetNumberOfListings()
         {
             // Arrange
-
+            int testListingID;
+            int testAgentID;
             // Act
-            ISeeData.IncrementDailyHitCount(listingID);
-            ISeeData.IncrementDailyHitCount(listingID);
-            ISeeData.IncrementDailyHitCount(listingID);
-            ISeeData.UpdateLifetimeHitCount(listingID);
-            ISeeData.ResetDailyHitCount(listingID);
-            ISeeData.IncrementDailyHitCount(listingID);
-            ISeeData.IncrementDailyHitCount(listingID);
+            testAgentID = ISeeData.GetAgentID("user");
+            testListingID = ISeeData.GetSpecificListingForTestPurposes(testAgentID);
+
+            ISeeData.IncrementDailyHitCount(testListingID);
+            ISeeData.IncrementDailyHitCount(testListingID);
+            ISeeData.IncrementDailyHitCount(testListingID);
+            ISeeData.UpdateLifetimeHitCount(testListingID);
+            ISeeData.ResetDailyHitCount(testListingID);
+            ISeeData.IncrementDailyHitCount(testListingID);
+            ISeeData.IncrementDailyHitCount(testListingID);
             // Assert
-            Assert.AreEqual(3,ISeeData.GetListingLifetimeHitCount(listingID));
-            Assert.AreEqual(2,ISeeData.GetListingDailyHitCount(listingID));
-            Assert.AreNotEqual(0,ISeeData.GetTotalNumberOfListings());
+            Assert.AreEqual(3, ISeeData.GetListingLifetimeHitCount(testListingID));
+            Assert.AreEqual(2, ISeeData.GetListingDailyHitCount(testListingID));
+            Assert.AreNotEqual(0, ISeeData.GetTotalNumberOfListings());
         }
 
-        /// <summary>
-        /// Removes the parts of test listing.
-        /// </summary>
         [TestMethod]
         public void RemovePartsOfTestListing()
         {
             // Arrange
-            // This one might need more testing for the photos.
-            DataRow row;
+            int testListingID;
+            int testAgentID;
             // Act
-            ISeeData.RemovePhotoOne(listingID);
-            ISeeData.RemovePhotoTwo(listingID);
-            ISeeData.RemovePhotoThree(listingID);
-            ISeeData.RemovePhotoFour(listingID);
-            ISeeData.RemovePhotoFive(listingID);
-            ISeeData.RemoveSquareFootage(listingID);
-            ISeeData.RemoveRoomDescription(listingID);
-            ISeeData.RemoveDescription(listingID);
-            ISeeData.RemoveSubdivision(listingID);
-            ISeeData.RemoveAlarmInfo(listingID);
-            row = ISeeData.GetSpecificListing(listingID).Rows[0];
+            testAgentID = ISeeData.GetAgentID("user");
+            testListingID = ISeeData.GetSpecificListingForTestPurposes(testAgentID);
+
+            ISeeData.RemovePhotoOne(testListingID);
+            ISeeData.RemovePhotoTwo(testListingID);
+            ISeeData.RemovePhotoThree(testListingID);
+            ISeeData.RemovePhotoFour(testListingID);
+            ISeeData.RemovePhotoFive(testListingID);
+            ISeeData.RemoveRoomDescription(testListingID);
+            ISeeData.RemoveDescription(testListingID);
+            ISeeData.RemoveSubdivision(testListingID);
+            ISeeData.RemoveAlarmInfo(testListingID);
+
             // Assert
-            Assert.IsNull(row["extraPhotoOne"]);
-            Assert.IsNull(row["extraPhotoTwo"]);
-            Assert.IsNull(row["extraPhotoThree"]);
-            Assert.IsNull(row["extraPhotoFour"]);
-            Assert.IsNull(row["extraPhotoFive"]);
-            Assert.IsNull(row["listingSquareFootage"]);
-            Assert.IsNull(row["listingDescription"]);
-            Assert.IsNull(row["listingRoomDescription"]);
-            Assert.IsNull(row["listingSubdivision"]);
-            Assert.IsNull(row["listingAlarmInfo"]);
+            Assert.IsInstanceOfType(ISeeData.GetPhotoOne(testListingID),typeof(Image));
+            Assert.IsInstanceOfType(ISeeData.GetPhotoTwo(testListingID), typeof(Image));
+            Assert.IsInstanceOfType(ISeeData.GetPhotoThree(testListingID), typeof(Image));
+            Assert.IsInstanceOfType(ISeeData.GetPhotoFour(testListingID), typeof(Image));
+            Assert.IsInstanceOfType(ISeeData.GetPhotoFive(testListingID), typeof(Image));
+            Assert.AreEqual("",ISeeData.GetListingRoomDescription(testListingID));
+            Assert.AreEqual("", ISeeData.GetListingDescription(testListingID));
+            Assert.AreEqual("", ISeeData.GetListingSubdivision(testListingID));
+            Assert.AreEqual("", ISeeData.GetListingAlarmInfo(testListingID));
         }
 
-        /// <summary>
-        /// Gets the parts of test listing.
-        /// </summary>
         [TestMethod]
         public void TestGetDataTableFunctions()
         {
             // Arrange
-
+            int testListingID;
+            int testAgentID;
             // Act
-
+            testAgentID = (int) ISeeData.GetAgentID("user");
+            testListingID = ISeeData.GetSpecificListingForTestPurposes(testAgentID);
             // Assert
-            Assert.IsInstanceOfType(ISeeData.GetListingsFilterBySquareFootage(0,1000000),typeof(DataTable));
-            Assert.IsInstanceOfType(ISeeData.GetListingsFilterByPriceRange(0,1000000000), typeof(DataTable));
-            Assert.IsInstanceOfType(ISeeData.GetListingsFilterByZipCode("zip"), typeof(DataTable));
+            Assert.IsInstanceOfType(ISeeData.GetListingsFilterBySquareFootage(0, 1000000), typeof(DataTable));
+            Assert.IsInstanceOfType(ISeeData.GetListingsFilterByPriceRange(0, 1000000000), typeof(DataTable));
+            Assert.IsInstanceOfType(ISeeData.GetListingsFilterByZipCode(changeString), typeof(DataTable));
             Assert.IsInstanceOfType(ISeeData.GetAllListings(), typeof(DataTable));
-            Assert.IsInstanceOfType(ISeeData.GetSpecificListing(listingID), typeof(DataTable));
-            Assert.IsInstanceOfType(ISeeData.GetAllListingsForEmailToSpecificAgent(66666), typeof(DataTable));
+            Assert.IsInstanceOfType(ISeeData.GetSpecificListing(testListingID), typeof(DataTable));
+            Assert.IsInstanceOfType(ISeeData.GetAllListingsForEmailToSpecificAgent(testAgentID), typeof(DataTable));
         }
-
-        /// <summary>
-        /// Deletes the test listing.
-        /// </summary>
+        
         [TestMethod]
         public void DeleteTestListing()
         {
             // Arrange
-
+            int testAgentID;
+            int testListingID;
             // Act
-            ISeeData.RemoveListing(listingID);
+            testAgentID = ISeeData.GetAgentID("user");
+            testListingID = ISeeData.GetSpecificListingForTestPurposes(testAgentID);
+
+            ISeeData.RemoveListing(testListingID);
             // Assert
-            Assert.AreNotEqual(listingID, ISeeData.GetSpecificListing(listingID));
+            Assert.AreNotEqual(testListingID, ISeeData.GetSpecificListing(testListingID));
         }
 
-        /// <summary>
-        /// Ends the of listing tests.
-        /// </summary>
-        [ClassCleanup]
-        public static void EndOfListingTests()
-        {
-            ISeeData.closeConnection();
-        }
-
-        /// <summary>
-        /// The i see data
-        /// </summary>
-        public static SQL_Connection ISeeData;
-        /// <summary>
-        /// The listing identifier
-        /// </summary>
-        private int listingID;
-    }
-
-    /// <summary>
-    /// Test functions that interact with the agent database.
-    /// </summary>
-    [TestClass]
-    public class AgentDatabaseTests
-    {
-        /// <summary>
-        /// Initializes this instance.
-        /// </summary>
-        [ClassInitialize]
-        public static void Init()
-        {
-            ISeeData = new SQL_Connection();
-            ISeeData.openConnection();
-        }
-
-        /// <summary>
-        /// Adds an agent get agent identifier.
-        /// </summary>
-        [TestMethod]
-        public void AddAnAgent_GetAgentID()
-        {
-            // Arrange
-            int id;
-            // Act
-            ISeeData.AddAgent("agent_Fname", "agent_Lname", "agent_Uname",
-                "agent_password", "agent_number", "agent_email", 696969, "000");
-            id = ISeeData.GetAgentID("agent_Uname");
-            // Assert
-            Assert.AreNotEqual(-1, id);
-        }
-
-        /// <summary>
-        /// Gets the agent identifier edit agent information.
-        /// </summary>
         [TestMethod]
         public void GetAgentID_EditAgentInfo()
         {
             // Arrange
-            int id;
-            string editInfo = "Yarg";
             int editNumber = 666;
+            int testAgentID;
             // Act
-            id = ISeeData.GetAgentID("agent_Uname");
-            ISeeData.UpdateAgentFirstName(editInfo,id);
-            ISeeData.UpdateAgentLastName(editInfo, id);
-            ISeeData.UpdateAgentUsername(editInfo, id);
-            ISeeData.UpdateAgentPassword(editInfo, id);
-            ISeeData.UpdateAgentNumber(editNumber.ToString(), id);
-            ISeeData.UpdateAgentEmail(editInfo, id);
+            testAgentID = (int) ISeeData.GetAgentID("user");
+
+            ISeeData.UpdateAgentFirstName(changeString, testAgentID);
+            ISeeData.UpdateAgentLastName(changeString, testAgentID);
+            ISeeData.UpdateAgentUsername(changeString, testAgentID);
+            ISeeData.UpdateAgentPassword(changeString, testAgentID);
+            ISeeData.UpdateAgentNumber(editNumber.ToString(), testAgentID);
+            ISeeData.UpdateAgentEmail(changeString, testAgentID);
 
             // Assert
-            Assert.AreEqual(id, ISeeData.GetAgentID(editInfo));
+            Assert.AreEqual(testAgentID, ISeeData.GetAgentID(changeString));
         }
 
-        /// <summary>
-        /// Differents the agent get function tests.
-        /// </summary>
         [TestMethod]
         public void DifferentAgentGetFunctionTests()
         {
             // Arrange
-            int id;
             string checkString = "Yarg";
+            int testAgentID;
 
             // Act
-            id = ISeeData.GetAgentID(checkString);
+            testAgentID = (int) ISeeData.GetAgentID(changeString);
 
             // Assert
-            Assert.AreNotEqual(0,ISeeData.GetTotalNumberOfAgentsUsingService());
-            Assert.AreEqual(1,ISeeData.GetTotalNumberOfAgentsWithAgency(696969));
-            Assert.AreEqual(checkString,ISeeData.GetAgentFirstName(id));
-            Assert.AreEqual(checkString,ISeeData.GetAgentLastName(id));
-            Assert.AreEqual(checkString,ISeeData.GetAgentUserName(id));
-            Assert.IsTrue(ISeeData.CheckAgentPassword(checkString,checkString));
-            Assert.AreEqual(checkString,ISeeData.GetAgentPhoneNumber(id));
-            Assert.AreEqual(checkString,ISeeData.GetAgentEmail(id));
-            Assert.AreEqual(696969,ISeeData.GetAgencyOfAgent(id));
+            Assert.AreNotEqual(0, ISeeData.GetTotalNumberOfAgentsUsingService());
+            Assert.AreEqual(checkString, ISeeData.GetAgentFirstName(testAgentID));
+            Assert.AreEqual(checkString, ISeeData.GetAgentLastName(testAgentID));
+            Assert.AreEqual(checkString, ISeeData.GetAgentUserName(testAgentID));
+            Assert.IsTrue(ISeeData.CheckAgentPassword(checkString, checkString));
+            Assert.AreEqual(666.ToString(), ISeeData.GetAgentPhoneNumber(testAgentID));
+            Assert.AreEqual(checkString, ISeeData.GetAgentEmail(testAgentID));
         }
 
-        /// <summary>
-        /// Tests the data table get functions.
-        /// </summary>
         [TestMethod]
         public void TestDataTableGetFunctions()
         {
             // Arrange
-            int id;
             DataRow set;
+            DataTable helper = new DataTable();
+            int testAgentID;
+            int testAgencyID;
             // Act
-            id = ISeeData.GetAgentID("Yarg");
-            set = ISeeData.GetAgent(id).Rows[0];
+            testAgentID = (int) ISeeData.GetAgentID(changeString);
+            testAgencyID = (int) ISeeData.GetAgencyID("test");
+            helper = ISeeData.GetAgent(testAgentID);
+            set = helper.Rows[0];
             // Assert
-            Assert.AreEqual("Yarg",set[1]);
-            Assert.IsInstanceOfType(ISeeData.GetAllAgents(),typeof(DataTable));
-            Assert.IsInstanceOfType(ISeeData.GetAllAgentsFromAgency(696969),typeof(DataTable));
+            Assert.AreEqual("Yarg", set["agent_Fname"]);
+            Assert.IsInstanceOfType(ISeeData.GetAllAgents(), typeof(DataTable));
+            Assert.IsInstanceOfType(ISeeData.GetAllAgentsFromAgency(testAgencyID), typeof(DataTable));
         }
 
-        /// <summary>
-        /// Gets the agent identifier delete agent.
-        /// </summary>
         [TestMethod]
         public void GetAgentID_DeleteAgent()
         {
             // Arrange
-            int id;
+            int testAgentID;
             // Act
-            id = ISeeData.GetAgentID("Yarg");
-            ISeeData.DeleteAgent(id);
+            testAgentID = ISeeData.GetAgentID(changeString);
+            ISeeData.DeleteAgent(testAgentID);
             // Assert
-            Assert.AreNotEqual(id,ISeeData.GetAgentID("Yarg"));
+            Assert.AreNotEqual(testAgentID, ISeeData.GetAgentID("Yarg"));
         }
 
-        /// <summary>
-        /// Ends the of agent tests.
-        /// </summary>
-        [ClassCleanup]
-        public static void EndOfAgentTests()
-        {
-            ISeeData.closeConnection();
-        }
-
-        /// <summary>
-        /// The i see data
-        /// </summary>
-        public static test2.SQL_Connection ISeeData;
-    }
-
-    /// <summary>
-    /// Test functions that interact with the agency database.
-    /// </summary>
-    [TestClass]
-    public class AgencyDatabaseTests
-    {
-        /// <summary>
-        /// Initializes this instance.
-        /// </summary>
-        [ClassInitialize]
-        public static void Init()
-        {
-            ISeeData = new SQL_Connection();
-            ISeeData.openConnection();
-        }
-
-        /// <summary>
-        /// Adds an agency get agency identifier.
-        /// </summary>
-        [TestMethod]
-        public void AddAnAgency_GetAgencyID()
-        {
-            // Arrange
-            ISeeData.AddAgency("agency_name","agency_email","agency_phone",
-                "agency_street","agency_city","agency_state","agency_zip");
-            int id;
-            DataRow set;
-            // Act
-            id = ISeeData.GetAgencyID("agency_name");
-            var helper = ISeeData.GetAgency(id);
-            set = helper.Rows[0];
-            // Assert
-            Assert.AreSame(typeof(DataTable),helper);
-            Assert.AreEqual("agency_name", set[0]);
-        }
-
-        /// <summary>
-        /// Updates an agency.
-        /// </summary>
         [TestMethod]
         public void UpdateAnAgency()
         {
             // Arrange
-            int id;
+            int testAgencyID;
             DataRow set;
-
+            DataTable helper = new DataTable();
             // Act
-            id = ISeeData.GetAgencyID("agency_name");
-            ISeeData.UpdateAgencyName("kiiim",id);
-            ISeeData.UpdateAgencyEmail("jong", id);
-            ISeeData.UpdateAgencyPhone("un", id);
-            ISeeData.UpdateAgencyStreet("is", id);
-            ISeeData.UpdateAgencyCity("sexy,", id);
-            ISeeData.UpdateAgencyState("not", id);
-            ISeeData.UpdateAgencyZip("fatass", id);
-            var helper = ISeeData.GetAgency(id);
+            testAgencyID = (int) ISeeData.GetAgencyID("test");
+
+            ISeeData.UpdateAgencyName("kiiim", testAgencyID);
+            ISeeData.UpdateAgencyEmail("jong", testAgencyID);
+            ISeeData.UpdateAgencyPhone("un", testAgencyID);
+            ISeeData.UpdateAgencyStreet("is", testAgencyID);
+            ISeeData.UpdateAgencyCity("sexy,", testAgencyID);
+            ISeeData.UpdateAgencyState("not", testAgencyID);
+            ISeeData.UpdateAgencyZip("fatass", testAgencyID);
+            helper = ISeeData.GetAgency(testAgencyID);
             set = helper.Rows[0];
 
             // Assert
-            Assert.AreEqual("kiiim",set[0]);
-            Assert.AreEqual("jong", set[1]);
-            Assert.AreEqual("un", set[2]);
-            Assert.AreEqual("is", set[3]);
-            Assert.AreEqual("sexy,", set[4]);
-            Assert.AreEqual("not", set[5]);
-            Assert.AreEqual("fatass", set[6]);
+            Assert.AreEqual("kiiim", set["agency_name"]);
+            Assert.AreEqual("jong", set["agency_email"]);
+            Assert.AreEqual("un", set["agency_phone"]);
+            Assert.AreEqual("is", set["agency_street"]);
+            Assert.AreEqual("sexy,", set["agency_city"]);
+            Assert.AreEqual("not", set["agency_state"]);
+            Assert.AreEqual("fatass", set["agency_zip"]);
         }
 
-        /// <summary>
-        /// Removes an agency.
-        /// </summary>
         [TestMethod]
         public void RemoveAnAgency()
         {
             // Arrange
-            int id;
-
+            int testAgencyID;
             // Act
-            id = ISeeData.GetAgencyID("kiiim");
-            ISeeData.DeleteAgency(id);
+            testAgencyID = (int) ISeeData.GetAgencyID("kiiim");
+            ISeeData.DeleteAgency(testAgencyID);
             // Assert
-            Assert.AreNotEqual(id, ISeeData.GetAgencyID("kiiim"));
+            Assert.AreNotEqual(testAgencyID, ISeeData.GetAgencyID("kiiim"));
         }
 
-        /// <summary>
-        /// Ends the of agency tests.
-        /// </summary>
         [ClassCleanup]
-        public static void EndOfAgencyTests()
+        public static void CleanUp()
         {
             ISeeData.closeConnection();
         }
-
-        /// <summary>
-        /// The i see data
-        /// </summary>
-        public static test2.SQL_Connection ISeeData;
+        
+        private string changeString = "Yarg";
+        private static SQL_Connection ISeeData;
     }
 }

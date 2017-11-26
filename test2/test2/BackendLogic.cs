@@ -26,7 +26,8 @@ namespace test2
         {
             connection = new SqlConnection();
             connection.ConnectionString =
-                "Data Source=DESKTOP-QM2SFGD;Initial Catalog=Housing;Integrated Security=True";
+                //"Data Source=DESKTOP-QM2SFGD;Initial Catalog=Housing;Integrated Security=True";
+                "Data Source=DESKTOP-08QT6IE;Initial Catalog=Housing;Integrated Security=True";
             connection.Open();
         }
 
@@ -45,8 +46,8 @@ namespace test2
         /// <summary>
         /// Adds the listing.
         /// </summary>
-        /// <param name="smallImage">The small image.</param>
-        /// <param name="largeImage">The large image.</param>
+        /// <param name="listing_smallPhoto">The small image.</param>
+        /// <param name="listing_largePhoto">The large image.</param>
         /// <param name="listingPrice">The listing price.</param>
         /// <param name="street">The street.</param>
         /// <param name="city">The city.</param>
@@ -55,7 +56,7 @@ namespace test2
         /// <param name="squareFootage">The square footage.</param>
         /// <param name="agent_id">The agent identifier.</param>
         /// <param name="agency_id">The agency identifier.</param>
-        public void AddListing(Image smallImage, Image largeImage, int listingPrice, string street, string city,
+        public void AddListing(Image listing_smallPhoto, Image listing_largePhoto, int listingPrice, string street, string city,
             string state, string zip, int squareFootage, int agent_id, int agency_id)
         {
             using (var command = new SqlCommand())
@@ -65,29 +66,29 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        "INSERT INTO TABLENAME (listing_smallImage, listing_largeImage, listing_price, listing_street, listing_city, listing_state, "
-                        + "listing_zip, listing_sqFT, agent_id, agency_id) VALUES (@smallImage, @largeImage, @listingPrice, "
-                        + "@listingStreet, @listingCity, @listingState, @listingZip, @listingSquareFootage, @agent_id, @agency_id)";
+                        "INSERT INTO listing (listing_smallPhoto, listing_largePhoto, listing_price, listing_street, listing_city, listing_state, "
+                        + "listing_zip, listing_sqFT, agent_id, agency_id) VALUES (@listing_smallPhoto, @listing_largePhoto, @listing_price, "
+                        + "@listing_street, @listing_city, @listing_state, @listing_zip, @listing_sqFT, @agent_id, @agency_id)";
                     // For each variable just start inserting stuff
-                    command.Parameters.Add("@smallImage", SqlDbType.Image);
-                    command.Parameters.Add("@largeImage", SqlDbType.Image);
-                    command.Parameters.Add("@listingPrice", SqlDbType.Int);
-                    command.Parameters.Add("@listingStreet", SqlDbType.NChar);
-                    command.Parameters.Add("@listingCity", SqlDbType.NChar);
-                    command.Parameters.Add("@listingState", SqlDbType.NChar);
-                    command.Parameters.Add("@listingZip", SqlDbType.NChar);
-                    command.Parameters.Add("@listingSquareFootage", SqlDbType.Int);
+                    command.Parameters.Add("@listing_smallPhoto", SqlDbType.Image);
+                    command.Parameters.Add("@listing_largePhoto", SqlDbType.Image);
+                    command.Parameters.Add("@listing_price", SqlDbType.Int);
+                    command.Parameters.Add("@listing_street", SqlDbType.NVarChar);
+                    command.Parameters.Add("@listing_city", SqlDbType.NVarChar);
+                    command.Parameters.Add("@listing_state", SqlDbType.NVarChar);
+                    command.Parameters.Add("@listing_zip", SqlDbType.NVarChar);
+                    command.Parameters.Add("@listing_sqFT", SqlDbType.Int);
                     command.Parameters.Add("@agent_id", SqlDbType.Int);
                     command.Parameters.Add("@agency_id", SqlDbType.Int);
 
-                    command.Parameters["@smallImage"].Value = ImagetoByte(smallImage);
-                    command.Parameters["@largeImage"].Value = ImagetoByte(largeImage);
-                    command.Parameters["@listingPrice"].Value = listingPrice;
-                    command.Parameters["@listingStreet"].Value = street.ToCharArray();
-                    command.Parameters["@listingCity"].Value = city.ToCharArray();
-                    command.Parameters["@listingState"].Value = state.ToCharArray();
-                    command.Parameters["@listingZip"].Value = zip.ToCharArray();
-                    command.Parameters["@squareFootage"].Value = squareFootage;
+                    command.Parameters["@listing_smallPhoto"].Value = ImagetoByte(listing_smallPhoto);
+                    command.Parameters["@listing_largePhoto"].Value = ImagetoByte(listing_largePhoto);
+                    command.Parameters["@listing_price"].Value = listingPrice;
+                    command.Parameters["@listing_street"].Value = street.ToCharArray();
+                    command.Parameters["@listing_city"].Value = city.ToCharArray();
+                    command.Parameters["@listing_state"].Value = state.ToCharArray();
+                    command.Parameters["@listing_zip"].Value = zip.ToCharArray();
+                    command.Parameters["@listing_sqFT"].Value = squareFootage;
                     command.Parameters["@agent_id"].Value = agent_id;
                     command.Parameters["@agency_id"].Value = agency_id;
 
@@ -119,8 +120,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_smallPhoto = @listing_smallPhoto WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET listing_smallPhoto = @listing_smallPhoto WHERE ",
+                            "listing_id = ", listing_id);
                     command.Parameters.Add("@listing_smallPhoto", SqlDbType.Image);
 
                     command.Parameters["@listing_smallPhoto"].Value = ImagetoByte(replacementImage);
@@ -148,8 +149,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_largePhoto = @listing_largePhoto WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET listing_largePhoto = @listing_largePhoto WHERE ",
+                            "listing_id = ", listing_id);
                     command.Parameters.Add("@listing_largePhoto", SqlDbType.Image);
 
                     command.Parameters["@listing_largePhoto"].Value = ImagetoByte(replacementImage);
@@ -177,8 +178,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET pic1 = @pic1 WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET pic1 = @pic1 WHERE ",
+                            "listing_id = ", listing_id);
                     command.Parameters.Add("@pic1", SqlDbType.Image);
 
                     command.Parameters["@pic1"].Value = ImagetoByte(replacementImage);
@@ -206,8 +207,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET pic2 = @pic2 WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET pic2 = @pic2 WHERE ",
+                            "listing_id = ", listing_id);
                     command.Parameters.Add("@pic2", SqlDbType.Image);
 
                     command.Parameters["@pic2"].Value = ImagetoByte(replacementImage);
@@ -235,8 +236,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET pic3 = @pic3 WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET pic3 = @pic3 WHERE ",
+                            "listing_id = ", listing_id);
                     command.Parameters.Add("@pic3", SqlDbType.Image);
 
                     command.Parameters["@pic3"].Value = ImagetoByte(replacementImage);
@@ -264,8 +265,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET pic4 = @pic4 WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET pic4 = @pic4 WHERE ",
+                            "listing_id = ", listing_id);
                     command.Parameters.Add("@pic4", SqlDbType.Image);
 
                     command.Parameters["@pic4"].Value = ImagetoByte(replacementImage);
@@ -293,8 +294,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET pic5 = @pic5 WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET pic5 = @pic5 WHERE ",
+                            "listing_id = ", listing_id);
                     command.Parameters.Add("@pic5", SqlDbType.Image);
 
                     command.Parameters["@pic5"].Value = ImagetoByte(replacementImage);
@@ -322,8 +323,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_price = @listing_price WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET listing_price = @listing_price WHERE ",
+                            "listing_id = ", listing_id);
                     command.Parameters.Add("@listing_price", SqlDbType.Int);
 
                     command.Parameters["@listing_price"].Value = replacementPrice;
@@ -351,9 +352,9 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_street = @listing_street WHERE ",
-                            "listing_id='", listing_id, "'");
-                    command.Parameters.Add("@listing_street", SqlDbType.NChar);
+                        string.Concat("UPDATE dbo.listing SET listing_street = @listing_street WHERE ",
+                            "listing_id = ", listing_id);
+                    command.Parameters.Add("@listing_street", SqlDbType.NVarChar);
 
                     command.Parameters["@listing_street"].Value = replacementStreet.ToCharArray();
 
@@ -380,9 +381,9 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_city = @listing_city WHERE ",
-                            "listing_id='", listing_id, "'");
-                    command.Parameters.Add("@listing_city", SqlDbType.NChar);
+                        string.Concat("UPDATE dbo.listing SET listing_city = @listing_city WHERE ",
+                            "listing_id = ", listing_id);
+                    command.Parameters.Add("@listing_city", SqlDbType.NVarChar);
 
                     command.Parameters["@listing_city"].Value = replacementCity.ToCharArray();
 
@@ -409,9 +410,9 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_state = @listing_state WHERE ",
-                            "listing_id='", listing_id, "'");
-                    command.Parameters.Add("@listing_state", SqlDbType.NChar);
+                        string.Concat("UPDATE dbo.listing SET listing_state = @listing_state WHERE ",
+                            "listing_id = ", listing_id);
+                    command.Parameters.Add("@listing_state", SqlDbType.NVarChar);
 
                     command.Parameters["@listing_state"].Value = replacementState.ToCharArray();
 
@@ -438,9 +439,9 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_zip = @listing_zip WHERE ",
-                            "listing_id='", listing_id, "'");
-                    command.Parameters.Add("@listing_zip", SqlDbType.NChar);
+                        string.Concat("UPDATE dbo.listing SET listing_zip = @listing_zip WHERE ",
+                            "listing_id = ", listing_id);
+                    command.Parameters.Add("@listing_zip", SqlDbType.NVarChar);
 
                     command.Parameters["@listing_zip"].Value = replacementZip.ToCharArray();
 
@@ -467,8 +468,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_sqFT = @listing_sqFT WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET listing_sqFT = @listing_sqFT WHERE ",
+                            "listing_id = ", listing_id);
                     command.Parameters.Add("@listing_sqFT", SqlDbType.Int);
 
                     command.Parameters["@listing_sqFT"].Value = replacementSquareFootage;
@@ -496,8 +497,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_description = @listing_description WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET listing_description = @listing_description WHERE ",
+                            "listing_id = ", listing_id);
                     command.Parameters.Add("@listing_description", SqlDbType.NVarChar);
 
                     command.Parameters["@listing_description"].Value = replacementDescription.ToCharArray();
@@ -525,8 +526,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_roomDescription = @listing_roomDescription WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET listing_roomDescription = @listing_roomDescription WHERE ",
+                            "listing_id = ", listing_id);
                     command.Parameters.Add("@listing_roomDescription", SqlDbType.NVarChar);
 
                     command.Parameters["@listing_roomDescription"].Value = replacementRoomDescription.ToCharArray();
@@ -554,8 +555,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_shortDescription = @listing_shortDescription WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET listing_shortDescription = @listing_shortDescription WHERE ",
+                            "listing_id = ", listing_id);
                     command.Parameters.Add("@listing_shortDescription", SqlDbType.NVarChar);
 
                     command.Parameters["@listing_shortDescription"].Value = replacementShortDescription.ToCharArray();
@@ -583,8 +584,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_nameSubdivision = @listing_nameSubdivision WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET listing_nameSubdivision = @listing_nameSubdivision WHERE ",
+                            "listing_id = ", listing_id);
 
                     command.Parameters.Add("@listing_nameSubdivision", SqlDbType.NVarChar);
                     command.Parameters["@listing_nameSubdivision"].Value = replacementSubdivision.ToCharArray();
@@ -612,8 +613,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_hitCount = listing_hitCount + 1 WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET listing_hitCount = listing_hitCount + 1 WHERE ",
+                            "listing_id = ", listing_id);
 
                     command.ExecuteNonQuery();
                 }
@@ -635,7 +636,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "UPDATE listing SET listing_hitCount = 0";
+                    command.CommandText = "UPDATE dbo.listing SET listing_hitCount = 0";
 
                     command.ExecuteNonQuery();
                 }
@@ -659,8 +660,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_hitCount = 0 WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET listing_hitCount = 0 WHERE ",
+                            "listing_id = ", listing_id);
 
                     command.ExecuteNonQuery();
                 }
@@ -682,7 +683,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "UPDATE listing SET listingLifetimeHitCount = listing_HitCount + listingLifetimeHitCount";
+                    command.CommandText = "UPDATE dbo.listing SET listingLifetimeHitCount = listing_HitCount + listingLifetimeHitCount";
 
                     command.ExecuteNonQuery();
                 }
@@ -707,8 +708,8 @@ namespace test2
                     command.CommandType = CommandType.Text;
                     command.CommandText =
                         string.Concat(
-                            "UPDATE listing SET listingLifetimeHitCount = listing_HitCount + listingLifetimeHitCount WHERE ",
-                            "listing_id='", listing_id, "'");
+                            "UPDATE dbo.listing SET listingLifetimeHitCount = listing_HitCount + listingLifetimeHitCount WHERE ",
+                            "listing_id = ", listing_id);
 
                     command.ExecuteNonQuery();
                 }
@@ -733,8 +734,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE listing SET listing_alarmInfo = @listing_alarmInfo WHERE ",
-                            "listing_id='", listing_id, "'");
+                        string.Concat("UPDATE dbo.listing SET listing_alarmInfo = @listing_alarmInfo WHERE ",
+                            "listing_id = ", listing_id);
                     // For each variable just start inserting stuff
                     command.Parameters.Add("@listing_alarmInfo", SqlDbType.NVarChar);
 
@@ -768,8 +769,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE TABLENAME SET extraPhotoOne = NULL WHERE ",
-                            "listing_id='", listingID, "'");
+                        string.Concat("UPDATE dbo.listing SET extraPhotoOne = NULL WHERE ",
+                            "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
                 }
@@ -793,8 +794,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE TABLENAME SET extraPhotoTwo = NULL WHERE ",
-                            "listing_id='", listingID, "'");
+                        string.Concat("UPDATE dbo.listing SET extraPhotoTwo = NULL WHERE ",
+                            "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
                 }
@@ -818,8 +819,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE TABLENAME SET extraPhotoThree = NULL WHERE ",
-                            "listing_id='", listingID, "'");
+                        string.Concat("UPDATE dbo.listing SET extraPhotoThree = NULL WHERE ",
+                            "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
                 }
@@ -843,8 +844,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE TABLENAME SET extraPhotoFour = NULL WHERE ",
-                            "listing_id='", listingID, "'");
+                        string.Concat("UPDATE dbo.listing SET extraPhotoFour = NULL WHERE ",
+                            "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
                 }
@@ -868,8 +869,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE TABLENAME SET extraPhotoFive = NULL WHERE ",
-                            "listing_id='", listingID, "'");
+                        string.Concat("UPDATE dbo.listing SET extraPhotoFive = NULL WHERE ",
+                            "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
                 }
@@ -893,8 +894,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE TABLENAME SET listingSquareFootage = NULL WHERE ",
-                            "listing_id='", listingID, "'");
+                        string.Concat("UPDATE dbo.listing SET listing_sqFT = 0 WHERE ",
+                            "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
                 }
@@ -918,8 +919,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE TABLENAME SET listingDescription = NULL WHERE ",
-                            "listing_id='", listingID, "'");
+                        string.Concat("UPDATE dbo.listing SET listingDescription = '' WHERE ",
+                            "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
                 }
@@ -943,8 +944,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE TABLENAME SET listingRoomDescription = NULL WHERE ",
-                            "listing_id='", listingID, "'");
+                        string.Concat("UPDATE dbo.listing SET listingRoomDescription = '' WHERE ",
+                            "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
                 }
@@ -968,8 +969,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE TABLENAME SET listingSubdivision = NULL WHERE ",
-                            "listing_id='", listingID, "'");
+                        string.Concat("UPDATE dbo.listing SET listingSubdivision = '' WHERE ",
+                            "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
                 }
@@ -993,8 +994,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE TABLENAME SET listingAlarmInfo = NULL WHERE ",
-                            "listing_id='", listingID, "'");
+                        string.Concat("UPDATE dbo.listing SET listingAlarmInfo = '' WHERE ",
+                            "listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
                 }
@@ -1018,7 +1019,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("DELETE FROM TABLENAME WHERE listing_id='", listingID, "'");
+                        string.Concat("DELETE FROM dbo.listing WHERE listing_id = ", listingID);
 
                     command.ExecuteNonQuery();
                 }
@@ -1034,21 +1035,21 @@ namespace test2
 
         #region Retrieving info for listing.
 
-        // Get the number of listings (total).
+        // Get the number of listing (total).
         /// <summary>
-        /// Gets the total number of listings.
+        /// Gets the total number of listing.
         /// </summary>
         /// <returns></returns>
         public int GetTotalNumberOfListings()
         {
-            var result = 0;
+            var result = -1;
             using (var command = new SqlCommand())
             {
                 try
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT COUNT(*) FROM TABLENAME";
+                    command.CommandText = "SELECT COUNT(*) FROM dbo.listing";
                     result = Convert.ToInt32(command.ExecuteScalar());
                 }
                 catch (Exception e)
@@ -1060,23 +1061,23 @@ namespace test2
             return result;
         }
 
-        // Get the number of listings (from the agent).
+        // Get the number of listing (from the agent).
         /// <summary>
-        /// Gets the total number of listings from agent.
+        /// Gets the total number of listing from agent.
         /// </summary>
         /// <param name="agent_id">The agent identifier.</param>
         /// <returns></returns>
         public int GetTotalNumberOfListingsFromAgent(int agent_id)
         {
-            var result = 0;
+            var result = -1;
             using (var command = new SqlCommand())
             {
                 try
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = string.Concat("SELECT COUNT(*) FROM TABLENAME WHERE agent_id ='",
-                        agent_id, "'");
+                    command.CommandText = string.Concat("SELECT COUNT(*) FROM dbo.listing WHERE agent_id = ",
+                        agent_id);
                     result = Convert.ToInt32(command.ExecuteScalar());
                 }
                 catch (Exception e)
@@ -1088,23 +1089,23 @@ namespace test2
             return result;
         }
 
-        // Get the number of listings (from an agency).
+        // Get the number of listing (from an agency).
         /// <summary>
-        /// Gets the total number of listings from agency.
+        /// Gets the total number of listing from agency.
         /// </summary>
         /// <param name="agency_id">The agency identifier.</param>
         /// <returns></returns>
         public int GetTotalNumberOfListingsFromAgency(int agency_id)
         {
-            var result = 0;
+            var result = -1;
             using (var command = new SqlCommand())
             {
                 try
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = string.Concat("SELECT COUNT(*) FROM TABLENAME WHERE agency_id ='",
-                        agency_id, "'");
+                    command.CommandText = string.Concat("SELECT COUNT(*) FROM dbo.listing WHERE agency_id = ",
+                        agency_id);
                     result = Convert.ToInt32(command.ExecuteScalar());
                 }
                 catch (Exception e)
@@ -1116,9 +1117,9 @@ namespace test2
             return result;
         }
 
-        // Get all listings within a given square footage range.
+        // Get all listing within a given square footage range.
         /// <summary>
-        /// Gets the listings filter by square footage.
+        /// Gets the listing filter by square footage.
         /// </summary>
         /// <param name="squareFootLow">The square foot low.</param>
         /// <param name="squareFootHigh">The square foot high.</param>
@@ -1135,7 +1136,7 @@ namespace test2
                     command.CommandText =
                         string.Concat(
                             "SELECT ALL listing_smallPhoto, listing_price, listing_street, listing_city, listing_state, ",
-                            "listing_zip, listing_sqFT, agent_id, agency_id FROM listing WHERE ",
+                            "listing_zip, listing_sqFT, agent_id, agency_id FROM dbo.listing WHERE ",
                             "listing_sqFT BETWEEN @low AND @high");
 
                     command.Parameters.Add("@low", SqlDbType.Int);
@@ -1174,9 +1175,9 @@ namespace test2
             return table;
         }
 
-        // Get all listings within a given price range.
+        // Get all listing within a given price range.
         /// <summary>
-        /// Gets the listings filter by price range.
+        /// Gets the listing filter by price range.
         /// </summary>
         /// <param name="costLow">The cost low.</param>
         /// <param name="costHigh">The cost high.</param>
@@ -1194,8 +1195,8 @@ namespace test2
                     command.CommandText =
                         string.Concat(
                             "SELECT ALL listing_smallPhoto, listing_price, listing_street, listing_city, listing_state, ",
-                            "listing_zip, listing_sqFT, agent_id, agency_id FROM listing WHERE ",
-                            "listingPrice BETWEEN @low AND @high");
+                            "listing_zip, listing_sqFT, agent_id, agency_id FROM dbo.listing WHERE ",
+                            "listing_price BETWEEN @low AND @high");
 
                     command.Parameters.Add("@low", SqlDbType.Int);
                     command.Parameters.Add("@high", SqlDbType.Int);
@@ -1233,9 +1234,9 @@ namespace test2
             return table;
         }
 
-        // Get all listings matching the searched zip code.
+        // Get all listing matching the searched zip code.
         /// <summary>
-        /// Gets the listings filter by zip code.
+        /// Gets the listing filter by zip code.
         /// </summary>
         /// <param name="zip">The zip.</param>
         /// <returns></returns>
@@ -1250,22 +1251,35 @@ namespace test2
                     command.CommandType = CommandType.Text;
                     command.CommandText =
                         string.Concat(
-                            "SELECT ALL listing_smallPhoto, listing_price, listing_street, listing_city, listing_state, ",
-                            "listing_zip, listing_sqFT, agent_id, agency_id FROM listing WHERE ",
-                            "listingZip = @searchZip");
+                            "SELECT * FROM dbo.listing WHERE ",
+                            "listing_zip = @searchZip");
 
-                    command.Parameters.Add("@searchZip", SqlDbType.NChar);
+                    command.Parameters.Add("@searchZip", SqlDbType.NVarChar);
                     command.Parameters["@searchZip"].Value = zip.ToCharArray();
 
+                    table.Columns.Add("listing_id");
                     table.Columns.Add("listing_smallPhoto");
+                    table.Columns.Add("listing_largePhoto");
+                    table.Columns.Add("pic1");
+                    table.Columns.Add("pic2");
+                    table.Columns.Add("pic3");
+                    table.Columns.Add("pic4");
+                    table.Columns.Add("pic5");
                     table.Columns.Add("listing_price");
                     table.Columns.Add("listing_street");
                     table.Columns.Add("listing_city");
                     table.Columns.Add("listing_state");
                     table.Columns.Add("listing_zip");
                     table.Columns.Add("listing_sqFT");
+                    table.Columns.Add("listing_description");
+                    table.Columns.Add("listing_roomDescription");
+                    table.Columns.Add("listing_shortDescription");
+                    table.Columns.Add("listing_nameSubDivision");
+                    table.Columns.Add("listing_hitCount");
+                    table.Columns.Add("listing_alarmInfo");
                     table.Columns.Add("agent_id");
                     table.Columns.Add("agency_id");
+                    table.Columns.Add("listing_occupied");
 
 
                     using (var adapter = new SqlDataAdapter(command))
@@ -1273,9 +1287,29 @@ namespace test2
                         adapter.Fill(table);
                         foreach (DataRow row in table.Rows)
                         {
+                            // small photo
                             var dataStream = new byte[0];
                             dataStream = (byte[]) row["listing_smallPhoto"];
                             row["listing_smallPhoto"] = BytetoImage(dataStream);
+
+                            // large photo
+                            dataStream = (byte[])row["listing_largePhoto"];
+                            row["listing_largePhoto"] = BytetoImage(dataStream);
+                            // pic1
+                            dataStream = (byte[])row["pic1"];
+                            row["pic1"] = BytetoImage(dataStream);
+                            // pic2
+                            dataStream = (byte[])row["pic2"];
+                            row["pic2"] = BytetoImage(dataStream);
+                            // pic3
+                            dataStream = (byte[])row["pic3"];
+                            row["pic3"] = BytetoImage(dataStream);
+                            // pic4
+                            dataStream = (byte[])row["pic4"];
+                            row["pic4"] = BytetoImage(dataStream);
+                            // pic5
+                            dataStream = (byte[])row["pic5"];
+                            row["pic5"] = BytetoImage(dataStream);
                         }
                     }
                 }
@@ -1288,9 +1322,9 @@ namespace test2
             return table;
         }
 
-        // Get all listings, no filtering.
+        // Get all listing, no filtering.
         /// <summary>
-        /// Gets all listings.
+        /// Gets all listing.
         /// </summary>
         /// <returns></returns>
         public DataTable GetAllListings()
@@ -1338,6 +1372,29 @@ namespace test2
             return table;
         }
 
+        public int GetSpecificListingForTestPurposes(int agent_id)
+        {
+            int result = -1;
+            using (var command = new SqlCommand())
+            {
+                try
+                {
+                    command.Connection = connection;
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT listing_id FROM dbo.listing WHERE agent_id = @agentID";
+                    command.Parameters.Add("@agentID", SqlDbType.Int);
+                    command.Parameters["@agentID"].Value = agent_id;
+                    result = Convert.ToInt32(command.ExecuteScalar());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    result = -1;
+                }
+            }
+            return result;
+        }
+
         // Get all info for one specific listing. To be used for the agent detailed page.
         /// <summary>
         /// Gets the specific listing.
@@ -1353,7 +1410,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT * FROM TABLENAME WHERE listing_id = @listingID";
+                    command.CommandText = "SELECT * FROM dbo.listing WHERE listing_id = @listingID";
 
                     command.Parameters.Add("@listingID", SqlDbType.Int);
                     command.Parameters["@listingID"].Value = listingID;
@@ -1421,7 +1478,7 @@ namespace test2
         }
 
         /// <summary>
-        /// Gets all listings for email to specific agent.
+        /// Gets all listing for email to specific agent.
         /// </summary>
         /// <param name="agent_id">The agent identifier.</param>
         /// <returns></returns>
@@ -1434,8 +1491,8 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = String.Concat("Select listing_street, listing_city, listing_state, ",
-                        "listing_zip, listing_hitCount, listingLifetimeHitCount FROM listings where agent_id = ",
+                    command.CommandText = String.Concat("Select All listing_street, listing_city, listing_state, ",
+                        "listing_zip, listing_hitCount, listingLifetimeHitCount FROM dbo.listing where agent_id = ",
                         "@agent_id");
                         
                     command.Parameters.Add("@agent_id", SqlDbType.Int);
@@ -1478,7 +1535,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_largePhoto FROM TABLENAME WHERE listing_id = @listingID";
+                    command.CommandText = "SELECT listing_largePhoto FROM dbo.listing WHERE listing_id = @listingID";
 
                     command.Parameters.Add("@listingID", SqlDbType.Int);
                     command.Parameters["@listingID"].Value = listing_id;
@@ -1519,7 +1576,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_smallPhoto FROM TABLENAME WHERE listing_id = @listingID";
+                    command.CommandText = "SELECT listing_smallPhoto FROM dbo.listing WHERE listing_id = @listingID";
 
                     command.Parameters.Add("@listingID", SqlDbType.Int);
                     command.Parameters["@listingID"].Value = listing_id;
@@ -1560,7 +1617,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT pic1 FROM TABLENAME WHERE listing_id = @listingID";
+                    command.CommandText = "SELECT pic1 FROM dbo.listing WHERE listing_id = @listingID";
 
                     command.Parameters.Add("@listingID", SqlDbType.Int);
                     command.Parameters["@listingID"].Value = listing_id;
@@ -1601,7 +1658,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT pic2 FROM TABLENAME WHERE listing_id = @listingID";
+                    command.CommandText = "SELECT pic2 FROM dbo.listing WHERE listing_id = @listingID";
 
                     command.Parameters.Add("@listingID", SqlDbType.Int);
                     command.Parameters["@listingID"].Value = listing_id;
@@ -1642,7 +1699,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT pic3 FROM TABLENAME WHERE listing_id = @listingID";
+                    command.CommandText = "SELECT pic3 FROM dbo.listing WHERE listing_id = @listingID";
 
                     command.Parameters.Add("@listingID", SqlDbType.Int);
                     command.Parameters["@listingID"].Value = listing_id;
@@ -1683,7 +1740,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT pic4 FROM TABLENAME WHERE listing_id = @listingID";
+                    command.CommandText = "SELECT pic4 FROM dbo.listing WHERE listing_id = @listingID";
 
                     command.Parameters.Add("@listingID", SqlDbType.Int);
                     command.Parameters["@listingID"].Value = listing_id;
@@ -1724,7 +1781,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT pic5 FROM TABLENAME WHERE listing_id = @listingID";
+                    command.CommandText = "SELECT pic5 FROM dbo.listing WHERE listing_id = @listingID";
 
                     command.Parameters.Add("@listingID", SqlDbType.Int);
                     command.Parameters["@listingID"].Value = listing_id;
@@ -1758,14 +1815,14 @@ namespace test2
         /// <returns></returns>
         public int GetListingPrice(int listing_id)
         {
-            var result = 0;
+            var result = -1;
             using (var command = new SqlCommand())
             {
                 try
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_price FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT listing_price FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
                     result = Convert.ToInt32(command.ExecuteScalar());
@@ -1794,7 +1851,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_street FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT listing_street FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
 
@@ -1824,7 +1881,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_city FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT listing_city FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
 
@@ -1854,7 +1911,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_state FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT listing_state FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
 
@@ -1884,7 +1941,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_zip FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT listing_zip FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
 
@@ -1907,14 +1964,14 @@ namespace test2
         /// <returns></returns>
         public int GetListingSquareFootage(int listing_id)
         {
-            var result = 0;
+            var result = -1;
             using (var command = new SqlCommand())
             {
                 try
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_sqFT FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT listing_sqFT FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
                     result = Convert.ToInt32(command.ExecuteScalar());
@@ -1943,7 +2000,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_shortDescription FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT listing_shortDescription FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
 
@@ -1973,7 +2030,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_description FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT listing_description FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
 
@@ -2003,7 +2060,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_roomDescription FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT listing_roomDescription FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
 
@@ -2033,7 +2090,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_nameSubdivision FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT listing_nameSubdivision FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
 
@@ -2063,7 +2120,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_alarmInfo FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT listing_alarmInfo FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
 
@@ -2086,14 +2143,14 @@ namespace test2
         /// <returns></returns>
         public int GetListingDailyHitCount(int listing_id)
         {
-            var result = 0;
+            var result = -1;
             using (var command = new SqlCommand())
             {
                 try
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listing_hitCount FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT listing_hitCount FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
                     result = Convert.ToInt32(command.ExecuteScalar());
@@ -2115,14 +2172,14 @@ namespace test2
         /// <returns></returns>
         public int GetListingLifetimeHitCount(int listing_id)
         {
-            var result = 0;
+            var result = -1;
             using (var command = new SqlCommand())
             {
                 try
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT listingLifetimeHitCount FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT listingLifetimeHitCount FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
                     result = Convert.ToInt32(command.ExecuteScalar());
@@ -2151,7 +2208,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT agent_id FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT agent_id FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
 
@@ -2181,7 +2238,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT agency_id FROM listing WHERE listing_id = @listing";
+                    command.CommandText = "SELECT agency_id FROM dbo.listing WHERE listing_id = @listing";
                     command.Parameters.Add("@listing", SqlDbType.Int);
                     command.Parameters["@listing"].Value = listing_id;
 
@@ -2226,7 +2283,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        "INSERT INTO agent (agent_Fname, agent_Lname, agent_Uname, agent_password, agent_number, agent_email, agency_id,"
+                        "INSERT INTO agent (agent_Fname, agent_Lname, agent_Uname, agent_password, agent_number, agent_email, agency_id, "
                         + "agent_number2) VALUES (@agent_Fname, @agent_Lname, @agent_Uname, @agent_password,  @agent_number, @agent_email, @agency_id, "
                         + "@agent_number2)";
                     // For each variable just start inserting stuff
@@ -2236,7 +2293,7 @@ namespace test2
                     command.Parameters.Add("@agent_password", SqlDbType.NVarChar);
                     command.Parameters.Add("@agent_number", SqlDbType.NVarChar);
                     command.Parameters.Add("@agent_email", SqlDbType.NVarChar);
-                    command.Parameters.Add("@agency_id", SqlDbType.NVarChar);
+                    command.Parameters.Add("@agency_id", SqlDbType.Int);
                     command.Parameters.Add("@agent_number2", SqlDbType.NVarChar);
 
                     command.Parameters["@agent_Fname"].Value = agent_Fname.ToCharArray();
@@ -2276,8 +2333,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE agent SET agent_Fname = @agent_Fname WHERE ",
-                            "agent_id='", agent_id, "'");
+                        string.Concat("UPDATE dbo.agent SET agent_Fname = @agent_Fname WHERE ",
+                            "agent_id = ", agent_id);
                     command.Parameters.Add("@agent_Fname", SqlDbType.NVarChar);
 
                     command.Parameters["@agent_Fname"].Value = firstName.ToCharArray();
@@ -2305,8 +2362,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE agent SET agent_Lname = @agent_Lname WHERE ",
-                            "agent_id='", agent_id, "'");
+                        string.Concat("UPDATE dbo.agent SET agent_Lname = @agent_Lname WHERE ",
+                            "agent_id = ", agent_id);
                     command.Parameters.Add("@agent_Lname", SqlDbType.NVarChar);
 
                     command.Parameters["@agent_Lname"].Value = lastName.ToCharArray();
@@ -2334,8 +2391,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE agent SET agent_Uname = @agent_Uname WHERE ",
-                            "agent_id='", agent_id, "'");
+                        string.Concat("UPDATE dbo.agent SET agent_Uname = @agent_Uname WHERE ",
+                            "agent_id = ", agent_id);
                     command.Parameters.Add("@agent_Uname", SqlDbType.NVarChar);
 
                     command.Parameters["@agent_Uname"].Value = userName.ToCharArray();
@@ -2363,8 +2420,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE agent SET agent_password = @agent_password WHERE ",
-                            "agent_id='", agent_id, "'");
+                        string.Concat("UPDATE dbo.agent SET agent_password = @agent_password WHERE ",
+                            "agent_id = ", agent_id);
                     command.Parameters.Add("@agent_password", SqlDbType.NVarChar);
 
                     command.Parameters["@agent_password"].Value = password.ToCharArray();
@@ -2392,8 +2449,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE agent SET agent_number = @agent_number WHERE ",
-                            "agent_id='", agent_id, "'");
+                        string.Concat("UPDATE dbo.agent SET agent_number = @agent_number WHERE ",
+                            "agent_id = ", agent_id);
                     command.Parameters.Add("@agent_number", SqlDbType.NVarChar);
 
                     command.Parameters["@agent_number"].Value = phoneNumber.ToCharArray();
@@ -2421,8 +2478,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE agent SET agent_email = @agent_email WHERE ",
-                            "agent_id='", agent_id, "'");
+                        string.Concat("UPDATE dbo.agent SET agent_email = @agent_email WHERE ",
+                            "agent_id = ", agent_id);
                     command.Parameters.Add("@agent_email", SqlDbType.NVarChar);
 
                     command.Parameters["@agent_email"].Value = email.ToCharArray();
@@ -2453,7 +2510,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("DELETE FROM agent WHERE agent_id='", agent_id, "'");
+                        string.Concat("DELETE FROM dbo.agent WHERE agent_id = ", agent_id);
 
                     command.ExecuteNonQuery();
                 }
@@ -2474,14 +2531,14 @@ namespace test2
         /// <returns></returns>
         public int GetTotalNumberOfAgentsUsingService()
         {
-            var result = 0;
+            var result = -1;
             using (var command = new SqlCommand())
             {
                 try
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT COUNT(*) FROM agent";
+                    command.CommandText = "SELECT COUNT(*) FROM dbo.agent";
                     result = Convert.ToInt32(command.ExecuteScalar());
                 }
                 catch (Exception e)
@@ -2500,14 +2557,14 @@ namespace test2
         /// <returns></returns>
         public int GetTotalNumberOfAgentsWithAgency(int agency_id)
         {
-            var result = 0;
+            var result = -1;
             using (var command = new SqlCommand())
             {
                 try
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = string.Concat("SELECT COUNT(*) FROM agent WHERE agency_id='", agency_id, "'");
+                    command.CommandText = string.Concat("SELECT COUNT(*) FROM dbo.agent WHERE agency_id = ", agency_id);
                     result = Convert.ToInt32(command.ExecuteScalar());
                 }
                 catch (Exception e)
@@ -2534,7 +2591,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("SELECT agent_Fname FROM agent WHERE agent_id='", agent_id, "'");
+                        string.Concat("SELECT agent_Fname FROM dbo.agent WHERE agent_id = ", agent_id);
                     result = Convert.ToString(command.ExecuteScalar());
                 }
                 catch (Exception e)
@@ -2561,7 +2618,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("SELECT agent_Lname FROM agent WHERE agent_id='", agent_id, "'");
+                        string.Concat("SELECT agent_Lname FROM dbo.agent WHERE agent_id = ", agent_id);
                     result = Convert.ToString(command.ExecuteScalar());
                 }
                 catch (Exception e)
@@ -2580,14 +2637,14 @@ namespace test2
         /// <returns></returns>
         public int GetAgentID(string username)
         {
-            var result = 0;
+            var result = -1;
             using (var command = new SqlCommand())
             {
                 try
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT agent_id FROM agent WHERE agent_Uname = @username";
+                    command.CommandText = "SELECT agent_id FROM dbo.agent WHERE agent_Uname = @username";
                     command.Parameters.Add("@username", SqlDbType.NVarChar);
                     command.Parameters["@username"].Value = username.ToCharArray();
                     result = Convert.ToInt32(command.ExecuteScalar());
@@ -2616,7 +2673,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("SELECT agent_Uname FROM agent WHERE agent_id='", agent_id, "'");
+                        string.Concat("SELECT agent_Uname FROM dbo.agent WHERE agent_id = ", agent_id);
                     result = Convert.ToString(command.ExecuteScalar());
                 }
                 catch (Exception e)
@@ -2643,7 +2700,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT agent_passwd FROM agent WHERE agent_Uname = @username";
+                    command.CommandText = "SELECT agent_password FROM dbo.agent WHERE agent_Uname = @username";
                     command.Parameters.Add("@username", SqlDbType.NVarChar);
                     command.Parameters["@username"].Value = username.ToCharArray();
                     result = Convert.ToString(command.ExecuteScalar());
@@ -2672,7 +2729,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("SELECT agent_number FROM agent WHERE agent_id='", agent_id, "'");
+                        string.Concat("SELECT agent_number FROM dbo.agent WHERE agent_id = ", agent_id);
                     result = Convert.ToString(command.ExecuteScalar());
                 }
                 catch (Exception e)
@@ -2699,7 +2756,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("SELECT agent_email FROM agent WHERE agent_id='", agent_id, "'");
+                        string.Concat("SELECT agent_email FROM dbo.agent WHERE agent_id = ", agent_id);
                     result = Convert.ToString(command.ExecuteScalar());
                 }
                 catch (Exception e)
@@ -2725,7 +2782,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = string.Concat("SELECT agency_id FROM agent WHERE agent_id='", agent_id, "'");
+                    command.CommandText = string.Concat("SELECT agency_id FROM dbo.agent WHERE agent_id = ", agent_id);
                     result = Convert.ToInt32(command.ExecuteScalar());
                 }
                 catch (Exception e)
@@ -2752,8 +2809,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("SELECT ALL agent_Fname, agent_Lname, agent_number, agent_email, agency_id ",
-                            "FROM agent WHERE agent_id='", agent_id, "'");
+                        string.Concat("SELECT agent_Fname, agent_Lname, agent_number, agent_email, agency_id ",
+                            "FROM dbo.agent WHERE agent_id = ", agent_id);
 
                     table.Columns.Add("agent_Fname");
                     table.Columns.Add("agent_Lname");
@@ -2790,7 +2847,7 @@ namespace test2
                     command.CommandType = CommandType.Text;
                     command.CommandText =
                         string.Concat("SELECT ALL agent_Fname, agent_Lname, agent_number, agent_email, agent_id, ",
-                            "agency_id FROM agent");
+                            "agency_id FROM dbo.agent");
 
                     table.Columns.Add("agent_Fname");
                     table.Columns.Add("agent_Lname");
@@ -2829,7 +2886,7 @@ namespace test2
                     command.CommandType = CommandType.Text;
                     command.CommandText =
                         string.Concat("SELECT ALL agent_Fname, agent_Lname, agent_number, agent_email, agent_id ",
-                            "FROM agent WHERE agency_id='", agency_id, "'");
+                            "FROM dbo.agent WHERE agency_id = ", agency_id);
 
                     table.Columns.Add("agent_Fname");
                     table.Columns.Add("agent_Lname");
@@ -2927,8 +2984,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE agency SET agency_name = @agency_name WHERE ",
-                            "agency_id='", agency_id, "'");
+                        string.Concat("UPDATE dbo.agency SET agency_name = @agency_name WHERE ",
+                            "agency_id = ", agency_id);
                     command.Parameters.Add("@agency_name", SqlDbType.NVarChar);
 
                     command.Parameters["@agency_name"].Value = name.ToCharArray();
@@ -2956,8 +3013,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE agency SET agency_email = @agency_email WHERE ",
-                            "agency_id='", agency_id, "'");
+                        string.Concat("UPDATE dbo.agency SET agency_email = @agency_email WHERE ",
+                            "agency_id = ", agency_id);
                     command.Parameters.Add("@agency_email", SqlDbType.NVarChar);
 
                     command.Parameters["@agency_email"].Value = email.ToCharArray();
@@ -2985,8 +3042,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE agency SET agency_phone = @agency_phone WHERE ",
-                            "agency_id='", agency_id, "'");
+                        string.Concat("UPDATE dbo.agency SET agency_phone = @agency_phone WHERE ",
+                            "agency_id = ", agency_id);
                     command.Parameters.Add("@agency_phone", SqlDbType.NVarChar);
 
                     command.Parameters["@agency_phone"].Value = phoneNumber.ToCharArray();
@@ -3014,8 +3071,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE agency SET agency_street = @agency_street WHERE ",
-                            "agency_id='", agency_id, "'");
+                        string.Concat("UPDATE dbo.agency SET agency_street = @agency_street WHERE ",
+                            "agency_id = ", agency_id);
                     command.Parameters.Add("@agency_street", SqlDbType.NVarChar);
 
                     command.Parameters["@agency_street"].Value = street.ToCharArray();
@@ -3043,8 +3100,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE agency SET agency_city = @agency_city WHERE ",
-                            "agency_id='", agency_id, "'");
+                        string.Concat("UPDATE dbo.agency SET agency_city = @agency_city WHERE ",
+                            "agency_id = ", agency_id);
                     command.Parameters.Add("@agency_city", SqlDbType.NVarChar);
 
                     command.Parameters["@agency_city"].Value = city.ToCharArray();
@@ -3072,8 +3129,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE agency SET agency_state = @agency_state WHERE ",
-                            "agency_id='", agency_id, "'");
+                        string.Concat("UPDATE dbo.agency SET agency_state = @agency_state WHERE ",
+                            "agency_id = ", agency_id);
                     command.Parameters.Add("@agency_state", SqlDbType.NVarChar);
 
                     command.Parameters["@agency_state"].Value = state.ToCharArray();
@@ -3101,8 +3158,8 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("UPDATE agency SET agency_zip = @agency_zip WHERE ",
-                            "agency_id='", agency_id, "'");
+                        string.Concat("UPDATE dbo.agency SET agency_zip = @agency_zip WHERE ",
+                            "agency_id = ", agency_id);
                     command.Parameters.Add("@agency_zip", SqlDbType.NVarChar);
 
                     command.Parameters["@agency_zip"].Value = zip.ToCharArray();
@@ -3133,7 +3190,7 @@ namespace test2
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        string.Concat("DELETE FROM agency WHERE agency_id='", agency_id, "'");
+                        string.Concat("DELETE FROM dbo.agency WHERE agency_id = ", agency_id);
 
                     command.ExecuteNonQuery();
                 }
@@ -3161,7 +3218,7 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT COUNT(*) FROM agency";
+                    command.CommandText = "SELECT COUNT(*) FROM dbo.agency";
                     result = Convert.ToInt32(command.ExecuteScalar());
                 }
                 catch (Exception e)
@@ -3188,7 +3245,7 @@ namespace test2
                     command.CommandType = CommandType.Text;
                     command.CommandText =
                         "SELECT ALL agency_name, agency_email, agency_phone, agency_street, agency_city, "
-                        + "agency_state, agency_zip FROM agency";
+                        + "agency_state, agency_zip FROM dbo.agency";
 
                     table.Columns.Add("agency_name");
                     table.Columns.Add("agency_email");
@@ -3227,8 +3284,8 @@ namespace test2
                     command.CommandType = CommandType.Text;
                     command.CommandText =
                         string.Concat(
-                            "SELECT ALL agency_name, agency_email, agency_phone, agency_street, agency_city, ",
-                            "agency_state, agency_zip FROM agency WHERE agency_id='", agency_id, "'");
+                            "SELECT agency_name, agency_email, agency_phone, agency_street, agency_city, ",
+                            "agency_state, agency_zip FROM dbo.agency WHERE agency_id = ", agency_id);
 
                     table.Columns.Add("agency_name");
                     table.Columns.Add("agency_email");
@@ -3266,8 +3323,8 @@ namespace test2
                 {
                     command.Connection = connection;
                     command.CommandType = CommandType.Text;
-                    command.CommandText = string.Concat("SELECT agency_id FROM agency WHERE",
-                    " agency_name = ", agency_name);
+                    command.CommandText = string.Concat("SELECT agency_id FROM dbo.agency WHERE",
+                        " agency_name = '", agency_name, "'");
                     result = Convert.ToInt32(command.ExecuteScalar());
                 }
                 catch (Exception e)
@@ -3282,19 +3339,6 @@ namespace test2
 
         #endregion
 
-
-        /// <summary>
-        /// Gets the text.
-        /// </summary>
-        /// <param name="myTable">My table.</param>
-        public void getText(DataTable myTable)
-        {
-            var row = myTable.Rows[0];
-            var outputString = myTable.Columns["testDescription"].ToString();
-            Console.WriteLine(outputString);
-            outputString = row["testDescription"].ToString();
-            Console.WriteLine(outputString);
-        }
 
         /// <summary>
         /// Image to the byte.
@@ -3328,7 +3372,6 @@ namespace test2
         /// <summary>
         /// The command
         /// </summary>
-        private SqlCommand command;
     }
 
     #endregion
@@ -3336,91 +3379,24 @@ namespace test2
     /// <summary>
     /// 
     /// </summary>
-    internal class Program
+    public class Program
     {
         /// <summary>
         /// Mains the specified arguments.
         /// </summary>
         /// <param name="args">The arguments.</param>
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            var conString = "Data Source=DESKTOP-QM2SFGD;Initial Catalog=Housing;Integrated Security=True";
+            SQL_Connection connection = new SQL_Connection();
+            connection.openConnection();
 
-            var con = new SqlConnection(conString);
-            con.Open();
-            var tester = new SQL_Connection();
-
-            //connect to sql database 
-            if (con.State == ConnectionState.Open)
-            {
-                //initilize data to variables
-                var name = "Boston";
-                var email = "death.org";
-                var phone = "6669996666";
-                var street = "666 Street";
-                var state = "666 City";
-                var city = "999 Death Row";
-                var agency_zip = "66666";
-
-                var fName = "BENJ";
-                var lName = "stateFarm";
-                var userName = "Jake";
-                var password = "fromStateFarm";
-                var number = "345559999";
-                var email2 = "Jake@stateFarm";
-                var agency_id = 5;
-                var number2 = "1234567890";
-                var agent_id = 10;
-
-                //begin testing code here
-                //******************************//
-                //char[] a = agency_id.ToCharArray();
-                //char[] b = agent_id.ToCharArray();
-
-                //******************************//
-                //end testing code here
-                tester.openConnection();
-                //tester.UpdateShortDescription("A beautiful, best, bigger than ur house...",5);
-                var image1 = Image.FromFile("c:\\image1.jpeg");
-                tester.UpdatePhotoOne(image1, 5);
-
-
-                //test table
-                /*
-                DataTable temp = tester.GetAgency(5);
-                foreach (DataRow row in temp.Rows)
-                {
-                    Console.WriteLine("----------row------------");
-                    foreach (var item in row.ItemArray)
-                    {
-                        Console.Write("item:  ");
-                        Console.WriteLine(item);
-                    }
-                }
-                */
-
-
-                //Console.WriteLine();
-                //tester.AddAgent(fName, lName, userName,password,number2, email2, agency_id, number2);
-                //Int16 zip = 3580;
-
-                //int zip = 45678;
-                // string q = "insert into agency(agency_name,agency_email,agency_phone,agency_street,agency_state,agency_city,agency_zip)values('" + name + "','" + email + "','" + phone + " ','" + street + "','" + state + " ','" + city + "','" + agency_zip + "')";
-                //SqlCommand cmd = new SqlCommand(q, con);
-                //cmd.ExecuteNonQuery();
-
-                //push data into sql database.
-                //string z = "insert into agent(agent_Fname,agent_Lname,agent_Uname,agent_password,agent_number,agent_email,agency_id,agent_number2)values('" + fName + "','" + lName + "','" + userName + " ','" + password + "','" + number + " ','" + email2 + "','" + agency_id + "','" + number2 + "')";
-                //SqlCommand cmd1 = new SqlCommand(z, con);
-                //cmd1.ExecuteNonQuery();
-
-                //MessageBox.Show("Connection made successfully!");
-                //Console.WriteLine("connect successfully");
-            }
-            else
-            {
-                Console.WriteLine("Failed to connect");
-            }
+            connection.AddListing(Resource1.glorious_leader, Resource1.Glorious_Leader_makes_Cupcakes, 666,
+                "street", "city",
+                "state", "zip", 444, 5, 5);
+            DataTable helper = new DataTable();
+            helper = connection.GetListingsFilterByZipCode("zip");
+            Console.WriteLine(helper.Rows[0]["listing_street"]);
+            Console.ReadLine();
         }
     }
 }
