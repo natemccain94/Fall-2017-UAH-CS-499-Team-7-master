@@ -6,9 +6,16 @@ using test2;
 
 namespace BackendTests
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [TestClass]
     public class DatabaseTests
     {
+        /// <summary>
+        /// Initializes the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
         [ClassInitialize]
         public static void Init(TestContext context)
         {
@@ -18,6 +25,9 @@ namespace BackendTests
         }
 
         #region Test Methods
+        /// <summary>
+        /// Starts up.
+        /// </summary>
         [TestMethod]
         public void StartUp()
         {
@@ -39,6 +49,9 @@ namespace BackendTests
             Assert.AreNotEqual(-1, testListingID);
         }
 
+        /// <summary>
+        /// Updates the test listing information.
+        /// </summary>
         [TestMethod]
         public void UpdateTestListingInformation()
         {
@@ -88,6 +101,9 @@ namespace BackendTests
             Assert.IsInstanceOfType(ISeeData.GetPhotoFive(testListingID), typeof(Bitmap));
         }
 
+        /// <summary>
+        /// Changes the test listing hit counts get number of listings.
+        /// </summary>
         [TestMethod]
         public void ChangeTestListingHitCounts_GetNumberOfListings()
         {
@@ -111,6 +127,9 @@ namespace BackendTests
             Assert.AreNotEqual(0, ISeeData.GetTotalNumberOfListings());
         }
 
+        /// <summary>
+        /// Removes the parts of test listing.
+        /// </summary>
         [TestMethod]
         public void RemovePartsOfTestListing()
         {
@@ -143,6 +162,9 @@ namespace BackendTests
             Assert.AreEqual("", ISeeData.GetListingAlarmInfo(testListingID));
         }
 
+        /// <summary>
+        /// Tests the get data table functions.
+        /// </summary>
         [TestMethod]
         public void TestGetDataTableFunctions()
         {
@@ -160,7 +182,10 @@ namespace BackendTests
             Assert.IsInstanceOfType(ISeeData.GetSpecificListing(testListingID), typeof(DataTable));
             Assert.IsInstanceOfType(ISeeData.GetAllListingsForEmailToSpecificAgent(testAgentID), typeof(DataTable));
         }
-        
+
+        /// <summary>
+        /// Deletes the test listing.
+        /// </summary>
         [TestMethod]
         public void DeleteTestListing()
         {
@@ -176,6 +201,9 @@ namespace BackendTests
             Assert.AreNotEqual(testListingID, ISeeData.GetSpecificListing(testListingID));
         }
 
+        /// <summary>
+        /// Gets the agent identifier edit agent information.
+        /// </summary>
         [TestMethod]
         public void GetAgentID_EditAgentInfo()
         {
@@ -196,6 +224,9 @@ namespace BackendTests
             Assert.AreEqual(testAgentID, ISeeData.GetAgentID(changeString));
         }
 
+        /// <summary>
+        /// Differents the agent get function tests.
+        /// </summary>
         [TestMethod]
         public void DifferentAgentGetFunctionTests()
         {
@@ -216,6 +247,9 @@ namespace BackendTests
             Assert.AreEqual(checkString, ISeeData.GetAgentEmail(testAgentID));
         }
 
+        /// <summary>
+        /// Tests the data table get functions.
+        /// </summary>
         [TestMethod]
         public void TestDataTableGetFunctions()
         {
@@ -235,6 +269,9 @@ namespace BackendTests
             Assert.IsInstanceOfType(ISeeData.GetAllAgentsFromAgency(testAgencyID), typeof(DataTable));
         }
 
+        /// <summary>
+        /// Gets the agent identifier delete agent.
+        /// </summary>
         [TestMethod]
         public void GetAgentID_DeleteAgent()
         {
@@ -247,6 +284,9 @@ namespace BackendTests
             Assert.AreNotEqual(testAgentID, ISeeData.GetAgentID("Yarg"));
         }
 
+        /// <summary>
+        /// Updates an agency.
+        /// </summary>
         [TestMethod]
         public void UpdateAnAgency()
         {
@@ -277,6 +317,9 @@ namespace BackendTests
             Assert.AreEqual("fatass", set["agency_zip"]);
         }
 
+        /// <summary>
+        /// Removes an agency.
+        /// </summary>
         [TestMethod]
         public void RemoveAnAgency()
         {
@@ -290,19 +333,35 @@ namespace BackendTests
         }
         #endregion
 
+        /// <summary>
+        /// Cleans up.
+        /// </summary>
         [ClassCleanup]
         public static void CleanUp()
         {
             ISeeData.closeConnection();
         }
-        
+
+        /// <summary>
+        /// The change string
+        /// </summary>
         private string changeString = "Yarg";
+        /// <summary>
+        /// The i see data
+        /// </summary>
         private static SQL_Connection ISeeData;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [TestClass]
     public class EmailFunctions
     {
+        /// <summary>
+        /// Initializes the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
         [ClassInitialize]
         public static void Init(TestContext context)
         {
@@ -312,6 +371,9 @@ namespace BackendTests
 
         #region Test Methods
 
+        /// <summary>
+        /// Customers the request showing email test.
+        /// </summary>
         [TestMethod]
         public void CustomerRequestShowingEmailTest()
         {
@@ -330,6 +392,9 @@ namespace BackendTests
             Assert.AreEqual(0, 0);
         }
 
+        /// <summary>
+        /// Sends the closing forms to agent test.
+        /// </summary>
         [TestMethod]
         public void SendClosingFormsToAgentTest()
         {
@@ -349,12 +414,18 @@ namespace BackendTests
 
         #endregion
 
+        /// <summary>
+        /// Cleans up.
+        /// </summary>
         [ClassCleanup]
         public static void CleanUp()
         {
             
         }
 
+        /// <summary>
+        /// The i see data
+        /// </summary>
         private static SQL_Connection ISeeData;
 
     }

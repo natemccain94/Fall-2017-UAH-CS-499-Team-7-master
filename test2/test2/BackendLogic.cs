@@ -8,7 +8,7 @@ using System.IO;
 namespace test2
 {
     #region Nate's input
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -751,7 +751,7 @@ namespace test2
         }
 
         #endregion
-        
+
         #region deleting part of a listing/removing a listing
 
         /// <summary>
@@ -1029,7 +1029,7 @@ namespace test2
         }
 
         #endregion
-        
+
         #region Retrieving info for listing.
 
         // Get the number of listing (total).
@@ -1369,6 +1369,11 @@ namespace test2
             return table;
         }
 
+        /// <summary>
+        /// Gets the specific listing for test purposes.
+        /// </summary>
+        /// <param name="agent_id">The agent identifier.</param>
+        /// <returns></returns>
         public int GetSpecificListingForTestPurposes(int agent_id)
         {
             int result = -1;
