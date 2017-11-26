@@ -1,30 +1,25 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="agentMain.aspx.cs" Inherits="agentMain" Debug="true"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="display_houses_pagination.aspx.cs" Inherits="users_display_houses_pagination" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Agent Main Page</title>
-    <link rel="stylesheet" type="text/css" href="StyleSheet.css" />
-    <link href="bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link type="text/css" href="gridview.css" rel="stylesheet" />
+    <title></title>
+        <link rel="stylesheet" type="text/css" href="StyleSheet.css" />
+        <link href="agents/bootstrap/bootstrap.min.css" rel="stylesheet" />
+        <link href="../agents/bootstrap/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <form id="agent" runat="server">
-       
-   
-   
+           
+    <form id="form1" runat="server">
+        <div>
     <ul>
-        <li><a class="active" href="#" > Home</a></li>
-        <li><a href="insert_listing.aspx" >Add a Listing</a></li>
-        <li><a href="agent_forms.aspx" >Agent Forms</a></li>
+        <li><a href="display_houses.aspx">Home</a></li>
+        <li><a class="active" href="#" >More Listing</a></li>
         <li><a href="../users/display_houses.aspx" >Customer's Main</a></li>
-        <li><a href="#"><asp:Button ID="logoutButton" runat="server" OnClick="Button1_Click" Text="Logout" /></a></li>
-
     </ul>
-    <h1> Welcome Agent</h1>
-    
-    <asp:ScriptManager ID="ScriptManager2" runat="server" EnablePageMethods="true"/>
+
+     <asp:ScriptManager ID="ScriptManager2" runat="server" EnablePageMethods="true"/>
      <!--test gridview-->
     <div class="container h-100 d-flex justify-content-center">
          <div class="row">
@@ -47,11 +42,13 @@
             <asp:Button Text="Search" runat="server" OnClick="Search_Click" />
          </div>
     </div>
-         <br />
+    <br />
 
-        <asp:GridView ID="GridView1" CssClass="table table-striped table-bordered table-hover" OnPageIndexChanging="GridView1_PageIndexChanging" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White"
+        <!--Begin gridview-->
+       <asp:GridView ID="GridView1" CssClass="table table-striped table-bordered table-hover" OnPageIndexChanging="GridView1_PageIndexChanging" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White"
             runat="server" AllowPaging="true" PageSize="5" AutoGenerateColumns="false">
             <Columns>
+                <asp:BoundField  DataField="pic1" HeaderText="pic 1" ItemStyle-Width="150"  />
                 <asp:BoundField DataField="listing_id" HeaderText="Listing ID" ItemStyle-Width="150" />
                 <asp:BoundField DataField="listing_price" HeaderText="Price" ItemStyle-Width="150" />
                 <asp:BoundField DataField="listing_street" HeaderText="Street" ItemStyle-Width="250" />
@@ -59,12 +56,12 @@
                 <asp:BoundField DataField="listing_zip" HeaderText="ZipCode" ItemStyle-Width="100" />
                 <asp:BoundField DataField="listing_shortDescription" HeaderText="Short Description" ItemStyle-Width="250" />
                 <asp:BoundField DataField="listing_alarmInfo" HeaderText="Alarm Info." ItemStyle-Width="100" />
-               <asp:HyperLinkField DataNavigateUrlFields="listing_id" HeaderText="More details..."  DataNavigateUrlFormatString="update_listing.aspx?listing_id={0}" Text="View Details" />
+               <asp:HyperLinkField DataNavigateUrlFields="listing_id" HeaderText="More details..." DataNavigateUrlFormatString="detailed_display.aspx?id={0}"  Text="View Details" />
             </Columns>
         </asp:GridView>
-    <!--test gridview-->
+        <!--End gridview-->
+ 
+        </div>
     </form>
 </body>
-  
 </html>
-

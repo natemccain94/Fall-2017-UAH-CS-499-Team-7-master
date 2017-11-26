@@ -70,6 +70,28 @@ body {
      margin-right: 0;
 }
 
+.btn-change {
+    height: 300px;
+    width: 300px;
+    background-image: url('../Pictures/Empty.png');
+    background-size: cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+    margin: 35px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    float: none;
+    box-shadow: 0 0 1px #ccc;
+    -webkit-transition: all 0.5s ease-in-out;
+    border: 0px;
+    color: #fff;
+}
+
+    .btn-change:hover {
+        -webkit-transform: scale(1.1);
+        background-image: url('../Pictures/Empty.png');
+        opacity: 0.4;
+    }
  /*
 .product-info {
     position: absolute;

@@ -1,34 +1,51 @@
-﻿body {
-    /*background-image:url("C:/Users/jjp0009/Desktop/picture1.jpg"); */
-    background-image: url('../Pictures/picture1.jpg')
-    /*background: url('Pictures/picture1.jpg');*/
-}
+﻿
 
-h1 {
-    color: green;
-    text-align: center;
-    font-size: 90px;
-}
 
-.auto-style1 {
-    width: 300px;
-    /*width: 50%; */
-    position: fixed;
-    margin-left: -150px;
-    margin-top: -150px;
-    top: 50%;
-    left: 50%;
+body {
+    background-image: url('../Pictures/login-background.jpg');
+    padding-top: 200px;
+    padding-bottom: 40px;
 }
-
-.auto-style2 {
-    text-align: right;
-    width: 201px;
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
 }
+    .form-signin .form-control {
+        position: relative;
+        box-sizing: border-box;
+        height: auto;
+        padding: 10px;
+        font-size: 16px;
+    }
 
-.auto-style3 {
-    width: 201px;
+.form-signin .TextBox[class="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+.form-signin .TextBox1[class="password"] 
+{
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
 }
+.form-signin .btn-change {
+        height: 35px;
+        width: 130px;
+        background: lightseagreen;
+        margin: 20px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        float:none;
+        box-shadow: 0 0 1px #ccc;
+        -webkit-transition: all 0.5s ease-in-out;
+        border: 0px;
+        color: #fff;
+    }
 
-.auto-style4 {
-    width: 267px;
+.btn-change:hover {
+        -webkit-transform: scale(1.1);
+        background: #31708f;
 }

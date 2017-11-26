@@ -127,7 +127,8 @@ public partial class agents_schedule_listing : System.Web.UI.Page
         listingID = Convert.ToInt32(_listingInfo["ID"].ToString());
         currentAgentID = Convert.ToInt32(_userInfo["AgentID"].ToString());
         currentAgencyID = Convert.ToInt32(_userInfo["AgencyID"].ToString());
-        Response.Write(listingID);
+        //Response.Write(_userInfo["AgentID"]);
+       // Response.Write(_userInfo["AgencyID"]);
         con.Open();
         SqlCommand cmd1 = new SqlCommand("SELECT agent.agent_id FROM listing INNER JOIN agent ON listing.agent_id = agent.agent_id WHERE listing.listing_id = '"+listingID+"' " , con);
         SqlDataReader usernameRdr = null;
@@ -135,7 +136,7 @@ public partial class agents_schedule_listing : System.Web.UI.Page
 
         while (usernameRdr.Read())
         {
-            Response.Write("This happens");
+           // Response.Write("This happens");
            agent_id  = Convert.ToInt32(usernameRdr["agent_id"]);
         }
 
@@ -143,16 +144,21 @@ public partial class agents_schedule_listing : System.Web.UI.Page
         finish = DropDownList3.SelectedValue + "-" + DropDownList1.SelectedValue + "-" + DropDownList2.SelectedValue + " " + DropDownList7.SelectedValue + ":" + DropDownList8.SelectedValue + ":" + zero ;
 
         cmd1 = new SqlCommand("SELECT agency.agency_id FROM listing INNER JOIN agency ON listing.agency_id = agency.agency_id WHERE listing.listing_id = '" + listingID + "' ", con);
+        usernameRdr.Close();
+
+        usernameRdr = null;
+        usernameRdr = cmd1.ExecuteReader();
         while (usernameRdr.Read())
         {
+           
             agency_id = Convert.ToInt32(usernameRdr["agency_id"]);
         }
 
-        Response.Write(currentAgencyID);
+        //Response.Write(currentAgencyID);
         cmd1 = new SqlCommand("SELECT agency_name FROM agency WHERE agency_id = '" + currentAgencyID + "' ", con);
         while (usernameRdr.Read())
         {
-            Response.Write("this happesn 2");
+      
             agency_showing_company = usernameRdr["agency_name"].ToString();
         }
 
@@ -170,17 +176,21 @@ public partial class agents_schedule_listing : System.Web.UI.Page
 
         usernameRdr.Close();
 
+       // Response.Write(agent_id);
+       // Response.Write(listingID);
+       // Response.Write(agency_id);
+
         string sql = "INSERT INTO schedule(start, finish, agent_id, listing_id, agency_id, agent_showing_firstName, agent_showing_lastName, agency_showing_company)VALUES('" +start+ "','" + finish + "','" +agent_id+ "','" + listingID + "','" + agency_id + "','" + agent_showing_firstName+ "','" +agent_showing_lastName+ "','" + agency_showing_company +"'  )";
         //string time = "2017-10-11 10:45:00";
         //string sql = "INSERT INTO schedule(start) VALUES('"+time +"')";
         SqlCommand command;
-        //command = new SqlCommand(sql, con);
-        //int x = command.ExecuteNonQuery();
+        command = new SqlCommand(sql, con);
+        int x = command.ExecuteNonQuery();
 
-        Response.Write(agent_id);
-        Response.Write(agency_id);
-        Response.Write(agent_showing_firstName);
+        
+        
 
         con.Close();
+        Response.Redirect("schedule_listing.aspx");
     }
 }
