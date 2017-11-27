@@ -76,15 +76,6 @@
              <div class="col">
                <asp:label ID="zip" runat="server" Font-Bold="true">listing ZipCode</asp:label><br />
                 <asp:TextBox runat="server" ID="listing_zip"/>
-                 <asp:RegularExpressionValidator 
-                     ID="RegularExpressionValidator3" 
-                     ControlToValidate="listing_zip" 
-                     runat="server" 
-                     ErrorMessage="Numbers Only" 
-                     ForeColor="Red"
-                     Font-Bold="true"
-                     ValidationExpression="\d+">
-               </asp:RegularExpressionValidator>
             </div>
             <div class="col">
                 <asp:label ID="description" runat="server" Font-Bold="true">listing Description</asp:label><br />
@@ -121,18 +112,18 @@
              <!--begin ROW 4 of update listing-->
             <div class="row">
             <div class="col">
-                <h1>Picture 1</h1>
-                <asp:Image class="img-thumbnail" runat="server" ID="pic1"></asp:Image>
+                <h1>Large Picture</h1>
+                <asp:Image class="img-thumbnail" runat="server" ID="largepic"></asp:Image>
                 <asp:FileUpload runat="server" ID="FileUpload1" />
             </div>
             <div class="col">
-                <h1>Picture 2</h1>
-                <asp:Image class="img-thumbnail"  runat="server" ID="pic2"></asp:Image>
+                <h1>Small Picture</h1>
+                <asp:Image class="img-thumbnail"  runat="server" ID="smallpic"></asp:Image>
                 <asp:FileUpload runat="server" ID="FileUpload2" />
             </div>
             <div class="col">
-                <h1>Picture 3</h1>
-                <asp:Image class="img-thumbnail"  runat="server" ID="pic3"></asp:Image>
+                <h1>Picture 1</h1>
+                <asp:Image class="img-thumbnail"  runat="server" ID="pic1"></asp:Image>
                 <asp:FileUpload runat="server" ID="FileUpload3" />
             </div>
             </div>
@@ -141,19 +132,24 @@
             <!--begin ROW 5 of update listing-->
             <div class="row">
             <div class="col">
-                <h1>Picture 4</h1>
-                <asp:Image class="img-thumbnail" runat="server" ID="pic4"></asp:Image>
+                <h1>Picture 2</h1>
+                <asp:Image class="img-thumbnail" runat="server" ID="pic2"></asp:Image>
                 <asp:FileUpload runat="server" ID="FileUpload4" />
             </div>
             <div class="col">
-                <h1>Picture 5</h1>
-                <asp:Image class="img-thumbnail"  runat="server" ID="pic5"></asp:Image>
+                <h1>Picture 3</h1>
+                <asp:Image class="img-thumbnail"  runat="server" ID="pic3"></asp:Image>
                 <asp:FileUpload runat="server" ID="FileUpload5" />
             </div>
             <div class="col">
-                <h1>Picture 6</h1>
-                <asp:Image class="img-thumbnail"  runat="server" ID="pic6"></asp:Image>
+                <h1>Picture 4</h1>
+                <asp:Image class="img-thumbnail"  runat="server" ID="pic4"></asp:Image>
                 <asp:FileUpload runat="server" ID="FileUpload6" />
+            </div>
+             <div class="col">
+                <h1>Picture 5</h1>
+                <asp:Image class="img-thumbnail"  runat="server" ID="pic5"></asp:Image>
+                <asp:FileUpload runat="server" ID="FileUpload7" />
             </div>
             </div>
             <br />

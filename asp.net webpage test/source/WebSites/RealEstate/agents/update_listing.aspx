@@ -121,18 +121,18 @@
              <!--begin ROW 4 of update listing-->
             <div class="row">
             <div class="col">
-                <h1>Picture 1</h1>
-                <asp:Image runat="server" ID="Image1"></asp:Image>
+                <h1>Large photo</h1>
+                <asp:Image runat="server" ID="Image1" Width="200" Height="200"></asp:Image>
                 <asp:FileUpload runat="server" ID="FileUpload1" />
             </div>
             <div class="col">
-                <h1>Picture 2</h1>
-                <asp:Image runat="server" ID="Image2"></asp:Image>
+                <h1>Small photo</h1>
+                <asp:Image runat="server" ID="Image2" Width="200" Height="200"></asp:Image>
                 <asp:FileUpload runat="server" ID="FileUpload2" />
             </div>
             <div class="col">
-                <h1>Picture 3</h1>
-                <asp:Image runat="server" ID="Image3"></asp:Image>
+                <h1>Picture 1</h1>
+                <asp:Image runat="server" ID="Image3" Width="200" Height="200"></asp:Image>
                 <asp:FileUpload runat="server" ID="FileUpload3" />
             </div>
             </div>
@@ -141,19 +141,24 @@
             <!--begin ROW 5 of update listing-->
             <div class="row">
             <div class="col">
-                <h1>Picture 4</h1>
-                <asp:Image class="img-thumbnail" runat="server" ID="Image4"></asp:Image>
+                <h1>Picture 2</h1>
+                <asp:Image class="img-thumbnail" runat="server" ID="Image4" Width="200" Height="200"></asp:Image>
                 <asp:FileUpload runat="server" ID="FileUpload4" />
             </div>
             <div class="col">
-                <h1>Picture 5</h1>
-                <asp:Image class="img-thumbnail" runat="server" ID="Image5"></asp:Image>
+                <h1>Picture 3</h1>
+                <asp:Image class="img-thumbnail" runat="server" ID="Image5" Width="200" Height="200"></asp:Image>
                 <asp:FileUpload runat="server" ID="FileUpload5" />
             </div>
             <div class="col">
-                <h1>Picture 6</h1>
-                <asp:Image class="img-thumbnail" runat="server" ID="Image6"></asp:Image>
+                <h1>Picture 4</h1>
+                <asp:Image class="img-thumbnail" runat="server" ID="Image6" Width="200" Height="200"></asp:Image>
                 <asp:FileUpload runat="server" ID="FileUpload6" />
+            </div>
+             <div class="col">
+                <h1>Picture 5</h1>
+                <asp:Image class="img-thumbnail" runat="server" ID="Image7" Width="200" Height="200"></asp:Image>
+                <asp:FileUpload runat="server" ID="FileUpload7" />
             </div>
             </div>
             <br />

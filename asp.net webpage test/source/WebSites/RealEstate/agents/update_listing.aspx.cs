@@ -15,6 +15,10 @@ public partial class agents_update_listing : System.Web.UI.Page
     SqlDataReader reader;
     Listing new_listing = new Listing();
     int id;
+    //empty picture
+    System.Drawing.Image empty = Resource.Empty1; 
+
+    int a = 1;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["listing_id"] == null)
@@ -35,12 +39,13 @@ public partial class agents_update_listing : System.Web.UI.Page
         Response.Redirect("login.aspx");
     }
     //convert bytearray to image
+    
     public String ByteArrayToImage(byte[] byteArrayIn)
     {
         string base64String = Convert.ToBase64String(byteArrayIn, 0, byteArrayIn.Length);
         return base64String;
     }
-
+    
     protected void Cancel_Click(object sender, EventArgs e)
     {
         Response.Redirect("agentMain.aspx");
@@ -67,14 +72,14 @@ public partial class agents_update_listing : System.Web.UI.Page
     protected void Update_Click(object sender, EventArgs e)
     {
         Listing temp = new Listing();
-        temp.Listing_price = Int64.Parse(listing_price.Text);
+        temp.Listing_price = Int32.Parse(listing_price.Text);
         temp.Listing_state = listing_state.Text;
         temp.Listing_street = listing_street.Text;
         temp.Listing_shortDescription = listing_shortDescription.Text;
         temp.Listing_city = listing_city.Text;
-        temp.Listing_sqFT = Int64.Parse(listing_sqFT.Text);
+        temp.Listing_sqFT = Int32.Parse(listing_sqFT.Text);
         temp.Listing_description = listing_description.Text;
-        temp.Listing_zip = Int64.Parse(listing_zip.Text);
+        temp.Listing_zip = listing_zip.Text;
         temp.Listing_roomDescription = listing_roomDescription.Text;
         temp.Listing_nameSubDivision = listing_nameSubDivision.Text;
         temp.Listing_alarminfo = listing_alarminfo.Text;
@@ -105,17 +110,11 @@ public partial class agents_update_listing : System.Web.UI.Page
             cmd.CommandType = CommandType.Text;
 
             //initialize the long-ass sql querry
-            cmd.CommandText = "UPDATE listing SET pic1 = @pic1, pic2 = @pic2, pic3 = @pic3, pic4 = @pic4, pic5 = @pic5, pic6 = @pic6, " +
-                "listing_price = @listing_price, listing_street = @listing_street, listing_state = @listing_state, listing_city = @listing_city, " +
+            cmd.CommandText = "UPDATE listing SET listing_price = @listing_price, listing_street = @listing_street, listing_state = @listing_state, listing_city = @listing_city, " +
                 "listing_zip = @listing_zip, listing_sqFT = @listing_sqFT, listing_description = @listing_description, listing_roomDescription = @listing_roomDescription," +
                 "listing_shortDescription = @listing_shortDescription, listing_nameSubDivision = @listing_nameSubdivision, listing_alarmInfo = @listing_alarmInfo, " +
                 "listing_occupied = @listing_occupied WHERE listing_id=" + id;
-            cmd.Parameters.AddWithValue("@pic1", new_listing.Pic1);
-            cmd.Parameters.AddWithValue("@pic2", new_listing.Pic2);
-            cmd.Parameters.AddWithValue("@pic3", new_listing.Pic3);
-            cmd.Parameters.AddWithValue("@pic4", new_listing.Pic4);
-            cmd.Parameters.AddWithValue("@pic5", new_listing.Pic5);
-            cmd.Parameters.AddWithValue("@pic6", new_listing.Pic6);
+
             cmd.Parameters.AddWithValue("@listing_price", new_listing.Listing_price);
             cmd.Parameters.AddWithValue("@listing_street", new_listing.Listing_street);
             cmd.Parameters.AddWithValue("@listing_state", new_listing.Listing_state);
@@ -132,6 +131,71 @@ public partial class agents_update_listing : System.Web.UI.Page
             con.Open();
             cmd.ExecuteNonQuery();
             con.Close();
+
+            if (new_listing.LargePic != null)
+            {
+                cmd.CommandText = "UPDATE listing SET listing_largePhoto = @listing_largePhoto WHERE listing_id=" + id;
+                cmd.Parameters.AddWithValue("@listing_largePhoto", new_listing.LargePic);
+                cmd.Connection = con;
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+
+            if (new_listing.SmallPic != null)
+            {
+                cmd.CommandText = "UPDATE listing SET listing_smallPhoto = @listing_smallPhoto WHERE listing_id=" + id;
+                cmd.Parameters.AddWithValue("@listing_smallPhoto", new_listing.SmallPic);
+                cmd.Connection = con;
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            if (new_listing.Pic1 != null)
+            {
+                cmd.CommandText = "UPDATE listing SET pic1 = @pic1 WHERE listing_id=" + id;
+                cmd.Parameters.AddWithValue("@pic1", new_listing.Pic1);
+                cmd.Connection = con;
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            if (new_listing.Pic2 != null)
+            {
+                cmd.CommandText = "UPDATE listing SET pic2 = @pic2 WHERE listing_id=" + id;
+                cmd.Parameters.AddWithValue("@pic2", new_listing.Pic2);
+                cmd.Connection = con;
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            if (new_listing.Pic3 != null)
+            {
+                cmd.CommandText = "UPDATE listing SET pic3 = @pic3 WHERE listing_id=" + id;
+                cmd.Parameters.AddWithValue("@pic3", new_listing.Pic3);
+                cmd.Connection = con;
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            if (new_listing.Pic4 != null)
+            {
+                cmd.CommandText = "UPDATE listing SET pic4 = @pic4 WHERE listing_id=" + id;
+                cmd.Parameters.AddWithValue("@pic4", new_listing.Pic4);
+                cmd.Connection = con;
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            if (new_listing.Pic5 != null)
+            {
+                cmd.CommandText = "UPDATE listing SET pic5 = @pic5 WHERE listing_id=" + id;
+                cmd.Parameters.AddWithValue("@pic5", new_listing.Pic5);
+                cmd.Connection = con;
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
         }
         Response.Redirect("agentMain.aspx");
 
@@ -146,7 +210,7 @@ public partial class agents_update_listing : System.Web.UI.Page
         listing_city.Text = new_listing.Listing_city;
         listing_sqFT.Text = new_listing.Listing_sqFT.ToString();
         listing_description.Text = new_listing.Listing_description;
-        listing_zip.Text = new_listing.Listing_zip.ToString();
+        listing_zip.Text = new_listing.Listing_zip;
         listing_roomDescription.Text = new_listing.Listing_roomDescription;
         listing_nameSubDivision.Text = new_listing.Listing_nameSubDivision;
         listing_alarminfo.Text = new_listing.Listing_alarminfo;
@@ -154,22 +218,21 @@ public partial class agents_update_listing : System.Web.UI.Page
         {
             listing_occupied.Checked = true;
         }
-        Image1.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic1);
-        Image2.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic2);
-        Image3.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic3);
-        Image4.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic4);
-        Image5.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic5);
-        Image6.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic6);
+        Image1.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.LargePic);
+        Image2.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.SmallPic);
+        Image3.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic1);
+        Image4.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic2);
+        Image5.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic3);
+        Image6.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic4);
+        Image7.ImageUrl = "data:image/jpg;base64," + ByteArrayToImage(new_listing.Pic5);
 
     }
     private void set_backend_listing()
     {
-        Int64 Local_sqFt = 0;
-        Int64 Zipcode = 0;
-        Int64 local_price = 0;
-        Int64.TryParse(listing_sqFT.Text, out Local_sqFt);
-        Int64.TryParse(listing_zip.Text, out Zipcode);
-        Int64.TryParse(listing_price.Text, out local_price);
+        Int32 Local_sqFt = 0;
+        Int32 local_price = 0;
+        Int32.TryParse(listing_sqFT.Text, out Local_sqFt);
+        Int32.TryParse(listing_price.Text, out local_price);
 
         new_listing.Listing_price = local_price;
         new_listing.Listing_state = listing_state.Text;
@@ -178,7 +241,7 @@ public partial class agents_update_listing : System.Web.UI.Page
         new_listing.Listing_city = listing_city.Text;
         new_listing.Listing_sqFT = Local_sqFt;
         new_listing.Listing_description = listing_description.Text;
-        new_listing.Listing_zip = Zipcode;
+        new_listing.Listing_zip = listing_zip.Text;
         new_listing.Listing_roomDescription = listing_roomDescription.Text;
         new_listing.Listing_nameSubDivision = listing_nameSubDivision.Text;
         new_listing.Listing_alarminfo = listing_alarminfo.Text;
@@ -187,12 +250,35 @@ public partial class agents_update_listing : System.Web.UI.Page
             new_listing.Listing_occupied = true;
         }
         //get pics
-        new_listing.Pic1 = FileUpload1.FileBytes;
-        new_listing.Pic2 = FileUpload2.FileBytes;
-        new_listing.Pic3 = FileUpload3.FileBytes;
-        new_listing.Pic4 = FileUpload4.FileBytes;
-        new_listing.Pic5 = FileUpload5.FileBytes;
-        new_listing.Pic6 = FileUpload6.FileBytes;
+        if (FileUpload1.HasFile == true)
+        {
+            new_listing.LargePic = FileUpload1.FileBytes;
+        }
+        if (FileUpload2.HasFile == true)
+        {
+            new_listing.SmallPic = FileUpload2.FileBytes;
+        }
+        if (FileUpload3.HasFile == true)
+        {
+            new_listing.Pic1 = FileUpload3.FileBytes;
+        }
+        if (FileUpload4.HasFile == true)
+        {
+            new_listing.Pic2 = FileUpload4.FileBytes;
+        }
+        if (FileUpload5.HasFile == true)
+        {
+            new_listing.Pic3 = FileUpload5.FileBytes;
+        }
+        if (FileUpload6.HasFile == true)
+        {
+            new_listing.Pic4 = FileUpload6.FileBytes;
+        }
+        if (FileUpload7.HasFile == true)
+        {
+            new_listing.Pic5 = FileUpload7.FileBytes;
+        }
+       
     }
     private void set_frontend_listing()
     {
@@ -207,25 +293,26 @@ public partial class agents_update_listing : System.Web.UI.Page
         while (reader.Read())
         {   //initialize new_listing object to with retrieving sql data 
             Boolean occupied_flag = false;
-            new_listing.Listing_price = Convert.ToInt64(reader["listing_price"]);
+            new_listing.Listing_price = Convert.ToInt32(reader["listing_price"]);
             new_listing.Listing_state = reader["listing_state"].ToString();
             new_listing.Listing_street = reader["listing_street"].ToString();
             new_listing.Listing_shortDescription = reader["listing_shortDescription"].ToString();
             new_listing.Listing_city = reader["listing_city"].ToString();
-            new_listing.Listing_sqFT = Convert.ToInt64(reader["listing_sqFT"]);
+            new_listing.Listing_sqFT = Convert.ToInt32(reader["listing_sqFT"]);
             new_listing.Listing_description = reader["listing_description"].ToString();
-            new_listing.Listing_zip = Convert.ToInt64(reader["listing_zip"]);
+            new_listing.Listing_zip = reader["listing_zip"].ToString();
             new_listing.Listing_roomDescription = reader["listing_roomDescription"].ToString();
             new_listing.Listing_nameSubDivision = reader["listing_nameSubDivision"].ToString();
             new_listing.Listing_alarminfo = reader["listing_alarmInfo"].ToString();
             Boolean.TryParse(reader["listing_occupied"].ToString(), out occupied_flag);
             new_listing.Listing_occupied = occupied_flag;
-            new_listing.Pic1 = (byte[])reader[1];
-            new_listing.Pic2 = (byte[])reader[2];
-            new_listing.Pic3 = (byte[])reader[3];
-            new_listing.Pic4 = (byte[])reader[4];
-            new_listing.Pic5 = (byte[])reader[5];
-            new_listing.Pic6 = (byte[])reader[6];
+            new_listing.LargePic = (byte[])reader["listing_largePhoto"];
+            new_listing.SmallPic = (byte[])reader["listing_smallPhoto"];
+            new_listing.Pic1 = (byte[])reader["pic1"];
+            new_listing.Pic2 = (byte[])reader["pic2"];
+            new_listing.Pic3 = (byte[])reader["pic3"];
+            new_listing.Pic4 = (byte[])reader["pic4"];
+            new_listing.Pic5 = (byte[])reader["pic5"];
 
         }
         set_Frontend_gui(new_listing);

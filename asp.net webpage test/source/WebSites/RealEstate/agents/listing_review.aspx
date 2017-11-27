@@ -8,16 +8,19 @@
    
     <style type="text/css">
         .auto-style1 {
-            height: 508px;
+            height: 564px;
+        }
+        .auto-style2 {
+            height: 593px;
         }
     </style>
    
 </head>
-<body style="height: 469px">
+<body style="height: 573px">
     <form id="form1" runat="server" class="auto-style1">
-        <div class="auto-style1">
+        <div class="auto-style2">
             <asp:DropDownList ID="DropDownList1" runat="server">
-                <asp:ListItem Value="0"></asp:ListItem>
+                <asp:ListItem Value="0">0</asp:ListItem>
                 <asp:ListItem Value="1"></asp:ListItem>
                 <asp:ListItem Value="2"></asp:ListItem>
                 <asp:ListItem Value="3"></asp:ListItem>
@@ -63,18 +66,43 @@
             <br />
             <br />
 
+            <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="load values" />
+
             <br />
 
-            <asp:TextBox ID="TextBox1"  runat="server" Height="125px" Width="257px" TextMode="MultiLine"></asp:TextBox>
+            <asp:TextBox ID="TextBox1"  runat="server" Height="125px" Width="257px" TextMode="MultiLine" ></asp:TextBox>
          
             Additional Notes<br />
             <br />
             <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
             Buyer First Name<br />
             <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
-            Buyer Laste Name<br />
+            Buyer Laste Name<br /> <br />
+
+            <asp:Label ID="Label9" runat="server" Text="Showing Agent Email:   "></asp:Label><asp:Label ID="Label5" runat="server" Text="Label"></asp:Label>
             <br />
-            <asp:Button ID="Button1" runat="server" Text="Upload" />
+            <asp:Label ID="Label10" runat="server" Text="Showing Agent Number:   "></asp:Label><asp:Label ID="Label6" runat="server" Text="Label"></asp:Label>
+            <br />
+            <asp:Label ID="Label11" runat="server" Text="Is House Occupied?  "></asp:Label><asp:CheckBox ID="CheckBox1" runat="server" Text="House Occupied" />
+            <br />
+             <br />
+            <asp:Label ID="Label8" runat="server" Text="Lock Box Code:    "></asp:Label><asp:Label ID="Label7" runat="server" Text="Label"></asp:Label>
+             <br />
+            
+            <br />
+            <asp:Button ID="Button1" runat="server" Text="Upload" OnClick="Button1_Click" />
+
+
+
+            
+
+
+
+            <asp:Button ID="Button2" runat="server" OnClientClick="return false" OnClick="Button2_Click" Text="Update" />
+
+
+
+            
 
 
 

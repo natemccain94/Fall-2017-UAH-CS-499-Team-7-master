@@ -71,7 +71,7 @@
                
                 <div class="over">
                     <!-- id= whatever is how we are passing the specific listing id-->
-                    <a id="login" href="detailed_display.aspx?id=<%#Eval("listing_id") %>"><img src='data:image/jpg;base64,<%#Eval("pic1") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic1")) : string.Empty %>' alt="pic1" height="300" width="300" /></a>
+                    <a id="login" href="detailed_display.aspx?id=<%#Eval("listing_id") %>"><img src='data:image/jpg;base64,<%#Eval("listing_largePhoto") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("listing_largePhoto")) : string.Empty %>' alt="pic1" height="300" width="300" /></a>
                      <div class="overlay">
                          <div class="text">
                             <h2>$<%#Eval("listing_price") %></h2>

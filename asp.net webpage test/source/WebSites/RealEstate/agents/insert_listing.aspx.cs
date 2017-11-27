@@ -9,11 +9,13 @@ using System.Data.SqlClient;
 using System.Text;
 using System.IO;
 using Resources;
+using System.Drawing;
 
 public partial class agents_insert_listing : System.Web.UI.Page
 {
     //template class for listing
     Listing temp;
+    System.Drawing.Image empty = Resource.Empty1;
     protected void Page_Load(object sender, EventArgs e)
     {
         HttpCookie _userInfo = Request.Cookies["_userInfo"];
@@ -34,18 +36,24 @@ public partial class agents_insert_listing : System.Web.UI.Page
    
     protected void Add_Click(object sender, EventArgs e)
     {
+        byte[] empty_pic = (byte[])(new ImageConverter()).ConvertTo(empty, typeof(byte[]));
         SqlCommand command;
         string conString = "Data Source=DESKTOP-KFI49LK;Initial Catalog=Housing;Integrated Security=True";
         string agent_id = null;
         string agency_id = null;
+        byte[] largePic = empty_pic;
         temp = init_listing();
         //get pics
-        byte[] encodePic1 = FileUpload1.FileBytes;
-        byte[] encodePic2 = FileUpload2.FileBytes;
-        byte[] encodePic3 = FileUpload3.FileBytes;
-        byte[] encodePic4 = FileUpload4.FileBytes;
-        byte[] encodePic5 = FileUpload5.FileBytes;
-        byte[] encodePic6 = FileUpload6.FileBytes;
+        if (FileUpload1.HasFile == true)
+        {
+            largePic = FileUpload1.FileBytes;
+        }
+        byte[] smallPic = FileUpload2.FileBytes;
+        byte[] encodePic1 = FileUpload3.FileBytes;
+        byte[] encodePic2 = FileUpload4.FileBytes;
+        byte[] encodePic3 = FileUpload5.FileBytes;
+        byte[] encodePic4 = FileUpload6.FileBytes;
+        byte[] encodePic5 = FileUpload7.FileBytes;
         //get agent_id and agency_id
         HttpCookie reqCookies = Request.Cookies["_userInfo"];
         if (reqCookies != null)
@@ -72,15 +80,17 @@ public partial class agents_insert_listing : System.Web.UI.Page
 
 
             con.Open();
-            string sql = "INSERT INTO listing(pic1,pic2,pic3,pic4,pic5,pic6,listing_price,listing_street,listing_state,listing_city,listing_zip,listing_sqFT,listing_description,listing_roomDescription,listing_shortDescription,listing_nameSubDivision,listing_alarmInfo,agent_id,agency_id,listing_occupied)VALUES(@img1, @img2, @img3, @img4, @img5, @img6,'" + temp.Listing_price + "','" + temp.Listing_street + "','" + temp.Listing_state + "','" + temp.Listing_city + "','" + temp.Listing_zip + "','" + temp.Listing_sqFT + "','" + temp.Listing_description + "','" + temp.Listing_roomDescription + "','" + temp.Listing_shortDescription + "','" + temp.Listing_nameSubDivision + "','" + temp.Listing_alarminfo + "','" + agent_id + "','" + agency_id + "','" + temp.Listing_occupied + "')";
+            string sql = "INSERT INTO listing(listing_largePhoto,listing_smallPhoto,pic1,pic2,pic3,pic4,pic5,listing_price,listing_street,listing_state,listing_city,listing_zip,listing_sqFT,listing_description,listing_roomDescription,listing_shortDescription,listing_nameSubDivision,listing_alarmInfo,agent_id,agency_id,listing_occupied)VALUES(@largePic,@smallPic,@img1, @img2, @img3, @img4, @img5,'" + temp.Listing_price + "','" + temp.Listing_street + "','" + temp.Listing_state + "','" + temp.Listing_city + "','" + temp.Listing_zip + "','" + temp.Listing_sqFT + "','" + temp.Listing_description + "','" + temp.Listing_roomDescription + "','" + temp.Listing_shortDescription + "','" + temp.Listing_nameSubDivision + "','" + temp.Listing_alarminfo + "','" + agent_id + "','" + agency_id + "','" + temp.Listing_occupied + "')";
 
             command = new SqlCommand(sql, con);
+            command.Parameters.Add(new SqlParameter("@largePic", largePic));
+            command.Parameters.Add(new SqlParameter("@smallPic", smallPic));
             command.Parameters.Add(new SqlParameter("@img1", encodePic1));
             command.Parameters.Add(new SqlParameter("@img2", encodePic2));
             command.Parameters.Add(new SqlParameter("@img3", encodePic3));
             command.Parameters.Add(new SqlParameter("@img4", encodePic4));
             command.Parameters.Add(new SqlParameter("@img5", encodePic5));
-            command.Parameters.Add(new SqlParameter("@img6", encodePic6));
+
 
             int x = command.ExecuteNonQuery();
             con.Close();
@@ -95,15 +105,13 @@ public partial class agents_insert_listing : System.Web.UI.Page
     private Listing init_listing()
     {
         Listing temp = new Listing();
-        Int64 Local_sqFt = 0;
-        Int64 Zipcode = 0;
-        Int64 local_price = 0;
-        Int64.TryParse(sqFT.Text, out Local_sqFt);
-        Int64.TryParse(zip.Text, out Zipcode);
-        Int64.TryParse(listing_price.Text, out local_price);
+        Int32 Local_sqFt = 0;
+        Int32 local_price = 0;
+        Int32.TryParse(listing_sqFT.Text, out Local_sqFt);
+        Int32.TryParse(listing_price.Text, out local_price);
         temp.Listing_sqFT = Local_sqFt;
         temp.Listing_price = local_price;
-        temp.Listing_zip = Zipcode;
+        temp.Listing_zip = listing_zip.Text;
         temp.Listing_state = listing_state.Text;
         temp.Listing_city = listing_city.Text;
         temp.Listing_description = listing_description.Text;
