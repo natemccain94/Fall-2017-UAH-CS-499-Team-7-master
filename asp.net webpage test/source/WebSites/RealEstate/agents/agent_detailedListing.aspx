@@ -46,7 +46,7 @@
                             <img src='data:image/jpg;base64,<%#Eval("pic3") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic3")) : string.Empty %>' alt="pic3" height="150" width="200"/></a>                                                  
                             <img src='data:image/jpg;base64,<%#Eval("pic4") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic4")) : string.Empty %>' alt="pic4" height="150" width="200" /></a>                                                
                             <img src='data:image/jpg;base64,<%#Eval("pic5") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic5")) : string.Empty %>' alt="pic5" height="150" width="200" /></a>                                               
-                            <img src='data:image/jpg;base64,<%#Eval("listing_smallPhoto") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic6")) : string.Empty %>' alt="pic6" height="150" width="200"/></a>
+                            <img src='data:image/jpg;base64,<%#Eval("listing_smallPhoto") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("listing_smallPhoto")) : string.Empty %>' alt="pic6" height="150" width="200"/></a>
 
                            
                 
