@@ -13,7 +13,7 @@
         <div>
             <asp:GridView ID="GridView1" runat="server" Height="282px" Width="1272px">
                 <Columns>
-                    <asp:HyperLinkField HeaderText="See Review" ControlStyle-BackColor="White" NavigateUrl="listing_review.aspx?id=<%#Eval('listing_id')%>"  Text="See Review" />
+                    <asp:HyperLinkField HeaderText="See Review" ControlStyle-BackColor="White" datanavigateurlfields="schedule_id" datanavigateurlformatstring="listing_review.aspx?id={0}" Text="See Review" />
                     
                  
                 </Columns>
@@ -28,7 +28,7 @@
 
         </div>
 
-          <div id="theDiv" runat="server" class="house_info3" style="width:30%; height:600px; float:right; margin-bottom: 100px; margin: 10px 50% 0px 50%; background-color: black">
+          <div id="theDiv" runat="server" class="house_info3" style="width:30%; height:600px; float:right; margin-bottom: 100px; margin: 10px 40% 0px 40%; background-color: black">
                 
                          
                 
@@ -111,13 +111,7 @@
 
               
                <asp:DropDownList ID="DropDownList4" runat="server" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged">
-                  <asp:ListItem Value="1"></asp:ListItem>
-                  <asp:ListItem Value="2"></asp:ListItem>
-                  <asp:ListItem Value="3"></asp:ListItem>
-                  <asp:ListItem Value="4"></asp:ListItem>
-                  <asp:ListItem Value="5"></asp:ListItem>
-                  <asp:ListItem Value="6"></asp:ListItem>
-                  <asp:ListItem Value="7"></asp:ListItem>
+            
                   <asp:ListItem Value="8"></asp:ListItem>
                  
                    <asp:ListItem Value="9"></asp:ListItem>
@@ -125,6 +119,15 @@
                    <asp:ListItem Value="11"></asp:ListItem>
                    <asp:ListItem Value="12"></asp:ListItem>
                  
+                   <asp:ListItem Value="13"></asp:ListItem>
+                   <asp:ListItem Value="14"></asp:ListItem>
+                   <asp:ListItem Value="15"></asp:ListItem>
+                   <asp:ListItem Value="16"></asp:ListItem>
+                   <asp:ListItem Value="17"></asp:ListItem>
+                   <asp:ListItem Value="18"></asp:ListItem>
+                   <asp:ListItem Value="19"></asp:ListItem>
+                   <asp:ListItem Value="20"></asp:ListItem>
+       
               </asp:DropDownList>
                 
 
@@ -142,14 +145,13 @@
                   <asp:ListItem Value="45"></asp:ListItem>
                   <asp:ListItem Value="50"></asp:ListItem>
                   <asp:ListItem Value="55"></asp:ListItem>
-                  <asp:ListItem Value="60"></asp:ListItem>
                 
                  
               </asp:DropDownList>
                 
 
               
-               <asp:DropDownList ID="DropDownList6" runat="server">
+               <asp:DropDownList ID="DropDownList6" runat="server" Visible="False">
                   <asp:ListItem Value="AM"></asp:ListItem>
                   <asp:ListItem Value="PM"></asp:ListItem>
 
@@ -160,19 +162,23 @@
               <br />
 
               <asp:DropDownList ID="DropDownList7" runat="server" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged">
-                  <asp:ListItem Value="1"></asp:ListItem>
-                  <asp:ListItem Value="2"></asp:ListItem>
-                  <asp:ListItem Value="3"></asp:ListItem>
-                  <asp:ListItem Value="4"></asp:ListItem>
-                  <asp:ListItem Value="5"></asp:ListItem>
-                  <asp:ListItem Value="6"></asp:ListItem>
-                  <asp:ListItem Value="7"></asp:ListItem>
+
                   <asp:ListItem Value="8"></asp:ListItem>
                  
                    <asp:ListItem Value="9"></asp:ListItem>
                    <asp:ListItem Value="10"></asp:ListItem>
                    <asp:ListItem Value="11"></asp:ListItem>
                    <asp:ListItem Value="12"></asp:ListItem>
+                 
+                   <asp:ListItem Value="13"></asp:ListItem>
+                   <asp:ListItem Value="14"></asp:ListItem>
+                   <asp:ListItem Value="15"></asp:ListItem>
+                   <asp:ListItem Value="16"></asp:ListItem>
+                   <asp:ListItem Value="17"></asp:ListItem>
+                   <asp:ListItem Value="18"></asp:ListItem>
+                   <asp:ListItem Value="19"></asp:ListItem>
+                   <asp:ListItem Value="20"></asp:ListItem>
+      
                 </asp:DropDownList>
 
 
@@ -189,14 +195,13 @@
                         <asp:ListItem Value="45"></asp:ListItem>
                         <asp:ListItem Value="50"></asp:ListItem>
                         <asp:ListItem Value="55"></asp:ListItem>
-                        <asp:ListItem Value="60"></asp:ListItem>
                 
                  
               </asp:DropDownList>
                 
                 
 
-                 <asp:DropDownList ID="DropDownList9" runat="server">
+                 <asp:DropDownList ID="DropDownList9" runat="server" Visible="False">
                   <asp:ListItem Value="AM"></asp:ListItem>
                   <asp:ListItem Value="PM"></asp:ListItem>
 

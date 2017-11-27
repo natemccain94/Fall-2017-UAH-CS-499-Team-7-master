@@ -34,19 +34,19 @@
             <div style="height:450px; width:100%" >
 
                 <div style="height:300px; width:200px; float:left; margin-top: 100px">
-                    <img src='data:image/jpg;base64,<%#Eval("pic1") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic1")) : string.Empty %>' alt="pic1" height="300" width="300" /></a>       
+                    <img src='data:image/jpg;base64,<%#Eval("listing_largePhoto") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("listing_largePhoto")) : string.Empty %>' alt="pic1" height="300" width="300" /></a>       
                 </div>
 
                 
                 
                 <div style="height:320px; width:630px; float:left;  margin-top:100px; margin-left: 140px">
                    
-                            
+                            <img src='data:image/jpg;base64,<%#Eval("pic1") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic2")) : string.Empty %>' alt="pic2" height="150" width="200"/></a>                                     
                             <img src='data:image/jpg;base64,<%#Eval("pic2") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic2")) : string.Empty %>' alt="pic2" height="150" width="200"/></a>                            
                             <img src='data:image/jpg;base64,<%#Eval("pic3") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic3")) : string.Empty %>' alt="pic3" height="150" width="200"/></a>                                                  
                             <img src='data:image/jpg;base64,<%#Eval("pic4") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic4")) : string.Empty %>' alt="pic4" height="150" width="200" /></a>                                                
                             <img src='data:image/jpg;base64,<%#Eval("pic5") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic5")) : string.Empty %>' alt="pic5" height="150" width="200" /></a>                                               
-                            <img src='data:image/jpg;base64,<%#Eval("pic6") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic6")) : string.Empty %>' alt="pic6" height="150" width="200"/></a>
+                            <img src='data:image/jpg;base64,<%#Eval("listing_smallPhoto") != System.DBNull.Value ? Convert.ToBase64String((byte[])Eval("pic6")) : string.Empty %>' alt="pic6" height="150" width="200"/></a>
 
                            
                 
@@ -94,7 +94,10 @@
              
                     <div class="house_info2" style="width:30%; height:100%; margin-bottom: 100px; float:left; margin: 10px 20px 0px 20px; background-color: black; opacity: .6">
 
-                         <p style="color: white; opacity: 1">Subdivison: <%#Eval("listing_nameSubDivision") %></p>
+                         <p style="color: white; opacity: 1">Agent Information Only</p>
+                         <br />
+                         <p style="color: white; opacity: 1">Hit Count:  <%#Eval("listing_hitCount") %></p>
+                         <p style="color: white; opacity: 1">Arlarm Information: <%#Eval("listing_alarmInfo") %></p>
             
                 
                     </div>
@@ -104,8 +107,12 @@
                     <div id="theDiv" runat="server" class="house_info3" style="width:30%; height:100%; float:right; margin-bottom: 100px; margin: 10px 20px 0px 0px; background-color: black; opacity: .6">
                 
                             <p style="color: white; opacity: 1">Subdivison: <%#Eval("listing_nameSubDivision") %></p>
-                            <p style="color: white; opacity: 1">Agency: <%#Eval("agent_Fname") %> <%#Eval("agent_Lname") %></p>
-                            <p style="color: white; opacity: 1">Agent: <%#Eval("agency_name") %></p>
+                            <p style="color: white; opacity: 1">Agent: <%#Eval("agent_Fname") %> <%#Eval("agent_Lname") %></p>
+                            <p style="color: white; opacity: 1">Agent's Number: <%#Eval("agent_number") %></p>
+                            <p style="color: white; opacity: 1">Agent's Email: <%#Eval("agent_email") %></p>
+                            <p style="color: white; opacity: 1">Listing Agency: <%#Eval("agency_name") %></p>
+                            <p style="color: white; opacity: 1">Agency's Address: <%#Eval("agency_street") %> <%#Eval("agency_city") %>, <%#Eval("agency_state") %> <%#Eval("agency_zip") %></p>
+                            <p style="color: white; opacity: 1">Agency Number: <%#Eval("agency_phone") %></p>
                 
                     </div>
             
