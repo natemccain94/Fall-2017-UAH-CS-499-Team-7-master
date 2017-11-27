@@ -412,6 +412,36 @@ namespace BackendTests
             Assert.AreEqual(0, 0);
         }
 
+        /// <summary>
+        /// Showings the notification email test.
+        /// </summary>
+        [TestMethod]
+        public void ShowingNotificationEmailTest()
+        {
+            // Arrange
+            string[] requiredInputs = new[]
+            {
+                "ntl0003@uah.edu","I Only Believe","Fox News","Ihavethebestwords@trustmemyhandsarebig.com",
+                "2562562222","Donald","Trump","Vladamir","NotPutin","ILuvTrump@russiancollusion.org","12345","1600 Pennsylvania Ave NW",
+                "Washington","DC","20500","01/20/2017","11:00am","01/20/2021","11:00am"
+            };
+            // Act
+            // Send email about another agent showing the property
+            EmailAnAgent.ContactListingAgentAboutShowingTheirListing(requiredInputs[0], requiredInputs[1], requiredInputs[2],
+                requiredInputs[3], requiredInputs[4], requiredInputs[5], requiredInputs[6], requiredInputs[7],
+                requiredInputs[8], requiredInputs[9], requiredInputs[10], requiredInputs[11], requiredInputs[12],
+                requiredInputs[13], requiredInputs[14], requiredInputs[15], requiredInputs[16], requiredInputs[17],
+                requiredInputs[18]);
+            // Send email about the listing agent showing their own property
+            EmailAnAgent.ContactListingAgentAboutShowingTheirListing(requiredInputs[0], "Nate", "McCain",
+                requiredInputs[0], "Nate", "Nate", "McCain", "Morgan",
+                "Freeman", "coolvoice@gmail.com", requiredInputs[10], requiredInputs[11], requiredInputs[12],
+                requiredInputs[13], requiredInputs[14], requiredInputs[15], requiredInputs[16], requiredInputs[17],
+                requiredInputs[18]);
+            // Assert
+            Assert.AreEqual(0, 0);
+        }
+
         #endregion
 
         /// <summary>
